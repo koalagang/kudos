@@ -11,13 +11,13 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
+  # Bootloader
   boot.loader = {
     grub = {
       enable = true;
       device = "/dev/sda";
       # Enable encryption support
-      enableCryptodisk=true;
+      enableCryptodisk = true;
       # Limit the number of generations to save space in /boot
       configurationLimit = 10;
     };
@@ -131,7 +131,6 @@
     # TUI
     vim # I keep vim around in case I break my neovim config whilst tinkering
     neovim
-    #btop
 
     # GUI
     anki-bin
@@ -360,6 +359,12 @@
       warn-dirty = false
     '';
   };
+
+  # For some reason, git opens an annoying GUI askpass window
+  # instead of asking for the username and password in the terminal
+  # This disables that
+  programs.ssh.enableAskPassword = false;
+  # See https://github.com/NixOS/nixpkgs/issues/24311 for more
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
