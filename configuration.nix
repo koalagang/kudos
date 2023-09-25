@@ -130,13 +130,11 @@
 
     # TUI
     vim # I keep vim around in case I break my neovim config whilst tinkering
-    neovim
 
     # GUI
     anki-bin
     zathura
     signal-desktop
-    mpv mpvScripts.mpris
     keepassxc
     libreoffice-still
     mullvad-browser
