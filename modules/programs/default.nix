@@ -2,7 +2,7 @@
   imports = [
     ./btop
     ./mpv
-    ./neovim
+    ./nvim
     ./taskwarrior
     ./zathura
   ];
