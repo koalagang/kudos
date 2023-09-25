@@ -55,7 +55,7 @@
     # This allows me to edit my lua config without rebuilding nix
     # (unless I need to add another package as seen above).
     # Specifying absolute path is necessary because flakes live in the nix store
-    # so using an absolute path will place the config in the store.
+    # so using an absolute path will allow us to create a symlink outside of the store.
     # See https://github.com/nix-community/home-manager/issues/257 for more.
     source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/gross/modules/programs/nvim/nvim";
     recursive = true;
