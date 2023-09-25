@@ -3,5 +3,6 @@
     ./btop
     ./mpv
     ./nvim
+    ./zathura
   ];
 }

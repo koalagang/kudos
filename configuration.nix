@@ -133,7 +133,6 @@
 
     # GUI
     anki-bin
-    zathura
     signal-desktop
     keepassxc
     libreoffice-still
