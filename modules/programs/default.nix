@@ -3,6 +3,7 @@
     ./btop
     ./mpv
     ./nvim
+    ./taskwarrior
     ./zathura
   ];
 }
