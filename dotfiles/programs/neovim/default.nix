@@ -13,15 +13,16 @@
     # Dependencies
     extraPackages = with pkgs; [
       # Neovim system clipboard support
-      xclip # X11
       #wl-clipboard # Wayland
+      xclip # X11
+      #xsel # X11
 
       # PLUGIN DEPENDENCIES
       # lazy.nvim
       git
 
       # nvim-treesitter/nvim-treesitter
-      curl
+      curl # and for 3rd/image.nvim
       gnutar
       gcc # and for telescope-fzf-native.nvim
 

@@ -51,8 +51,6 @@ require("lazy").setup({
             -- write your own snippets in lua
         -- ekickx/clipboard.nvim
             -- configure it to support norg syntax
-        -- 3rd/image.nvim
-            -- use `programs.neovim.extraLuaPackages` in homemanager to install magick luarock
         -- nvim-focus/focus.nvim
         -- mfussenegger/nvim-dap
         -- ledger/vim-ledger
@@ -79,19 +77,28 @@ require("lazy").setup({
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate", -- Check for updates to the parsers
         dependencies = { "HiPhish/nvim-ts-rainbow2", "nvim-treesitter/nvim-treesitter-textobjects" },
+        -- EXTERNAL: tar, curl, gcc
         -- This weird-looking code is simply a way of inserting the languages table
         -- into the ft table alongside norg and markdown
         ft = { [ languages ] = {} , "norg", "markdown" },
         config = function()
             require(conf .. "treesitter")
         end,
-        -- EXTERNAL DEPENDENCIES: tar curl gcc
     },
 
     { -- "An Organized Future"
         "nvim-neorg/neorg",
         build = ":Neorg sync-parsers",
-        dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            {
+                "nvim-neorg/neorg-telescope",
+                dependencies = { "nvim-telescope/telescope.nvim" },
+            },
+            -- can't get image.nvim to work
+            --"3rd/image.nvim", -- EXTERNAL: magick (luarock), imagemagick, curl
+        },
         -- NOTE: sometimes neorg's folds break
         -- However, refreshing the file with `:e` fixes this
         cmd = "Neorg",
@@ -103,7 +110,7 @@ require("lazy").setup({
 
     { -- "Neovim file explorer: edit your filesystem like a buffer"
         "stevearc/oil.nvim",
-        keys = "-",
+        keys = { "-", "<C-n>" },
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require(conf .. "oil")
@@ -126,7 +133,7 @@ require("lazy").setup({
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons", -- EXTERNAL: any nerdfont (I use Fira Code)
-            { "nvim-telescope/telescope-fzf-native.nvim", build = 'make' }, -- EXTERNAL: gnumake gcc
+            { "nvim-telescope/telescope-fzf-native.nvim", build = 'make' }, -- EXTERNAL: gnumake, gcc
         },
         config = function()
             require(conf .. "telescope")
@@ -160,17 +167,6 @@ require("lazy").setup({
         ft = languages,
         config = function()
             require(conf .. "indent-blankline")
-        end,
-    },
-
-    { -- Helps to develop good and break bad vim habits
-      -- Hopefully, I will remove this before long ;)
-        "m4xshen/hardtime.nvim",
-        dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-        config = function()
-            require("hardtime").setup({
-                disabled_filetypes = { "oil" },
-            })
         end,
     },
 
