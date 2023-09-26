@@ -145,7 +145,6 @@
     ffmpeg
     sox
     yt-dlp
-    git
     fzf
 
     # Simple but useful CLI tools
