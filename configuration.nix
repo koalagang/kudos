@@ -145,8 +145,6 @@
     ffmpeg
     sox
     yt-dlp
-    taskwarrior
-    timewarrior
     git
     fzf
 
