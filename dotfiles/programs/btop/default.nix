@@ -237,4 +237,6 @@
       log_level = "WARNING";
     };
   };
+
+  home.shellAliases = { bp = "btop"; };
 }
