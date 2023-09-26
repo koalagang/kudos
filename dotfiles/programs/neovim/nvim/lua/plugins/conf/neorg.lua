@@ -1,17 +1,39 @@
 require("neorg").setup {
     load = {
-        -- Loads default behaviour
-        -- Once I get used to using neorg, I will be more specific and remove default modules that I don't use
-        ["core.defaults"] = {},
+        -- Modules in core.defaults
+        -- Double-comment = considering enabling
+        --["core.clipboard.code-blocks"] = {},
+        ----["core.esupports.hop"] = {},
+        ["core.esupports.indent"] = {},
+        ["core.esupports.metagen"] = {},
+        ["core.itero"] = {},
+        --["core.journal"] = {},
+        ["core.keybinds"] = {},
+        ['core.keybinds'] = {
+            config = {
+                hook = function(keybinds)
+                    -- depends on nvim-neorg/neorg-telescope
+                    keybinds.map_event('norg', 'n', '<C-x>', 'core.integrations.telescope.find_linkable')
+                    keybinds.map_event('norg', 'i', '<C-x>', 'core.integrations.telescope.insert_link')
+                end,
+            },
+        },
+        --["core.looking-glass"] = {},
+        --["core.pivot"] = {},
+        ["core.promo"] = {},
+        ----["core.qol.toc"] = {},
+        ["core.qol.todo_items"] = {},
+        --["core.tangle"] = {},
+        --["core.upgrade"] = {},
 
-        -- Adds pretty icons to your documents
+        -- Add pretty icons to your documents
         ["core.concealer"] = {
             config = {
                 icon_preset = "varied",
             },
         },
 
-        -- Manages Neorg workspaces
+        -- Manage Neorg workspaces
         ["core.dirman"] = {
             config = {
                 workspaces = {
@@ -32,7 +54,7 @@ require("neorg").setup {
         },
 
         -- Export norg files to markdown with `:Neorg export to-file filename.md`
-        ["core.export"] = {},
+        --["core.export"] = {},
 
         -- will uncomment once I've set up nvim-cmp
         --["core.completion"] = {},
@@ -55,22 +77,3 @@ imap("<m-*>", "**<left>")
 imap("<m-/>", "//<left>")
 imap("<m-_>", "__<left>")
 imap("<m-:>", "{::}<left><left>")
-
-local neorg_callbacks = require("neorg.core.callbacks")
-neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, keybinds)
-    -- Map all the below keybinds only when the "norg" mode is active
-    keybinds.map_event_to_mode("norg", {
-        n = { -- Bind keys in normal mode
-            { "TN", "core.integrations.telescope.find_linkable" },
-            -- depends on nvim-neorg/neorg-telescope
-        },
-
-        i = { -- Bind in insert mode
-            { "TN", "core.integrations.telescope.insert_link" },
-            -- depends on nvim-neorg/neorg-telescope
-        },
-    }, {
-        silent = true,
-        noremap = true,
-    })
-end)

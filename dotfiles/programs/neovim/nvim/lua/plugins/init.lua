@@ -76,7 +76,7 @@ require("lazy").setup({
     { -- Treesitter syntax highlighting
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate", -- Check for updates to the parsers
-        dependencies = { "HiPhish/nvim-ts-rainbow2", "nvim-treesitter/nvim-treesitter-textobjects" },
+        --dependencies = { "HiPhish/nvim-ts-rainbow2", "nvim-treesitter/nvim-treesitter-textobjects" },
         -- EXTERNAL: tar, curl, gcc
         -- This weird-looking code is simply a way of inserting the languages table
         -- into the ft table alongside norg and markdown
@@ -85,8 +85,15 @@ require("lazy").setup({
             require(conf .. "treesitter")
         end,
     },
+    {
+        "HiPhish/nvim-ts-rainbow2",
+        ft = languages,
+        dependencies = "nvim-treesitter/nvim-treesitter",
+    },
 
     { -- "An Organized Future"
+      -- NOTE: sometimes neorg's folds break
+      -- However, refreshing the file with ':e' fixes this
         "nvim-neorg/neorg",
         build = ":Neorg sync-parsers",
         dependencies = {
@@ -99,10 +106,17 @@ require("lazy").setup({
             -- can't get image.nvim to work
             --"3rd/image.nvim", -- EXTERNAL: magick (luarock), imagemagick, curl
         },
-        -- NOTE: sometimes neorg's folds break
-        -- However, refreshing the file with `:e` fixes this
         cmd = "Neorg",
         ft = "norg",
+        --[[ NOTE:
+        Neorg is *by far* my slowest plugin.
+        On my system, Neorg alone takes ~140ms to load when loading via cmd and ~250ms when loading via ft.
+        Therefore, for maximum speed, I recommend loading it once and then using telescope or oil to move between files
+        (as opposed to closing Neovim and opening a new norg file from the commandline)
+        because then Neorg stays loaded until you exit Neovim.
+        My config uses '<c-x>' in normal mode to navigate the Neorg workspaces with telescope and '-' or '<c-n>' for oil.
+        However, you must first load Neorg before using the former (either by opening a norg file or with ':Neorg').
+        ]]
         config = function()
             require(conf .. "neorg")
         end,
