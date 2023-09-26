@@ -58,7 +58,7 @@
     # so using an absolute path will allow us to create a symlink outside of the store.
     # I will probably change this once my neovim config has fewer moving parts.
     # See https://github.com/nix-community/home-manager/issues/257 for more.
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/gross/modules/programs/neovim/nvim";
+    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/gross/dotfiles/programs/neovim/nvim";
     recursive = true;
   };
 }
