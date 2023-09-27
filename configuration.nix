@@ -155,7 +155,6 @@
     trash-cli
     poppler_utils
     gzip
-    translate-shell
     colorpicker
     ddgr
     so

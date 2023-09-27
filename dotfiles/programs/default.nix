@@ -7,6 +7,7 @@
     ./neovim
     ./taskwarrior
     ./tealdeer
+    ./translate-shell
     ./yt-dlp
     ./zathura
   ];
