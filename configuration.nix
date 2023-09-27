@@ -144,8 +144,11 @@
     pandoc
     ffmpeg
     sox
-    yt-dlp
+    #yt-dlp
     fzf
+    # DO NOT REMOVE GIT
+    # see https://discourse.nixos.org/t/getting-the-head-of-the-git-tree-failed/21837 for why
+    git
 
     # Simple but useful CLI tools
     xclip

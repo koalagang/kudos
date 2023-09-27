@@ -5,6 +5,7 @@
     ./mpv
     ./neovim
     ./taskwarrior
+    ./yt-dlp
     ./zathura
   ];
 }
