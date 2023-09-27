@@ -5,16 +5,17 @@
     userEmail = "74791721+koalagang@users.noreply.github.com";
     userName = "koalagang";
 
+    # A structural diff tool that understands syntax
     difftastic.enable = true;
 
     aliases = {
       a = "add";
       c = "clone";
-      cm = "commit -m";
-      co = "checkout";
+      m = "commit -m";
+      o = "checkout";
       d = "diff";
       p = "push";
-      pl = "pull";
+      l = "pull";
       r = "rm";
       rs= "restore --staged";
       s = "status";
