@@ -153,7 +153,6 @@
     # Simple but useful CLI tools
     xclip
     trash-cli
-    tealdeer
     poppler_utils
     gzip
     translate-shell
