@@ -126,6 +126,7 @@ require("lazy").setup({
         "stevearc/oil.nvim",
         keys = { "-", "<C-n>" },
         dependencies = { "nvim-tree/nvim-web-devicons" },
+        -- EXTERNAL: trash-cli (for trash feature)
         config = function()
             require(conf .. "oil")
         end

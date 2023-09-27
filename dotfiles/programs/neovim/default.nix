@@ -34,6 +34,9 @@
       # pwntester/octo.nvim
       github-cli
 
+      # stevearc/oil.nvim
+      trash-cli
+
       # TODO:
       # LSP?
       # formatters?

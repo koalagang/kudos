@@ -1,5 +1,8 @@
 require("oil").setup({
+    -- depends on trash-cli
     delete_to_trash = true,
+    trash_command = "trash-put",
+
     use_default_keymaps = false,
     keymaps = {
         ["g?"] = "actions.show_help",
