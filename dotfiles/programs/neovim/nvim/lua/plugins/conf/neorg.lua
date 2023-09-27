@@ -3,7 +3,7 @@ require("neorg").setup {
         -- Modules in core.defaults
         -- Double-comment = considering enabling
         --["core.clipboard.code-blocks"] = {},
-        ----["core.esupports.hop"] = {},
+        ["core.esupports.hop"] = {},
         ["core.esupports.indent"] = {},
         ["core.esupports.metagen"] = {},
         ["core.itero"] = {},
