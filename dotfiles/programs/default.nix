@@ -5,6 +5,7 @@
     ./git
     ./mpv
     ./neovim
+    ./pandoc
     ./taskwarrior
     ./tealdeer
     ./translate-shell

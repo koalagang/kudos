@@ -141,7 +141,6 @@
 
     # Powerful CLI tools
     imagemagick
-    pandoc
     ffmpeg
     sox
     #yt-dlp
