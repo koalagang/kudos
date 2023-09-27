@@ -2,6 +2,8 @@
   programs.zathura = {
     enable = true;
 
+    # TODO: stylix
+
     options = {
       # enable clipboard
       selection-clipboard = "clipboard";

@@ -8,6 +8,7 @@
     enable = true;
 
     # will add my own dracula theme at some point
+    # TODO: nix-colors
     colorTheme = "dark-256";
 
     config = {

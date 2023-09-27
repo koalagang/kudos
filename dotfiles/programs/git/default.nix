@@ -6,6 +6,7 @@
     userName = "koalagang";
 
     # A structural diff tool that understands syntax
+    # TODO: nix-colors
     difftastic.enable = true;
 
     aliases = {

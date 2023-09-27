@@ -3,6 +3,7 @@
     enable = true;
 
     settings = {
+      # TODO: nix-colors
       color_theme = "dracula";
 
       # If the theme set background should be shown.
