@@ -174,7 +174,6 @@
     # Misc CLI tools
     wget
     curl
-    bat bat-extras.batgrep bat-extras.batman
     killall
     testdisk
 
