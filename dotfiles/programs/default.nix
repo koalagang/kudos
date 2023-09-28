@@ -4,6 +4,7 @@
     ./btop
     ./eza
     ./git
+    ./gpg
     ./mpv
     ./neovim
     ./pandoc
