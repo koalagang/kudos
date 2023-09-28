@@ -108,15 +108,6 @@ require("lazy").setup({
         },
         cmd = "Neorg",
         ft = "norg",
-        --[[ NOTE:
-        Neorg is *by far* my slowest plugin.
-        On my system, Neorg alone takes ~140ms to load when loading via cmd and ~250ms when loading via ft.
-        Therefore, for maximum speed, I recommend loading it once and then using telescope or oil to move between files
-        (as opposed to closing Neovim and opening a new norg file from the commandline)
-        because then Neorg stays loaded until you exit Neovim.
-        My config uses '<c-x>' in normal mode to navigate the Neorg workspaces with telescope and '-' or '<c-n>' for oil.
-        However, you must first load Neorg before using the former (either by opening a norg file or with ':Neorg').
-        ]]
         config = function()
             require(conf .. "neorg")
         end,
