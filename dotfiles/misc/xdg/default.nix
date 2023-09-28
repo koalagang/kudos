@@ -2,6 +2,7 @@
 
 {
   xdg = {
+    enable = true;
 
     #mime.enable = true;
     #mimeapps = {
@@ -18,16 +19,16 @@
       download = "${config.home.homeDirectory}/Downloads";
       pictures = "${config.home.homeDirectory}/Pictures";
       videos = "${config.home.homeDirectory}/Videos";
-      extraConfig = {
-        XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
-        XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
-      };
-      # By setting these to an existing directory, we can effectively disable them
+      # By setting these to an existing directory,
+      # we can effectively set xdg not to make them
       # (there is no option to disable them, not even by using an empty string)
       music = "${config.home.homeDirectory}";
       publicShare = "${config.home.homeDirectory}";
       templates = "${config.home.homeDirectory}";
     };
+
+    cacheHome = "${config.home.homeDirectory}/.cache";
+    configHome = "${config.home.homeDirectory}/.config";
     dataHome = "${config.home.homeDirectory}/.local/share";
     stateHome = "${config.home.homeDirectory}/.local/state";
   };
@@ -38,8 +39,8 @@
     XDG_DOWNLOAD_HOME = "${config.xdg.userDirs.download}";
     XDG_PICTURES_HOME = "${config.xdg.userDirs.pictures}";
     XDG_VIDEOS_HOME = "${config.xdg.userDirs.videos}";
-    XDG_CONFIG_HOME = "${config.xdg.userDirs.extraConfig.XDG_CONFIG_HOME}";
-    XDG_CACHE_HOME = "${config.xdg.userDirs.extraConfig.XDG_CACHE_HOME}";
+    XDG_CACHE_HOME = "${config.xdg.cacheHome}";
+    XDG_CONFIG_HOME = "${config.xdg.configHome}";
     XDG_DATA_HOME = "${config.xdg.dataHome}";
     XDG_STATE_HOME = "${config.xdg.stateHome}";
   };
