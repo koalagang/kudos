@@ -54,7 +54,7 @@
   home.packages = with pkgs; [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
 
   # Source lua config
-  home.file.".config/nvim" = {
+  home.file."${config.xdg.configHome}/nvim" = {
     # Link the file outside of the nix store.
     # This allows me to edit my lua config without rebuilding nix
     # (unless I need to add another package as seen above).

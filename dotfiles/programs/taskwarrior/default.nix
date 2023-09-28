@@ -1,7 +1,7 @@
 # See A Dive into Taskwarrior Ecosystem with Tomas Babej (https://www.youtube.com/watch?v=tijnc65soEI)
 # for a really great video on taskwarrior
 
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.taskwarrior = {
@@ -40,13 +40,13 @@
     # yes, I am that lazy
     shellAliases = { ta = "task"; };
 
-    # hooks are written in python
-    packages = with pkgs; [ python3 ];
-
     # install a hook which invokes timewarrior whenever I run `task start <ID>`
-    file.".config/task/hooks/on-modify.timewarrior" = {
+    file."${config.xdg.configHome}/task/hooks/on-modify.timewarrior" = {
       source = ./on-modify.timewarrior;
       executable = true;
     };
+
+    # dependencies of the timewarrior hook
+    packages = with pkgs; [ python3 timewarrior ];
   };
 }
