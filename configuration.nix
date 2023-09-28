@@ -19,7 +19,7 @@
       # Enable encryption support
       enableCryptodisk = true;
       # Limit the number of generations to save space in /boot
-      configurationLimit = 10;
+      configurationLimit = 30;
     };
     # Set wait time to 1 (boot in faster)
     timeout = 1;
