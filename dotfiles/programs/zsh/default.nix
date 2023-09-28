@@ -39,28 +39,24 @@
         bindkey "^?" backward-delete-char # fix backspace bug when switching modes
     '';
 
-    dirHashes = {
-       doc  = "$HOME/Documents";
-       vid  = "$HOME/Videos";
-       dl   = "$HOME/Downloads";
-       desk = "$HOME/Desktop";
-       git = "$HOME/Desktop/git";
-    };
-
+    # where to store the zshrc and zshenv
     dotDir = ".config/zsh";
 
     # history
     history = {
-      extended = true;
-      ignorePatterns = [ "rm *" "pkill *" ];
-      ignoreSpace = true;
+      extended = true; # sav timestamps into the history file
+      ignorePatterns = [ # do not add these (very dangerous) commands to the history
+        "rm *"
+        "rm -rf *"
+        "pkill *"
+      ];
+      ignoreSpace = true; # do not save commands beginning with a space
       path = "${config.xdg.dataHome}/zsh/zsh_history";
       # save 10,000 lines (this is actually the default behaviour)
       save = 10000;
       size = 10000;
       share = true;
     };
-    # TODO? INC_APPEND_HISTORY
 
     # Plugins
     enableAutosuggestions = true;
@@ -90,7 +86,7 @@
   };
   home.sessionVariables = {
     # zoxide configuration
-    _ZO_DATA_DIR = "${config.xdg.dataHome}/zsh/zoxide_history";
+    _ZO_DATA_DIR = "${config.xdg.dataHome}/zsh";
     _ZO_MAXAGE = 10000;
     _ZO_RESOLVE_SYMLINKS = 1;
   };
