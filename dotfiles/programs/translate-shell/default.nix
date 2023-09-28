@@ -5,4 +5,6 @@
     # TODO: nix-colors
     #settings.theme = {}
   };
+
+  home.shellAliases = { dict = "trans -d"; };
 }

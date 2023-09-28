@@ -32,4 +32,6 @@
       # I'll probably declaratively add countwords to this file later via writeShellScriptBin
     };
   };
+
+  home.shellAliases = { za = "zathura"; };
 }
