@@ -62,7 +62,7 @@
   #
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    PATH = "$PATH:$HOME/.local/bin:$HOME/.local/scripts"; # will change this once I port my scripts to writeShellScriptBin
   };
 
   # Let Home Manager install and manage itself.

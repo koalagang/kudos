@@ -11,5 +11,6 @@
     ./translate-shell
     ./yt-dlp
     ./zathura
+    ./zsh
   ];
 }

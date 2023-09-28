@@ -97,8 +97,8 @@
   };
   programs.zsh = {
     enable = true;
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
+  #  autosuggestions.enable = true;
+  #  syntaxHighlighting.enable = true;
   };
 
   # Swap out sudo for doas
