@@ -34,3 +34,6 @@ telescope.setup({
     },
 })
 telescope.load_extension("fzf") -- nvim-telescope/telescope-fzf-native.nvim
+-- TODO: telescope-zoxide; other extensions too?
+-- perhaps AckslD/nvim-neoclip.lua
+-- stevearc/dressing.nvim or telescope-ui-select.nvim?
