@@ -2,5 +2,6 @@
   imports = [
   ./programs
   ./nohome
+  ./misc
   ];
 }
