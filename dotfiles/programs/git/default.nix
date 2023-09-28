@@ -24,6 +24,8 @@
     };
 
   };
-  # yes, I am that lazy
-  home.shellAliases = { g = "git"; };
+  home.shellAliases = {
+    g = "git"; # yes, I am that lazy
+    diff = "difft";
+  };
 }
