@@ -2,6 +2,7 @@
   imports = [
     ./bat
     ./btop
+    ./eza
     ./git
     ./mpv
     ./neovim
