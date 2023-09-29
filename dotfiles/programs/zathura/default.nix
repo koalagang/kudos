@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   programs.zathura = {
     enable = true;
@@ -27,11 +29,17 @@
       p = "print";
       S = "toggle_statusbar";
       # display how many words there are in the current pdf file
-      # see my countwords script for how it is done
+      # see my countwords script below for how it is done
       w = "exec \"countwords $FILE\"";
-      # I'll probably declaratively add countwords to this file later via writeShellScriptBin
     };
   };
+
+  home.packages = [
+    (pkgs.writeShellScriptBin "countwords" ''
+    ${pkgs.libnotify}/bin/notify-send 'Word count' "$(${pkgs.poppler_utils}/bin/pdftotext $1 - | \
+    ${pkgs.coreutils}/bin/tr -d '[:punct:]' | ${pkgs.coreutils}/bin/wc -w)"
+  '')
+  ];
 
   home.shellAliases = { za = "zathura"; };
 }
