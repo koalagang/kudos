@@ -34,12 +34,14 @@
     };
   };
 
-  home.packages = [
-    (pkgs.writeShellScriptBin "countwords" ''
-    ${pkgs.libnotify}/bin/notify-send 'Word count' "$(${pkgs.poppler_utils}/bin/pdftotext $1 - | \
-    ${pkgs.coreutils}/bin/tr -d '[:punct:]' | ${pkgs.coreutils}/bin/wc -w)"
-  '')
-  ];
+  home = {
+    packages = [
+      (pkgs.writeShellScriptBin "countwords" ''
+      ${pkgs.libnotify}/bin/notify-send 'Word count' "$(${pkgs.poppler_utils}/bin/pdftotext $1 - | \
+      ${pkgs.coreutils}/bin/tr -d '[:punct:]' | ${pkgs.coreutils}/bin/wc -w)"
+    '')
+    ];
 
-  home.shellAliases = { za = "zathura"; };
+    shellAliases = { za = "zathura"; };
+  };
 }
