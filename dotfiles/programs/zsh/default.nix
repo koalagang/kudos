@@ -41,7 +41,9 @@
     '';
 
     # where to store the zshrc and zshenv
-    dotDir = "${config.xdg.configHome}/zsh";
+    # can't use ${config.xdg.configHome} because then it does /home/user//home/user/.config/zsh/.zshenv
+    # as the dotDir option is relative to the user's home directory
+    dotDir = ".config/zsh";
 
     # history
     history = {
