@@ -12,6 +12,7 @@
     autocd = true;
     # not exactly sure what all these do
     # I just grabbed it from my old zsh config (of which I likely grabbed from somewhere else)
+    # TODO: figure out what this does
     completionInit = ''
       autoload -U compinit && compinit -u
       zstyle ':completion:*' menu select
@@ -40,7 +41,7 @@
     '';
 
     # where to store the zshrc and zshenv
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
 
     # history
     history = {
