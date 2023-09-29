@@ -86,7 +86,7 @@ require("lazy").setup({
         end,
     },
     {
-        "HiPhish/nvim-ts-rainbow2",
+        "HiPhish/rainbow-delimiters.nvim",
         ft = languages,
         dependencies = "nvim-treesitter/nvim-treesitter",
     },
@@ -169,7 +169,8 @@ require("lazy").setup({
 
     { -- Indentation line-guides
         "lukas-reineke/indent-blankline.nvim",
-        dependencies = "nvim-treesitter/nvim-treesitter",
+        main = "ibl",
+        dependencies = { "nvim-treesitter/nvim-treesitter", "HiPhish/rainbow-delimiters.nvim" },
         ft = languages,
         config = function()
             require(conf .. "indent-blankline")
