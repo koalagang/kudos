@@ -151,7 +151,6 @@
 
     # Simple but useful CLI tools
     xclip
-    trash-cli
     poppler_utils
     gzip
     colorpicker
