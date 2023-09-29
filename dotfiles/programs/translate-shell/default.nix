@@ -6,5 +6,5 @@
     #settings.theme = {}
   };
 
-  home.shellAliases = { dict = "trans -d"; };
+  home.shellAliases.dict = "trans -d";
 }

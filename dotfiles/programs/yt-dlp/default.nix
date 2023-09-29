@@ -1,3 +1,5 @@
+{ config, ... }:
+
 {
   programs.yt-dlp = {
     enable = true;
@@ -7,9 +9,9 @@
       restrict-filenames = true;
       add-chapters = true;
       continue = true;
-      paths = "home:$HOME/Videos";
+      paths = "home:${config.xdg.userDirs.videos}";
     };
   };
 
-  home.shellAliases = { yt = "yt-dlp"; };
+  home.shellAliases.yt = "yt-dlp";
 }

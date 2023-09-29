@@ -239,5 +239,5 @@
     };
   };
 
-  home.shellAliases = { bp = "btop"; };
+  home.shellAliases.bp = "btop";
 }

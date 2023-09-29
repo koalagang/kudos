@@ -42,6 +42,6 @@
     '')
     ];
 
-    shellAliases = { za = "zathura"; };
+    shellAliases.za = "zathura";
   };
 }

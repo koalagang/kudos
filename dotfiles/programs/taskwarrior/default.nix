@@ -38,7 +38,7 @@
 
   home = {
     # yes, I am that lazy
-    shellAliases = { ta = "task"; };
+    shellAliases.ta = "task";
 
     # install a hook which invokes timewarrior whenever I run `task start <ID>`
     file."${config.xdg.configHome}/task/hooks/on-modify.timewarrior" = {

@@ -3,7 +3,7 @@
 {
   home = {
     # install trash-cli
-    packages = with pkgs; [ trash-cli ];
+    packages = [ pkgs.trash-cli ];
 
     # aliases
     shellAliases = {

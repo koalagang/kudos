@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   # Besides iwc (which will be removed later),
@@ -22,5 +22,7 @@
 
     # TODO: write iwtui (an iwd tui) using whiptail
     iwc = "iwctl station wlan0";
+
+    du = "${pkgs.du-dust}";
   };
 }

@@ -93,14 +93,4 @@
     _ZO_MAXAGE = 10000;
     _ZO_RESOLVE_SYMLINKS = 1;
   };
-  # TODO: add misc environmental variables to home.nix
-  # - most of these will be configured in the respective files for the software being aliased
-  # e.g. will set foot to TERMINAL in its config file after I've migrated to wayland
-  # nvim has defaultEditor = true (i.e. EDITOR=nvim)
-  # will not need PATH once I've ported scripts to writeShellScriptBin because all scripts will be in the nix store
-  # will set firefox to BROWSER
-
-  # TODO: aliases and functions
-  # - most of these will be configured in the respective files for the software being aliases
-  # e.g. adding fzf aliases to fzf's config directory
 }
