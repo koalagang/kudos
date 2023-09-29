@@ -95,7 +95,11 @@
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
-  programs.zsh = enable = true;
+  programs.zsh = {
+    enable = true;
+  #  autosuggestions.enable = true;
+  #  syntaxHighlighting.enable = true;
+  };
 
   # Swap out sudo for doas
   # If for whatever reason doas does not work
@@ -139,6 +143,7 @@
     imagemagick
     ffmpeg
     sox
+    #yt-dlp
     fzf
     # DO NOT REMOVE GIT
     # see https://discourse.nixos.org/t/getting-the-head-of-the-git-tree-failed/21837 for why
@@ -175,6 +180,10 @@
     dunst libnotify
     sxhkd
     xcompmgr
+
+    # User shell tools
+    zoxide
+    starship
 
     # suckless
     dmenu
