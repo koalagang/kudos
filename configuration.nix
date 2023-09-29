@@ -2,7 +2,6 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-# lib is enabled so that I can disallow unfree software but make exceptions
 { config, pkgs, lib, ... }:
 
 {
@@ -335,6 +334,7 @@
     fstrim.enable = true;
   };
 
+  # Enable flakes
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -343,9 +343,9 @@
     '';
   };
 
-  # For some reason, git opens an annoying GUI askpass window
-  # instead of asking for the username and password in the terminal
-  # This disables that
+  # For some reason, git opens an annoying graphical askpass window
+  # instead of asking for the username and password in the terminal.
+  # This disables that.
   programs.ssh.enableAskPassword = false;
   # See https://github.com/NixOS/nixpkgs/issues/24311 for more
 

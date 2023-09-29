@@ -1,7 +1,3 @@
--- still trying to figure out how to disable the first indent line in v3
---vim.g.indent_blankline_show_first_indent_level = false
---vim.opt.list = true
-
 local highlight = {
     "RainbowRed",
     "RainbowYellow",
