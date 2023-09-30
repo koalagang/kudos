@@ -4,10 +4,7 @@
   programs.mpv = {
     enable = true;
 
-    config = {
-      screenshot-directory = "~/Pictures";
-      ao = "pipewire,pulse,alsa";
-    };
+    config.screenshot-directory = "~/Pictures";
 
     bindings = {
       h = "seek -5";
