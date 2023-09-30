@@ -330,12 +330,15 @@
     fstrim.enable = true;
   };
 
-  # Enable flakes
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
+      # Enable flakes
       experimental-features = nix-command flakes
+      # Tell nix to stfu about git
       warn-dirty = false
+      # Tell nix to stop dumping stuff in my home directory
+      use-xdg-base-directories = true
     '';
   };
 
