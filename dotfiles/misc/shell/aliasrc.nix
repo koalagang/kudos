@@ -27,7 +27,5 @@
 
     # TODO: write iwtui (an iwd tui) using whiptail
     iwc = "iwctl station wlan0";
-
-    du = "dust"; # TODO: add flags to this
   };
 }
