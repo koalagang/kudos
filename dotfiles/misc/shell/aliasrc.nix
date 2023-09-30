@@ -7,6 +7,11 @@
   # For instance, in zathura's nix config I've defined za = "zathura"
   home.shellAliases = {
     grep = "grep --colour=auto";
+    G="grep --colour=auto";
+    A="awk";
+    C="cut";
+    E="echo";
+    S="sed";
 
     desk = "cd ${config.xdg.userDirs.desktop}";
     doc = "cd ${config.xdg.userDirs.documents}";

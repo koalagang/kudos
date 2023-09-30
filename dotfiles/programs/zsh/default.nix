@@ -80,36 +80,6 @@
       # TODO: nix-colors
       #styles = {};
     };
-    plugins = [
-      {
-        # fish-like abbreviations
-        name = "zsh-abbr";
-        src = pkgs.fetchFromGitHub {
-          owner = "olets";
-          repo = "zsh-abbr";
-          rev = "ede0a43b8b5eb0633521decd3a251e654388748a";
-          sha256 = "sha256-2B1CwQXtdPgPWX+tHxlnWIc7DXCeBReoZ3C3x1h2VOQ=";
-        };
-        file = "zsh-abbr.plugin.zsh";
-        # see below for config
-      }
-    ];
-  };
-  # abbreviations (requires zsh-abbr plugin)
-  home = {
-    file."${config.programs.zsh.dotDir}/zsh-abbr".text = ''
-      abbr A="| awk"
-      abbr C="| cut"
-      abbr G="| grep"
-      abbr S="| sed"
-      abbr E="echo"
-      abbr mk="mkdir"
-      abbr to="touch"
-    '';
-    sessionVariables = {
-      ABBR_USER_ABBREVIATIONS_FILE = "${config.programs.zsh.dotDir}/zsh-abbr";
-      ABBR_AUTOLOAD = 0; # don't update user abbreviations on-demand
-    };
   };
 
   # My favourite prompt
