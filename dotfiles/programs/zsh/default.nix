@@ -5,6 +5,7 @@
 # to learn how the contents of completionInit and initExtra below work.
 
 {
+  # If there ever was a shell I'd hide under, it's the trusty Z shell
   programs.zsh = {
     enable = true;
 
@@ -59,7 +60,7 @@
         "pkill *"
       ];
       ignoreSpace = true; # do not save commands beginning with a space
-      path = "${config.xdg.dataHome}/zsh/zsh_history";
+      path = "${config.xdg.cacheHome}/zsh/zsh_history";
       # save 10,000 lines (this is actually the default behaviour)
       save = 10000;
       size = 10000;
@@ -82,6 +83,7 @@
     };
     plugins = [
       {
+        # allows for using my zsh config inside the nix ephemeral shell
         name = "zsh-nix-shell";
         file = "nix-shell.plugin.zsh";
         src = pkgs.fetchFromGitHub {
@@ -94,7 +96,8 @@
     ];
   };
 
-  # My favourite prompt
+  # My favourite shell prompt
+  # I wouldn't leave Earth without it
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
@@ -102,13 +105,14 @@
   };
 
   # A smarter cd command
+  # Catching Zs whilst inhaling pure oxygen
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
   };
   home.sessionVariables = {
     # zoxide configuration
-    _ZO_DATA_DIR = "${config.xdg.dataHome}/zsh";
+    _ZO_DATA_DIR = "${config.xdg.cacheHome}/zsh";
     _ZO_MAXAGE = 10000;
     _ZO_RESOLVE_SYMLINKS = 1;
   };
