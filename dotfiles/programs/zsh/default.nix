@@ -1,30 +1,40 @@
-{ config, ... }:
+{ config, pkgs, ... }:
+
+# See https://thevaluable.dev/zsh-install-configure-mouseless/
+# and https://thevaluable.dev/zsh-completion-guide-examples/
+# to learn how the contents of completionInit and initExtra below work.
 
 {
   programs.zsh = {
     enable = true;
 
-    # Completion
-    # TODO: add environment.pathsToLink = [ "/share/zsh" ];
-    # to your system configuration to get completion for system packages (e.g. systemd).
-    enableCompletion = true;
+    # where to store the zshrc and zshenv
+    # can't use ${config.xdg.configHome} because then it does /home/user//home/user/.config/zsh/.zshenv
+    # as the dotDir option is relative to the user's home directory
+    dotDir = ".config/zsh";
+
     # Allow entering directories by entering path into shell (without need for 'cd' command)
+    # For example, `Documents/neorg` would be equivalent to `cd Documents/neorg`
     autocd = true;
-    # not exactly sure what all these do
-    # I just grabbed it from my old zsh config (of which I likely grabbed from somewhere else)
-    # TODO: figure out what this does
+
+    # -- Completion
+    enableCompletion = true;
     completionInit = ''
-      autoload -U compinit && compinit -u
+      # Basic tab completion
+      autoload -U compinit && compinit -u # load the compinit function
       zstyle ':completion:*' menu select
-      zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-      zmodload zsh/complist
       _comp_options+=(globdots) # include hidden files
-      zstyle ':completion:*' cache-path ${config.xdg.cacheHome}/zsh/zcompcache
+
+      # Auto completion with case insensitivity
+      zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
     '';
 
-    # vi mode
-    defaultKeymap = "viins"; # vi insert mode
+    # -- vi mode
+    defaultKeymap = "viins"; # start zsh in vi insert mode
     initExtra = ''
+        # Load complist module to allow rebinding menu keys
+        zmodload zsh/complist
+
         # enter vi mode with escape
         bindkey '^[' vi-cmd-mode
         export KEYTIMEOUT=1
@@ -40,12 +50,7 @@
         bindkey "^?" backward-delete-char # fix backspace bug when switching modes
     '';
 
-    # where to store the zshrc and zshenv
-    # can't use ${config.xdg.configHome} because then it does /home/user//home/user/.config/zsh/.zshenv
-    # as the dotDir option is relative to the user's home directory
-    dotDir = ".config/zsh";
-
-    # history
+    # -- History
     history = {
       extended = true; # sav timestamps into the history file
       ignorePatterns = [ # do not add these (very dangerous) commands to the history
@@ -61,28 +66,60 @@
       share = true;
     };
 
-    # Plugins
+    # -- Plugins
+    historySubstringSearch = {
+      # Search through history by typing a part of the command you're searching for
+      # and then hitting ctrl+k or ctrl+j to query the history
+      enable = true;
+      searchUpKey = "^K";
+      searchDownKey = "^J";
+    };
     enableAutosuggestions = true;
     syntaxHighlighting = {
       enable = true;
-      # TODO
+      # TODO: nix-colors
       #styles = {};
     };
-    # TODO: test this (might be a good alternative to searching the history with fzf)
-    #historySubstringSearch = {
-    #  enable = true;
-    #  # TODO: more options
-    #};
-    # TODO: add fish-like abbreviations (such as G for '| grep')
-    #plugins = {};
+    plugins = [
+      {
+        # fish-like abbreviations
+        name = "zsh-abbr";
+        src = pkgs.fetchFromGitHub {
+          owner = "olets";
+          repo = "zsh-abbr";
+          rev = "ede0a43b8b5eb0633521decd3a251e654388748a";
+          sha256 = "sha256-2B1CwQXtdPgPWX+tHxlnWIc7DXCeBReoZ3C3x1h2VOQ=";
+        };
+        file = "zsh-abbr.plugin.zsh";
+        # see below for config
+      }
+    ];
+  };
+  # abbreviations (requires zsh-abbr plugin)
+  home = {
+    file."${config.programs.zsh.dotDir}/zsh-abbr".text = ''
+      abbr A="| awk"
+      abbr C="| cut"
+      abbr G="| grep"
+      abbr S="| sed"
+      abbr E="echo"
+      abbr mk="mkdir"
+      abbr to="touch"
+    '';
+    sessionVariables = {
+      ABBR_USER_ABBREVIATIONS_FILE = "${config.programs.zsh.dotDir}/zsh-abbr";
+      ABBR_AUTOLOAD = 0; # don't update user abbreviations on-demand
+    };
   };
 
+  # My favourite prompt
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
     settings.line_break.disabled = true;
   };
 
+  # A smarter cd command
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
