@@ -23,6 +23,6 @@
     # TODO: write iwtui (an iwd tui) using whiptail
     iwc = "iwctl station wlan0";
 
-    du = "${pkgs.du-dust}";
+    du = "dust"; # TODO: add flags to this
   };
 }
