@@ -123,9 +123,6 @@
     #texlive -- figure out later what package you need
     #biber
 
-    # TUI
-    vim # I keep vim around in case I break my neovim config whilst tinkering
-
     # GUI
     anki-bin
     signal-desktop
@@ -163,7 +160,6 @@
     bc
 
     # Misc CLI tools
-    wget
     curl
     killall
     testdisk

@@ -4,5 +4,6 @@
     ./dust
     ./timewarrior
     ./trash-cli
+    ./wget
   ];
 }
