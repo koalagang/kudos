@@ -4,6 +4,10 @@
 # and https://thevaluable.dev/zsh-completion-guide-examples/
 # to learn how the contents of completionInit and initExtra below work.
 
+# This file consists of my zsh configuration,
+# as well as other tools I've got integrated into zsh
+# i.e. starship, zoxide and fzf
+
 {
   # If there ever was a shell I'd hide under, it's the trusty Z shell
   programs.zsh = {
@@ -30,30 +34,9 @@
       zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
     '';
 
-    # -- vi mode
-    defaultKeymap = "viins"; # start zsh in vi insert mode
-    initExtra = ''
-        # Load complist module to allow rebinding menu keys
-        zmodload zsh/complist
-
-        # enter vi mode with escape
-        bindkey '^[' vi-cmd-mode
-        export KEYTIMEOUT=1
-
-        # edit line in vim buffer with ctrl-v when in vi mode
-        autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd "^v" edit-command-line
-
-        # use vi keys in tab complete menu
-        bindkey -M menuselect 'h' vi-backward-char
-        bindkey -M menuselect 'j' vi-down-line-or-history
-        bindkey -M menuselect 'k' vi-up-line-or-history
-        bindkey -M menuselect 'l' vi-forward-char
-        bindkey "^?" backward-delete-char # fix backspace bug when switching modes
-    '';
-
     # -- History
     history = {
-      extended = true; # sav timestamps into the history file
+      extended = true; # save timestamps into the history file
       ignorePatterns = [ # do not add these (very dangerous) commands to the history
         "rm *"
         "rm -rf *"
@@ -94,6 +77,64 @@
         };
       }
     ];
+
+    # -- vi mode
+    defaultKeymap = "viins"; # start zsh in vi insert mode
+
+    initExtra = ''
+      # Load complist module to allow rebinding menu keys
+      zmodload zsh/complist
+
+      # enter vi mode with escape
+      bindkey '^[' vi-cmd-mode
+      export KEYTIMEOUT=1
+
+      # edit line in vim buffer with ctrl-v when in vi mode
+      autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd "^v" edit-command-line
+
+      # use vi keys in tab complete menu
+      bindkey -M menuselect 'h' vi-backward-char
+      bindkey -M menuselect 'j' vi-down-line-or-history
+      bindkey -M menuselect 'k' vi-up-line-or-history
+      bindkey -M menuselect 'l' vi-forward-char
+      bindkey "^?" backward-delete-char # fix backspace bug when switching modes
+
+      # -- fzf
+      # Fixes issue where I can't use fzf's cd widget
+      # This weird letter is basically just right-alt (sometimes called AltGr) + c
+      # I use the British keyboard layout on a classic ThinkPad keyboard if that is of relevance
+      bindkey "¢" fzf-cd-widget
+
+      # bind the other two just for consistency's sake
+      bindkey "¶" fzf-history-widget # right-alt + r
+      bindkey "ŧ" __fsel # right-alt + t
+
+      # See below for fzf config
+    '';
+  };
+
+  # The general-purpose commandline fuzzy finder
+  # It's so cute and fuzzy
+  programs.fzf = {
+    enable = true;
+
+    # my bindings are in (brackets)
+    # the default are in [square brackets]
+    # [alt  + c] || right-alt + c = search with fzf and cd into output
+    # [ctrl + r] || right-alt + r = search history and paste output onto the commandline
+    # [ctrl + t] || right-alt + t = search for files and paste output onto the commandline
+
+    enableZshIntegration = true;
+    changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
+    defaultCommand = "${pkgs.fd}/bin/fd --type f";
+    fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
+    #changeDirWidgetOptions = [];
+    #defaultOptions = {};
+    #fileWidgetOptions = {};
+    #historyWidgetOptions = {};
+
+    # TODO: stylix
+    #colors = {};
   };
 
   # My favourite shell prompt

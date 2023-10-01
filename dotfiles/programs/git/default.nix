@@ -26,6 +26,11 @@
   };
   home.shellAliases = {
     g = "git"; # yes, I am that lazy
-    diff = "difft";
+    diff = "difft"; # difftastic
+    # Search the git log and copy the commit to the clipboard
+    flog = ''
+      ${pkgs.git}/bin/git log --graph --decorate --pretty=oneline --abbrev-commit | ${pkgs.fzf}/bin/fzf | \
+      ${pkgs.coreutils}/bin/cut -d' ' -f2 | ${pkgs.xclip}/bin/xclip -select clipboard
+    '';
   };
 }
