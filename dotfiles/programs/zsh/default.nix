@@ -105,10 +105,6 @@
       # I use the British keyboard layout on a classic ThinkPad keyboard if that is of relevance
       bindkey "¢" fzf-cd-widget
 
-      # bind the other two just for consistency's sake
-      bindkey "¶" fzf-history-widget # right-alt + r
-      bindkey "ŧ" __fsel # right-alt + t
-
       # See below for fzf config
     '';
   };
@@ -118,11 +114,10 @@
   programs.fzf = {
     enable = true;
 
-    # my bindings are in (brackets)
-    # the default are in [square brackets]
-    # [alt  + c] || right-alt + c = search with fzf and cd into output
-    # [ctrl + r] || right-alt + r = search history and paste output onto the commandline
-    # [ctrl + t] || right-alt + t = search for files and paste output onto the commandline
+    # fzf shell widgets
+    # [right]alt + c = search with fzf and cd into output
+    # ctrl + r = search history and paste output onto the commandline
+    # ctrl + t = search for files and paste output onto the commandline
 
     enableZshIntegration = true;
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
