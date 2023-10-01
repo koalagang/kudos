@@ -37,16 +37,26 @@
   };
 
   home = {
-    # yes, I am that lazy
-    shellAliases.ta = "task";
+    shellAliases = {
+      ta = "task"; # yes, I am that lazy
 
-    # install a hook which invokes timewarrior whenever I run `task start <ID>`
-    file."${config.xdg.configHome}/task/hooks/on-modify.timewarrior" = {
-      source = ./on-modify.timewarrior;
-      executable = true;
+      # Credits to u/Andonome (OP) for this one
+      # https://www.reddit.com/r/taskwarrior/comments/uvwqlz/share_your_aliases/
+      tal = "task add dep:\"$(task +LATEST uuids)\"";
+      # Every task created with tal is a dependency of the most recently created task.
+      # Thus, you can chain a series of dependencies together.
+
+      to = "taskopen"; # see below
     };
 
-    # dependencies of the timewarrior hook
-    packages = with pkgs; [ python3 timewarrior ];
+    packages = [ pkgs.taskopen ];
+    file."${config.xdg.configHome}/task/taskopenrc".text = ''
+      TASKBIN='task'
+      # Directory has to be manually created
+      NOTES_FOLDER="$HOME/Documents/neorg/tasknotes/" # the leading slash here is important
+      NOTES_EXT=".norg" # Neorg
+      PATH_EXT=${pkgs.taskopen}/share/taskopen/scripts
+    '';
+    sessionVariables.TASKOPENRC = "${config.xdg.configHome}/task/taskopenrc";
   };
 }

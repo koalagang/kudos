@@ -46,6 +46,7 @@ require("neorg").setup {
                     study = "$HOME/Documents/neorg/study",
                     systems = "$HOME/Documents/neorg/systems",
                     tech = "$HOME/Documents/neorg/tech",
+                    tasknotes = "$HOME/Documents/neorg/tasknotes" -- Used by taskopen
                 },
             -- I don't actually use this workspace directly
             -- I've only assigned this so that neorg-telescope only searches this directory
