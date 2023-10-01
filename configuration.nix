@@ -249,6 +249,10 @@
     })
   ];
 
+  # Dconf is necessary for gtk theming if you're not using a DE.
+  # See https://github.com/nix-community/home-manager/issues/3113 for more
+  programs.dconf.enable = true;
+
   fonts.packages = with pkgs; [
     fira-code
     freefont_ttf
