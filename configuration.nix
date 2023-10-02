@@ -124,7 +124,7 @@
     #biber
 
     # GUI
-    anki-bin
+    #anki-bin
     signal-desktop
     keepassxc
     libreoffice-still
