@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   gtk = {
@@ -17,5 +17,8 @@
       name = "capitaine-cursors";
       package = pkgs.capitaine-cursors;
     };
+
+    # Don't dump the gtk2 config in the home directory
+    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
   };
 }
