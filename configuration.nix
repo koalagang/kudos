@@ -344,7 +344,7 @@
       experimental-features = nix-command flakes
 
       # Tell nix to stop dumping stuff into my home directory
-      use-xdg-base-directories = true;
+      use-xdg-base-directories = true
     '';
   };
 
