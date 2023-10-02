@@ -77,8 +77,13 @@
     xkbVariant = "";
 
     displayManager = {
-       lightdm.enable = true;
-       defaultSession = "none+dwm";
+      lightdm = {
+        enable = true;
+        # Respect the XDG base directory spec
+        # and stop dumping Xauthority files into the home directory
+        extraConfig = "user-authority-in-system-dir=true";
+      };
+      defaultSession = "none+dwm";
     };
   };
 
@@ -332,11 +337,14 @@
     fstrim.enable = true;
   };
 
-  # Enable flakes
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
+      # Enable flakes
       experimental-features = nix-command flakes
+
+      # Tell nix to stop dumping stuff into my home directory
+      use-xdg-base-directories = true;
     '';
   };
 
