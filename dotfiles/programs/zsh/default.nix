@@ -14,7 +14,7 @@
     enable = true;
 
     # where to store the zshrc and zshenv
-    # can't use ${config.xdg.configHome} because then it does /home/user//home/user/.config/zsh/.zshenv
+    # can't use ${config.xdg.configHome}/zsh because then it does /home/user//home/user/.config/zsh
     # as the dotDir option is relative to the user's home directory
     dotDir = ".config/zsh";
 
@@ -47,6 +47,7 @@
       # save 10,000 lines (this is actually the default behaviour)
       save = 10000;
       size = 10000;
+      # share command history between zsh sessions
       share = true;
     };
 
@@ -80,7 +81,6 @@
 
     # -- vi mode
     defaultKeymap = "viins"; # start zsh in vi insert mode
-
     initExtra = ''
       # Load complist module to allow rebinding menu keys
       zmodload zsh/complist
@@ -104,7 +104,6 @@
       # This weird letter is basically just right-alt (sometimes called AltGr) + c
       # I use the British keyboard layout on a classic ThinkPad keyboard if that is of relevance
       bindkey "¢" fzf-cd-widget
-
       # See below for fzf config
     '';
   };
