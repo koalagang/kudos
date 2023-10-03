@@ -15,17 +15,19 @@
       # Sunday is on the weekend, mate
       weekstart = "Monday";
 
-      # running `task next` should never show me more than 20 tasks
-      report.next.filter = "+PENDING -BLOCKING limit:20";
+      # running `task next` should never show me more than 5 tasks
+      # and this should only include tasks I can currently complete
+      report.next.filter = "+PENDING -WAITING -BLOCKING limit:5";
 
       alias = {
         a = "add";
         an = "annotate";
-        c = "done";
-        d = "delete";
+        c = "complete";
+        d = "done";
+        e = "edit";
         m = "mod";
         n = "next";
-        s = "start";
+        r = "delete"; # r for remove
       };
 
       # Set 'low priority' to reduce the urgency
@@ -46,9 +48,12 @@
       # Every task created with tal is a dependency of the most recently created task.
       # Thus, you can chain a series of dependencies together.
 
-      to = "taskopen"; # see below
+      # taskopen allows for more advanced annotations
+      # see below for config
+      to = "taskopen";
     };
 
+    # install and configure taskopen
     packages = [ pkgs.taskopen ];
     file."${config.xdg.configHome}/task/taskopenrc".text = ''
       TASKBIN='task'
