@@ -52,13 +52,6 @@
     };
 
     # -- Plugins
-    historySubstringSearch = {
-      # Search through history by typing a part of the command you're searching for
-      # and then hitting ctrl+k or ctrl+j to query the history
-      enable = true;
-      searchUpKey = "^K";
-      searchDownKey = "^J";
-    };
     enableAutosuggestions = true;
     syntaxHighlighting = {
       enable = true;
@@ -104,7 +97,37 @@
       # This weird letter is basically just right-alt (sometimes called AltGr) + c
       # I use the British keyboard layout on a classic ThinkPad keyboard if that is of relevance
       bindkey "¢" fzf-cd-widget
-      # See below for fzf config
+      # See programs.fzf further down for fzf config
+
+      # -- suffix aliases
+      # Like autocd but for files.
+      # Any of the following formats can be opened in the respective software just by entering the filepath
+      # (no need for prefixing it with vim or anything else).
+      # This is particularly useful with the ctrl+t fzf widget
+      # because it allows you to simply search for the file with fzf and then hit enter twice to open it
+      # text files
+      alias -s lua="$EDITOR"  # lua
+      alias -s nix="$EDITOR"  # nix
+      alias -s rs="$EDITOR"   # rust
+      alias -s sh="$EDITOR"   # shell
+      alias -s gd="$EDITOR"   # gdscript
+      alias -s md="$EDITOR"   # markdown
+      alias -s norg="$EDITOR" # neorg
+      # you probably want to have window swallowing enabled in your WM for the following
+      # alternatively, prefix them with setsid or with devour (latter only works on X)
+      # video and audio files
+      alias -s mp4="mpv"
+      alias -s mkv="mpv"
+      alias -s webm="mpv"
+      alias -s mp3="mpv"
+      alias -s flac="mpv"
+      # image files
+      # swiv is a wayland port of sxiv
+      alias -s png="swiv || sxiv"
+      alias -s jpg="swiv || sxiv"
+      alias -s jpeg="swiv || sxiv"
+      # I've included these in initExtra because I don't believe homemanager has an option for suffix aliases.
+      # It only has global aliases and regular aliases.
     '';
   };
 
@@ -112,13 +135,13 @@
   # It's so cute and fuzzy
   programs.fzf = {
     enable = true;
+    enableZshIntegration = true;
 
-    # fzf shell widgets
+    # -- fzf shell widgets
     # [right]alt + c = search with fzf and cd into output
     # ctrl + r = search history and paste output onto the commandline
     # ctrl + t = search for files and paste output onto the commandline
-
-    enableZshIntegration = true;
+    # use fd instead of find (much faster)
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
     defaultCommand = "${pkgs.fd}/bin/fd --type f";
     fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
