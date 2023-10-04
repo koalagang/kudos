@@ -1,8 +1,5 @@
 local api = vim.api
 
--- TODO: create group variable
--- TODO: create autocmd variable
-
 -- [[ File templates ]]
 local templates = api.nvim_create_augroup("templates", { clear = true })
 -- shell
@@ -17,6 +14,12 @@ api.nvim_create_autocmd("BufNewFile", {
     command = "0r ~/.config/nvim/templates/skeleton.tex | call feedkeys('jjellciw')",
     group = templates,
 })
+-- nix
+api.nvim_create_autocmd("BufNewFile", {
+    pattern = "*.nix",
+    command = "0r ~/.config/nvim/templates/skeleton.nix | call feedkeys('jA\t')",
+    group = templates,
+})
 
 -- [[ Formatting ]]
 local formatting = api.nvim_create_augroup("formatting", { clear = true })
@@ -24,6 +27,12 @@ local formatting = api.nvim_create_augroup("formatting", { clear = true })
 api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     command = [[%s/\s\+$//e]],
+    group = formatting,
+})
+-- Remove empty line at end of file
+api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    command = [[%s#\($\n\s*\)\+\%$##]],
     group = formatting,
 })
 -- prevent autocommenting new lines
