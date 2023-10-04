@@ -21,10 +21,12 @@
 
       alias = {
         a = "add";
+        al = "all";
         an = "annotate";
         c = "complete";
         d = "done";
         e = "edit";
+        l = "list";
         m = "mod";
         n = "next";
         r = "delete"; # r for remove
