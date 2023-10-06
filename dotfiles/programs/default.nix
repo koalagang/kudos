@@ -3,6 +3,7 @@
     ./bat
     ./btop
     ./eza
+    ./firefox
     ./git
     ./gpg
     ./mpv
