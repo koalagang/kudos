@@ -19,6 +19,11 @@
       K = "add video-zoom -1";
       u = "revert-seek";
       S = "cycle sub";
+      # Copy URL (if video) or path (if file) to clipboard.
+      # I know. The amount of backslashes here is crazy but you've got to escape loads of stuff.
+      # The input.conf line will look like this:
+      # C run "sh" "-c" "printf \"${path}\" | xclip -i -selection clipboard"; show-text "${path} copied to clipboard"
+      C = "run \"sh\" \"-c\" \"printf \\\"\${path}\\\" | xclip -i -selection clipboard\"; show-text \"\${path} copied to clipboard\"";
     };
 
     scripts = [ pkgs.mpvScripts.mpris ];
