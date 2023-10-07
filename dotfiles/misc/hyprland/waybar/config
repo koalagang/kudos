@@ -1,0 +1,52 @@
+{
+
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["battery","wireplumber", "network"],
+
+    "hyprland/workspaces": {
+        "active-only": false, // doesn't seem to work
+        "all-outputs": true,
+        "format": "{name} {icon} ",
+        "format-icons": {
+            "1": "󰈹", // web
+            "2": "", // coding
+            "3": "󰦨", // writing
+            "4": "󱍀", // flashcards + studying
+            "5": "󰭹", // chat
+            "default": "󰠱", // misc
+            "active": "",
+        },
+    },
+
+    "clock": {
+		//"on-click": "footclient -T 'tascript" // TODO: have script tell me due dates of tasks
+        "format": "{:%A %d %b %H:%M}",
+    },
+
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon} ",
+        "format-icons": ["", "", "", "", ""],
+        "max-length": 25
+    },
+
+    "wireplumber": {
+        "format": "{volume}% {icon} ",
+        "format-muted": " 0% 󰖁 ",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+    },
+
+    "network": {
+        "format-wifi": "{essid} {signalStrength}% " ,
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "",
+        "max-length": 50,
+    },
+}
