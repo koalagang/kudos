@@ -1,0 +1,51 @@
+// UK layout but with a few changes to allow me to use Norwegian letters, plus to improve my vim speed
+
+default partial alphanumeric_keys
+xkb_symbols "pc+gb+inet(evdev)+terminate(ctrl_alt_bksp)" {
+
+    name[Group1]="English (UK)";
+
+    include "pc+gb+inet(evdev)+terminate(ctrl_alt_bksp)"
+
+    // Backspace becomes a modifier for the following keys
+    // See bottom of file for how I "backspace" text
+    key <BKSP> {
+        type= "CTRL+ALT",
+        symbols[Group1]= [     Mode_switch, ISO_Level3_Shift,        NoSymbol,        NoSymbol,        NoSymbol ]
+    };
+    // type å when holding down backspace and [
+    key <AD11> {
+        type[group1]= "FOUR_LEVEL",
+        symbols[Group1]= [     bracketleft,       braceleft,        NoSymbol,        NoSymbol ],
+        symbols[Group2]= [           aring,           Aring ]
+    };
+    // type ø when holding down backspace and [
+    key <AC10> {
+        type[group1]= "FOUR_LEVEL",
+        symbols[Group1]= [       semicolon,           colon,        NoSymbol,        NoSymbol ],
+        symbols[Group2]= [          oslash,          Oslash ]
+    };
+    // type æ when holding down backspace and '
+    key <AC11> {
+        type[group1]= "FOUR_LEVEL",
+        symbols[Group1]= [      apostrophe,              at,        NoSymbol,        NoSymbol ],
+        symbols[Group2]= [              ae,              AE ]
+    };
+    // The above letters can also be entered in uppercase by additionally holding down shift
+    // However, the order of holding down is important: backspace -> shift -> letter
+
+    // Remap right shift to escape, thereby allowing me to using my right pinky to hit escape
+    // Three reasons:
+    // 1. Useful for when you want to hit escape without leaving the hjkl position (e.g. in vim insert mode or zsh vim insert mode)
+    // 2. Escape is way too far away for me as a vimmer
+    // 3. I only use left shift anyway
+    key <RTSH> {[Escape]};
+
+    // Remap capslock to backspace
+    // Three reasons:
+    // 1. I'm using backspace as an extra modifier (see first remapping)
+    // 2. Backspace is way too far away for a key I use often. Capslock, on the other hand, I can reach for with my left pinky or ring finger.
+    // 3. Capslock is a useless key. There are very few circumstances in which I would type in all caps
+    // and when I do I can either just hold down shift or hit U whilst selecting the text in vim visual mode.
+    key <CAPS> {[BackSpace]};
+};

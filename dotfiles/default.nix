@@ -1,7 +1,8 @@
 {
   imports = [
-  ./programs
-  ./nohome
   ./misc
+  ./nohome
+  ./programs
+  ./services
   ];
 }

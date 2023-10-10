@@ -13,7 +13,7 @@
     # Dependencies
     extraPackages = with pkgs; [
       # Neovim system clipboard support
-      #wl-clipboard # Wayland
+      wl-clipboard # Wayland
       xclip # X11
       #xsel # X11
 
