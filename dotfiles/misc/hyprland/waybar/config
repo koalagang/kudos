@@ -49,10 +49,12 @@
     },
 
     "network": {
-        "format-wifi": "{signalStrength}%  " ,
-        "format-ethernet": "{ifname} ",
-        "format-disconnected": "",
+        "format-wifi": "{signalStrength}% {icon} " ,
+        "format-ethernet": "󰈀 ",
+        "format-disconnected": "    󰤭 ",
+        "format-linked": "     ",
         "max-length": 50,
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
         //"on-click": // TODO: write iwtui
     },
 }

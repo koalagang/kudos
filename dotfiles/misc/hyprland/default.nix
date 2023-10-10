@@ -16,13 +16,12 @@
 
   # temporary
   # I'll create separate configs later
-  programs.foot = {
-    enable = true;
-    server.enable = true;
-  };
+  #programs.foot = {
+  #  enable = true;
+  #  server.enable = true;
+  #};
   home.file."${config.xdg.configHome}/foot/foot.ini" = {
     source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/gross/dotfiles/misc/hyprland/foot.ini";
-    recursive = true;
   };
 
   #programs.waybar = {
@@ -34,7 +33,9 @@
     recursive = true;
   };
 
-  home.packages = with pkgs; [ fuzzel waybar wlsunset ];
+  programs.fuzzel.enable = true;
+
+  home.packages = with pkgs; [ foot waybar wlsunset ];
   # I also have wlsunset configured with homemanager (see services/wlsunset)
   # but it doesn't seem to work
   # maybe because I'm not currently use hyprland's homemanager module?
