@@ -1,0 +1,13 @@
+# TODO: stylix
+font=FiraCode 12
+#background-color=
+#text-color=
+
+width=200
+
+text-alignment=center
+anchor=top-center
+border-radius=10
+
+default-timeout=5000
+history=0
