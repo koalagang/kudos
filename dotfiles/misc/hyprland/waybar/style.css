@@ -4,46 +4,22 @@
     font-weight: bold;
     font-size: 16px;
     background: none;
-    /*color: @theme_text_color;*/
-}
-
-
-tooltip {
-    background: #e7e7ec;;
-    opacity: 0.8;
-    border-radius: 10px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #11111b;
-}
-
-tooltip label{
-    color: #2b2b2c;
+    color: @theme_text_color;
 }
 
 #workspaces button {
     padding: 2.5px;
-    color: #313244;
     border-radius: 10px;
 }
 
-#workspaces button.active {
-    color: #a6adc8;
-}
-
-#workspaces button.focused {
-    color: #a6adc8;
-    background: #eba0ac;
-}
-
+/* TODO: sort out colouring */
 #workspaces button.urgent {
     color: #11111b;
     background: #a6e3a1;
 }
 
 #workspaces button:hover {
-    background: #11111b;
-    color: #cdd6f4;
+    background: @theme_base_color;
 }
 
 #workspaces {
@@ -52,6 +28,16 @@ tooltip label{
 }
 
 #clock,
+
+#network {
+    border-left: 0px;
+    padding: 5px 5px;
+}
+
+#wireplumber {
+    border-left: 0px;
+    padding: 5px 5px;
+}
 
 #battery {
     border-left: 0px;
@@ -68,14 +54,4 @@ tooltip label{
 #battery.critical:not(.charging) {
 	color: #e6e600;
 	background-color: #cc3436;
-}
-
-#wireplumber {
-    border-left: 0px;
-    padding: 5px 5px;
-}
-
-#network {
-    border-left: 0px;
-    padding: 5px 5px;
 }

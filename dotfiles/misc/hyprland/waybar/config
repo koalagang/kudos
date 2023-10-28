@@ -1,7 +1,8 @@
 {
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["battery","wireplumber", "network"],
+    //"modules-right": ["network", "wireplumber", "battery"],
+    "modules-right": ["wireplumber", "battery"],
 
     "hyprland/workspaces": {
         "format": "{name} {icon} ",
@@ -25,6 +26,26 @@
         "format": "{:%A %d %b %H:%M}",
     },
 
+    "network": {
+        "format-wifi": "{signalStrength}% {icon} " ,
+        "format-ethernet": "󰈀 ",
+        "format-disconnected": "    󰤭 ",
+        "format-linked": "     ",
+        "max-length": 50,
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        //"on-click": // TODO: write iwtui
+    },
+
+    "wireplumber": {
+        "format": "{volume}% {icon} ",
+        "format-muted": " 0% 󰖁 ",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pamixer -t",
+        "scroll-step": 5,
+    },
+
     "battery": {
         "interval": 60,
         "states": {
@@ -38,23 +59,4 @@
         "max-length": 25,
     },
 
-    "wireplumber": {
-        "format": "{volume}% {icon} ",
-        "format-muted": " 0% 󰖁 ",
-        "format-icons": {
-            "default": ["", "", ""]
-        },
-        "on-click": "pamixer -t",
-        "scroll-step": 5,
-    },
-
-    "network": {
-        "format-wifi": "{signalStrength}% {icon} " ,
-        "format-ethernet": "󰈀 ",
-        "format-disconnected": "    󰤭 ",
-        "format-linked": "     ",
-        "max-length": 50,
-        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-        //"on-click": // TODO: write iwtui
-    },
 }
