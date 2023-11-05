@@ -42,9 +42,11 @@ local function nmap(shortcut, command)
     vim.keymap.set("n", shortcut, command)
 end
 
-nmap("<c-t>.","<cmd>Telescope find_files<cr>")
-nmap("<c-t>h","<cmd>Telescope find_files search_dirs={'$HOME'}<cr>")
-nmap("<c-t>v","<cmd>Telescope find_files search_dirs={'$HOME/.config/nvim'}<cr>")
-nmap("<c-t>g","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git'}<cr>")
-nmap("<c-t>m","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git/gross'}<cr>")
-nmap("<c-t>l","<cmd>Telescope find_files search_dirs={'$HOME/Documents/latex'}<cr>")
+-- search for files in...
+nmap("<c-t>.","<cmd>Telescope find_files<cr>") -- current directory
+nmap("<c-t>~","<cmd>Telescope find_files search_dirs={'$HOME'}<cr>") -- home directory
+nmap("<c-t>v","<cmd>Telescope find_files search_dirs={'$HOME/.config/nvim'}<cr>") -- neovim config
+nmap("<c-t>g","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git'}<cr>") -- local git repos
+nmap("<c-t>m","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git/gross'}<cr>") -- nix config
+nmap("<c-t>l","<cmd>Telescope find_files search_dirs={'$HOME/Documents/latex'}<cr>") -- latex documents
+-- See neorg config for use of neorg-telescope (HINT: hit <c-t>n)
