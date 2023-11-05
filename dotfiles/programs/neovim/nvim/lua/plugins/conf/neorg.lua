@@ -8,13 +8,13 @@ require("neorg").setup {
         ["core.esupports.metagen"] = {},
         ["core.itero"] = {},
         --["core.journal"] = {},
-        ["core.keybinds"] = {},
         ['core.keybinds'] = {
             config = {
                 hook = function(keybinds)
                     -- depends on nvim-neorg/neorg-telescope
                     keybinds.map_event('norg', 'n', '<c-t>n', 'core.integrations.telescope.find_linkable')
-                    keybinds.map_event('norg', 'i', '<C-x>', 'core.integrations.telescope.insert_link')
+                    keybinds.map_event('norg', 'i', '<c-t>n', 'core.integrations.telescope.insert_link')
+                    keybinds.map_event('norg', 'n', '<c-t>h', 'core.integrations.telescope.search_headings')
                 end,
             },
         },
@@ -26,7 +26,7 @@ require("neorg").setup {
         --["core.tangle"] = {},
         --["core.upgrade"] = {},
 
-        -- Add pretty icons to your documents
+        -- Add pretty icons to documents
         ["core.concealer"] = {
             config = {
                 icon_preset = "varied",
@@ -71,6 +71,7 @@ require("neorg").setup {
 vim.wo.foldlevel = 1
 vim.wo.conceallevel = 2
 
+--[[
 local function imap(shortcut, command)
     vim.keymap.set("i", shortcut, command)
 end
@@ -78,3 +79,15 @@ imap("<m-*>", "**<left>")
 imap("<m-/>", "//<left>")
 imap("<m-_>", "__<left>")
 imap("<m-:>", "{::}<left><left>")
+]]
+
+--[[
+This can also be done using the keybinds module (see above).
+However, that makes lazy-loading harder.
+Binding the command manually
+and then lazy-loading neorg (see lazy.nvim entry) with <c-t>n allows us to lazy-load neorg-telescope.
+]]
+local function nmap(shortcut, command)
+    vim.keymap.set("n", shortcut, command)
+end
+nmap("<c-t>n", "<cmd>Telescope neorg find_linkable<cr>")

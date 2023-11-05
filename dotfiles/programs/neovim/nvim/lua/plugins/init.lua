@@ -113,9 +113,7 @@ require("lazy").setup({
         },
         cmd = "Neorg",
         ft = "norg",
-        -- doesn't seem to invoke neorg-telescope until neorg has been loaded via ft or cmd
-        -- TODO: fix it
-        keys = "<C-t>n",
+        keys = "<c-t>n", -- for use with neorg-telescope
         config = function()
             require(conf .. "neorg")
         end,
