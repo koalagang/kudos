@@ -29,4 +29,6 @@ in
   };
   # TODO: nix-colors for chrome/global/colors.css
   # incl. making the background colour dark theme (as it stands, about:blank is a blinding white)
+
+  home.sessionVariables.BROWSER = "firefox";
 }
