@@ -1,12 +1,12 @@
 { config, pkgs, ... }:
 
-# See https://thevaluable.dev/zsh-install-configure-mouseless/
-# and https://thevaluable.dev/zsh-completion-guide-examples/
-# to learn how the contents of completionInit and initExtra below work.
-
 # This file consists of my zsh configuration,
 # as well as other tools I've got integrated into zsh
 # i.e. starship, zoxide and fzf
+
+# See https://thevaluable.dev/zsh-install-configure-mouseless/
+# and https://thevaluable.dev/zsh-completion-guide-examples/
+# to learn how the contents of completionInit and initExtra below work.
 
 {
   # If there ever was a shell I'd hide under, it's the trusty Z shell
@@ -37,13 +37,13 @@
     # -- History
     history = {
       extended = true; # save timestamps into the history file
-      ignorePatterns = [ # do not add these (very dangerous) commands to the history
+      ignorePatterns = [ # do not add these very dangerous commands to the history
         "rm *"
         "rm -rf *"
         "pkill *"
       ];
       ignoreSpace = true; # do not save commands beginning with a space
-      path = "${config.xdg.cacheHome}/zsh/zsh_history";
+      path = "${config.xdg.dataHome}/zsh/zsh_history";
       # save 10,000 lines (this is actually the default behaviour)
       save = 10000;
       size = 10000;
@@ -83,20 +83,25 @@
       export KEYTIMEOUT=1
 
       # edit line in vim buffer with ctrl-v when in vi mode
-      autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd "^v" edit-command-line
+      autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd '^v' edit-command-line
 
       # use vi keys in tab complete menu
       bindkey -M menuselect 'h' vi-backward-char
       bindkey -M menuselect 'j' vi-down-line-or-history
       bindkey -M menuselect 'k' vi-up-line-or-history
       bindkey -M menuselect 'l' vi-forward-char
-      bindkey "^?" backward-delete-char # fix backspace bug when switching modes
+      bindkey '^?' backward-delete-char # fix backspace bug when switching modes
 
       # -- fzf
-      # Fixes issue where I can't use fzf's cd widget
+      # Fixes issue where I can't use fzf's cd widget (left alt + c doesn't give any input)
       # This weird letter is basically just right-alt (sometimes called AltGr) + c
       # I use the British keyboard layout on a classic ThinkPad keyboard if that is of relevance
-      bindkey "¢" fzf-cd-widget
+      bindkey '¢' fzf-cd-widget
+
+      # search zoxide database using fzf and enter the selected path
+      # 'bindkey -s' types out the full command before entering it, so using an alias makes it faster
+      alias Z='cd "$(zi)"'
+      bindkey -s '^z' 'Z^M' # ctrl+z
       # See programs.fzf further down for fzf config
 
       # -- suffix aliases
@@ -113,7 +118,9 @@
       alias -s gd="$EDITOR"   # gdscript
       alias -s md="$EDITOR"   # markdown
       alias -s norg="$EDITOR" # neorg
-      # you probably want to have window swallowing enabled in your WM for the following
+      alias -s tex="$EDITOR"  # latex
+      alias -s txt="$EDITOR"  # regular, uninterpreted text
+      # you probably want to have window swallowing enabled in your WM/compositor for the following
       # alternatively, prefix them with setsid or with devour (latter only works on X)
       # video and audio files
       alias -s mp4="mpv"
@@ -137,21 +144,39 @@
     enable = true;
     enableZshIntegration = true;
 
+    # TODO: stylix
+    #colors = {};
+
     # -- fzf shell widgets
     # [right]alt + c = search with fzf and cd into output
     # ctrl + r = search history and paste output onto the commandline
     # ctrl + t = search for files and paste output onto the commandline
     # use fd instead of find (much faster)
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
-    defaultCommand = "${pkgs.fd}/bin/fd --type f";
-    fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
-    #changeDirWidgetOptions = [];
-    #defaultOptions = {};
-    #fileWidgetOptions = {};
-    #historyWidgetOptions = {};
+    changeDirWidgetOptions = [
+      # preview file tree when using cd widget
+      # I usually use 'eza --tree' instead of tree but it doesn't seem to work in this case
+      # {} = directory being previewed
+      "--preview '${pkgs.tree}/bin/tree -C {} | head -200'"
+    ];
 
-    # TODO: stylix
-    #colors = {};
+    defaultCommand = "${pkgs.fd}/bin/fd --type f";
+    #defaultOptions = {};
+
+    fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
+    #fileWidgetOptions = [
+      #"--preview 'head {}'"
+      # TODO: write a previewer script
+      # this could use glow, bat, ueberzugpp, etc.
+      # see https://github.com/jstkdng/ueberzugpp/blob/master/scripts/fzfub
+      # and https://github.com/thimc/vifmimg for ideas on how to preview images
+    #];
+
+    #historyWidgetOptions = {}
+
+    # NOTE: although not exactly an fzf widget,
+    # I also have a binding for live grepping files with a different fuzzy finder
+    # see programs/neovim/default.nix if you're interested in that
   };
 
   # My favourite shell prompt
@@ -163,15 +188,16 @@
   };
 
   # A smarter cd command
-  # Catching Zs whilst inhaling pure oxygen
+  # Catching Zs
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
   };
+  # zoxide configuration
   home.sessionVariables = {
-    # zoxide configuration
-    _ZO_DATA_DIR = "${config.xdg.cacheHome}/zsh";
+    _ZO_DATA_DIR = "${config.xdg.dataHome}/zsh";
     _ZO_MAXAGE = 10000;
     _ZO_RESOLVE_SYMLINKS = 1;
+    _ZO_EXCLUDE_DIRS = "$HOME/.*:$XDG_DOCUMENTS_HOME/archive/*:/nix/store/*";
   };
 }
