@@ -23,6 +23,7 @@
         a = "add";
         al = "all";
         an = "annotate";
+        bd = "burndown.daily";
         c = "complete";
         d = "done";
         e = "edit";
