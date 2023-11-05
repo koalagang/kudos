@@ -47,6 +47,9 @@
       # 3rd/image.nvim
       imagemagick
       ueberzugpp
+
+      # jvgrootveld/telescope-zoxide
+      zoxide
     ];
     extraLuaPackages = luaPkgs: with luaPkgs; [ magick ]; # this is also for 3rd/image.nvim
   };

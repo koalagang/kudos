@@ -132,7 +132,7 @@ require("lazy").setup({
         "stevearc/oil.nvim",
         keys = { "-", "<C-n>" },
         cmd = "Oil",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        dependencies = { "nvim-tree/nvim-web-devicons" }, -- EXTERNAL: any nerdfont
         -- EXTERNAL: trash-cli (for trash feature)
         config = function()
             require(conf .. "oil")
@@ -146,11 +146,20 @@ require("lazy").setup({
         keys = "<c-t>",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons", -- EXTERNAL: any nerdfont (I use Fira Code)
+            "nvim-tree/nvim-web-devicons", -- EXTERNAL: any nerdfont
             { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- EXTERNAL: gnumake, gcc
         },
         config = function()
             require(conf .. "telescope")
+        end,
+    },
+    {
+        "jvgrootveld/telescope-zoxide",
+        dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+        -- EXTERNAL: zoxide
+        keys = "<c-t>z",
+        config = function()
+            vim.keymap.set("n", "<c-t>z", require("telescope").extensions.zoxide.list)
         end,
     },
 
@@ -176,7 +185,10 @@ require("lazy").setup({
             require(conf .. "winshift")
         end,
     },
-    -- Once I've also setup toggleterm and neogit, I'll have no excuse to leave neovim.
+    -- Once I've also setup toggleterm, neogit and octo, I'll have no excuse to leave neovim.
+    -- focus, winshift, oil and telescope will allow me to navigate files with ease,
+    -- neogit and octo will reduce (or even remove?) the need for using the commandline to interactive with git
+    -- and if I still find myself needing to use shell commands, toggleterm will be right there.
 
 
     -- [[ Minor plugins ]]

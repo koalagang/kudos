@@ -34,19 +34,29 @@ telescope.setup({
     },
 })
 telescope.load_extension("fzf") -- nvim-telescope/telescope-fzf-native.nvim
--- TODO: telescope-zoxide; other extensions too?
+-- Other extensions I use include:
+-- neorg-telescope
+-- telescope-zoxide
+--
+-- (see respective configs)
+
+-- TO CONSIDER
 -- perhaps AckslD/nvim-neoclip.lua
 -- stevearc/dressing.nvim or telescope-ui-select.nvim?
+--
+-- nvim-telescope/telescope-media-files.nvim if they add ueberzugpp support
+-- (see https://github.com/nvim-telescope/telescope-media-files.nvim/issues/34)
 
 local function nmap(shortcut, command)
     vim.keymap.set("n", shortcut, command)
 end
 
--- search for files in...
+-- find_files in...
 nmap("<c-t>.","<cmd>Telescope find_files<cr>") -- current directory
 nmap("<c-t>~","<cmd>Telescope find_files search_dirs={'$HOME'}<cr>") -- home directory
 nmap("<c-t>v","<cmd>Telescope find_files search_dirs={'$HOME/.config/nvim'}<cr>") -- neovim config
 nmap("<c-t>g","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git'}<cr>") -- local git repos
 nmap("<c-t>m","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git/gross'}<cr>") -- nix config
 nmap("<c-t>l","<cmd>Telescope find_files search_dirs={'$HOME/Documents/latex'}<cr>") -- latex documents
--- See neorg config for use of neorg-telescope (HINT: hit <c-t>n)
+-- See respective extensions for their bindings
+-- HINT: <c-t> is usually used for those too, e.g. <c-t>n for neorg-telescope, <c-t>z for telescope-zoxide, etc.
