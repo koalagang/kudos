@@ -95,7 +95,6 @@ nmap("K", "kddpkJ")
 nmap("cD", "Da")
 nmap("<bs>", "<cmd>b#<cr>") -- backspace to return to previous buffer
 nmap("<tab>", "za") -- tab to toggle currently selected fold
-nmap("<localleader>Nw", ":Neorg workspace<space>")
 nmap("Q", "V}gqkA<space>")
 
 -- Scripts and other external software
@@ -103,3 +102,5 @@ nmap("Q", "V}gqkA<space>")
 nmap("<leader>c", ':w! | !compiler "<c-r>%"<cr><cr>')
 nmap("<leader>sc", "<cmd>w! | <cmd>!shellcheck %<cr>")
 nmap("<leader>z", "<cmd>!zathura --fork %:t:r.pdf<cr><cr>")
+
+nmap("<localleader>Nw", ":Neorg workspace<space>")
