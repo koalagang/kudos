@@ -51,11 +51,11 @@ require("lazy").setup({
             -- write your own snippets in lua
         -- ekickx/clipboard.nvim
             -- configure it to support norg syntax
-        -- nvim-focus/focus.nvim
         -- mfussenegger/nvim-dap
         -- ledger/vim-ledger
-        -- stevearc/conform.nvim
-        -- mfussenegger/nvim-lint
+        -- null-ls replacement
+            -- stevearc/conform.nvim and mfussenegger/nvim-lint
+            -- or nvimtools/none-ls.nvim? (probably this)
     -- + related extensions (for nvim-cmp, telescope, neorg)
     -- MAYBE
         -- nvim-neotest/neotest
@@ -65,18 +65,24 @@ require("lazy").setup({
         -- folke/todo-comments.nvim
         -- folke/trouble.nvim
         -- iamcco/markdown-preview.nvim
-        -- junegunn/goyo.vim and junegunn/limelight.vim
+        -- junegunn/goyo.vim
             -- or pocco81/true-zen.nvim
             -- or folke/zen-mode.nvim
+        --  junegunn/limelight.vim
+            -- or folke/twilight.nvim
         -- karb94/neoscroll.nvim
+        -- Zeioth/compiler.nvim
+        -- Zeioth/dooku.nvim
+        -- Bekaboo/deadcolumn.nvim
 
 
     -- [[ Major plugins ]]
     -- These are the real game-changers
-    { -- Treesitter syntax highlighting
+
+    {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate", -- Check for updates to the parsers
-        --dependencies = { "HiPhish/nvim-ts-rainbow2", "nvim-treesitter/nvim-treesitter-textobjects" },
+        dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
         -- EXTERNAL: tar, curl, gcc
         -- This weird-looking code is simply a way of inserting the languages table
         -- into the ft table alongside norg and markdown
@@ -94,6 +100,7 @@ require("lazy").setup({
     { -- "An Organized Future"
       -- NOTE: sometimes neorg's folds break
       -- However, refreshing the file with ':e' fixes this
+      -- In my experience, though, this seems to have been fixed recently
         "nvim-neorg/neorg",
         build = ":Neorg sync-parsers",
         dependencies = {
@@ -103,24 +110,15 @@ require("lazy").setup({
                 "nvim-neorg/neorg-telescope",
                 dependencies = { "nvim-telescope/telescope.nvim" },
             },
-            -- can't get image.nvim to work
-            --"3rd/image.nvim", -- EXTERNAL: magick (luarock), imagemagick, curl
         },
         cmd = "Neorg",
         ft = "norg",
+        -- doesn't seem to invoke neorg-telescope until neorg has been loaded via ft or cmd
+        -- TODO: fix it
+        keys = "<C-t>n",
         config = function()
             require(conf .. "neorg")
         end,
-    },
-
-    { -- "Neovim file explorer: edit your filesystem like a buffer"
-        "stevearc/oil.nvim",
-        keys = { "-", "<C-n>" },
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        -- EXTERNAL: trash-cli (for trash feature)
-        config = function()
-            require(conf .. "oil")
-        end
     },
 
     { -- "Neovim motions on speed!"
@@ -132,29 +130,77 @@ require("lazy").setup({
         end,
     },
 
+    { -- "Neovim file explorer: edit your filesystem like a buffer"
+        "stevearc/oil.nvim",
+        keys = { "-", "<C-n>" },
+        cmd = "Oil",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        -- EXTERNAL: trash-cli (for trash feature)
+        config = function()
+            require(conf .. "oil")
+        end
+    },
+
     { -- "Find, Filter, Preview, Pick. All lua, all the time."
-        'nvim-telescope/telescope.nvim',
-        branch = '0.1.x',
+        "nvim-telescope/telescope.nvim",
+        branch = "0.1.x",
         cmd = "Telescope",
+        keys = "<c-t>",
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons", -- EXTERNAL: any nerdfont (I use Fira Code)
-            { "nvim-telescope/telescope-fzf-native.nvim", build = 'make' }, -- EXTERNAL: gnumake, gcc
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- EXTERNAL: gnumake, gcc
         },
         config = function()
             require(conf .. "telescope")
         end,
     },
 
+    -- Using a tiling window manager is great and all
+    -- but when you open vim instances in many separate terminals,
+    -- interaction between these buffers is limited.
+    -- The solution is splits, which are essentially vim windows tiling inside a single instance.
+    -- But that just introduces another problem -- splits are an absolute pain to work with in vanilla vim.
+    -- Enter focus and winshift!
+    -- This beautiful duo makes using splits an actual comfortable experience.
+    { -- Auto-focusing and auto-resizing splits/windows
+        "nvim-focus/focus.nvim",
+        version = "*",
+        keys = { "<c-h>", "<c-j>", "<c-k>", "<c-l>", "<m-h>", "<m-j>", "<m-k>", "<m-l>" },
+        config = function()
+            require(conf .. "focus")
+        end,
+    },
+    { -- Rearrange your windows with ease
+        "sindrets/winshift.nvim",
+        keys = { "<M-H>", "<M-J>", "<M-K>", "<M-L>" },
+        config = function()
+            require(conf .. "winshift")
+        end,
+    },
+    -- Once I've also setup toggleterm and neogit, I'll have no excuse to leave neovim.
+
+
     -- [[ Minor plugins ]]
     -- These don't massively change how Neovim behaves but they are really nice to have
-    { -- Dracula colourscheme
-        "Mofiqul/dracula.nvim",
-        -- One of the few plugins I don't lazy-load
-        -- High priority to make sure the colourscheme is loaded before everything else
+
+    --{ -- Dracula colourscheme
+    --    "Mofiqul/dracula.nvim",
+    --    -- One of the few plugins I don't lazy-load
+    --    -- High priority to make sure the colourscheme is loaded before everything else
+    --    priority = 1000,
+    --    --config = function()
+    --    --    require(conf .. "dracula")
+    --    --end,
+    --},
+    -- TEST
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
         priority = 1000,
-        config = function()
-            require(conf .. "dracula")
+        config = function ()
+            require(conf .. "catppuccin")
+            --vim.cmd.colorscheme "catppuccin-mocha"
         end,
     },
 
@@ -177,9 +223,35 @@ require("lazy").setup({
         end,
     },
 
+    { -- Bringing images to Neovim
+        "3rd/image.nvim",
+        ft = { "norg", "markdown "},
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        -- EXTERNAL: magick (luarock), imagemagick, curl
+        config = function()
+            require(conf .. "image")
+        end,
+    },
+
     { -- Makes creating markdown tables not pure suffering
         "dhruvasagar/vim-table-mode",
         cmd = "TableModeEnable",
     },
+
+    -- TESTING
+    --[['tpope/vim-unimpaired',
+
+    {
+        "kylechui/nvim-surround",
+        version = "*", -- Use for stability; omit to use `main` branch for the latest features
+        event = "VeryLazy",
+        config = function()
+            require("nvim-surround").setup({
+                -- Configuration here, or leave empty to use defaults
+            })
+        end
+    },
+    ]]
+    -- TESTING
 
 })

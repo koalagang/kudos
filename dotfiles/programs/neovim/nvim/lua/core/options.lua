@@ -11,7 +11,6 @@ local options = {
 
     -- local to buffer,
     swapfile = false,
-    -- TODO: set this to 2 for nix files
     tabstop = 4,
     softtabstop = 4,
     expandtab = true,

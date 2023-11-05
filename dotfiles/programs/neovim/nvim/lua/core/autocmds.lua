@@ -30,11 +30,11 @@ api.nvim_create_autocmd("BufWritePre", {
     group = formatting,
 })
 -- Remove empty line at end of file
-api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    command = [[%s#\($\n\s*\)\+\%$##]],
-    group = formatting,
-})
+--api.nvim_create_autocmd("BufWritePre", {
+--    pattern = "*",
+--    command = [[%s#\($\n\s*\)\+\%$##]],
+--    group = formatting,
+--})
 -- prevent autocommenting new lines
 api.nvim_create_autocmd("VimEnter", {
     pattern = "*",

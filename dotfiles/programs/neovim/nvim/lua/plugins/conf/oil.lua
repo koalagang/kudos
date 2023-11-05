@@ -22,4 +22,3 @@ require("oil").setup({
     },
 })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory in current buffer" })
-vim.keymap.set("n", "<C-n>", "<CMD>topleft vsplit | Oil<CR>", { desc = "Open parent directory in current buffer" })

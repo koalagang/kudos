@@ -37,3 +37,14 @@ telescope.load_extension("fzf") -- nvim-telescope/telescope-fzf-native.nvim
 -- TODO: telescope-zoxide; other extensions too?
 -- perhaps AckslD/nvim-neoclip.lua
 -- stevearc/dressing.nvim or telescope-ui-select.nvim?
+
+local function nmap(shortcut, command)
+    vim.keymap.set("n", shortcut, command)
+end
+
+nmap("<c-t>.","<cmd>Telescope find_files<cr>")
+nmap("<c-t>h","<cmd>Telescope find_files search_dirs={'$HOME'}<cr>")
+nmap("<c-t>v","<cmd>Telescope find_files search_dirs={'$HOME/.config/nvim'}<cr>")
+nmap("<c-t>g","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git'}<cr>")
+nmap("<c-t>m","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git/gross'}<cr>")
+nmap("<c-t>l","<cmd>Telescope find_files search_dirs={'$HOME/Documents/latex'}<cr>")

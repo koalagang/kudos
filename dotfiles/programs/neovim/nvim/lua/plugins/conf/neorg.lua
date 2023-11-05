@@ -13,7 +13,7 @@ require("neorg").setup {
             config = {
                 hook = function(keybinds)
                     -- depends on nvim-neorg/neorg-telescope
-                    keybinds.map_event('norg', 'n', '<C-x>', 'core.integrations.telescope.find_linkable')
+                    keybinds.map_event('norg', 'n', '<c-t>n', 'core.integrations.telescope.find_linkable')
                     keybinds.map_event('norg', 'i', '<C-x>', 'core.integrations.telescope.insert_link')
                 end,
             },

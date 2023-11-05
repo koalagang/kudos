@@ -42,23 +42,28 @@ vmap("S", ":s/\\%V/g<left><left>")
 
 -- [[ Navigate multiple files ]]
 -- Splits
-nmap("<c-j>", "<c-w><c-j>")
-nmap("<c-k>", "<c-w><c-k>")
-nmap("<c-l>", "<c-w><c-l>")
-nmap("<c-h>", "<c-w><c-h>")
+--nmap("<c-h>", "<c-w><c-h>")
+--nmap("<c-j>", "<c-w><c-j>")
+--nmap("<c-k>", "<c-w><c-k>")
+--nmap("<c-l>", "<c-w><c-l>")
 -- Tabs
-nmap("<Tab>", "gt")
-nmap("<S-Tab>", "gT")
-nmap("<c-t>", "<cmd>tabnew<cr>")
-nmap("tf", "tabfind<space>")
+--nmap("<Tab>", "gt")
+--nmap("<S-Tab>", "gT")
+--nmap("<c-t>", "<cmd>tabnew<cr>")
+--nmap("tf", "tabfind<space>")
 
 -- [[ Surround ]]
-imap('<m-">', '""<left>')
+-- foot terminal seems to have issues with ctl+shift+character
+--imap('<m-">', '""<left>')
+imap("<m-2>", '""<left>')
 imap("<m-'>", "''<left>")
-imap("<m-(>", "()<left>")
+--imap("<m-(>", "()<left>")
+imap("<m-9>", "()<left>")
 imap("<m-[>", "[]<left>")
-imap("<m-{>", "{}<left>")
-imap("<m-<>", "<><left>")
+--imap("<m-{>", "{}<left>")
+imap("<m-]>", "{}<left>")
+--imap("<m-<>", "<><left>")
+imap("<c-.>", "<><left>")
 imap("<m-`>", "``<left>")
 
 -- [[ Misc ]]
