@@ -85,6 +85,9 @@
       };
       defaultSession = "none+dwm";
     };
+
+    # Don't install xterm
+    excludePackages = [ pkgs.xterm ];
   };
 
   # Configure console keymap
@@ -132,7 +135,7 @@
     #anki-bin
     signal-desktop
     keepassxc
-    libreoffice-still
+    libreoffice-still jre_minimal
     mullvad-browser
     ungoogled-chromium
 
@@ -165,6 +168,7 @@
     # Misc CLI tools
     curl
     killall
+    file
     testdisk
 
     # Autostart tools
@@ -256,6 +260,7 @@
 
   # WIP
   programs.hyprland.enable = true;
+  security.pam.services.swaylock = {};
 
   # Dconf is necessary for gtk theming if you're not using a DE.
   # See https://github.com/nix-community/home-manager/issues/3113 for more
@@ -333,6 +338,8 @@
             # However, for me it seems that it does not turn itself back on
             # even when I play audio.
 
+            CPU_SCALING_GOVERNOR_ON_AC = "performance";
+            CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
         };
     };
 
