@@ -23,6 +23,8 @@
 
     "clock": {
         "on-click": "taskdue",
+        //on-middle-click refresh the widget
+        //on-right-click toggle seconds
         "format": "{:%A %d %b %H:%M}",
     },
 
