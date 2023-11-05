@@ -6,19 +6,17 @@ require("oil").setup({
     use_default_keymaps = false,
     keymaps = {
         ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
+        ["<cr>"] = "actions.select",
         ["V"] = "actions.select_vsplit",
         ["H"] = "actions.select_split",
-        ["<C-t>"] = "actions.select_tab",
-        ["<C-p>"] = "actions.preview",
-        ["<C-c>"] = "actions.close",
-        --["<C-l>"] = "actions.refresh",
+        ["<c-p>"] = "actions.preview",
+        ["q"] = "actions.close",
         ["-"] = "actions.parent",
         ["_"] = "actions.open_cwd",
         ["`"] = "actions.cd",
         ["~"] = "actions.tcd",
-        ["gs"] = "actions.change_sort",
         ["g."] = "actions.toggle_hidden",
+        ["gx"] = "actions.open_external",
     },
 })
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory in current buffer" })
+vim.keymap.set("n", "-", "<cmd>Oil --float<cr>", { desc = "Open parent directory in current buffer" })
