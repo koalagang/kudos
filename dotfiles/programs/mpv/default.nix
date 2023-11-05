@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   programs.mpv = {
     enable = true;
 
-    config.screenshot-directory = "~/Pictures";
+    config.screenshot-directory = "~/Pictures/mpv";
 
     bindings = {
       h = "seek -5";
@@ -27,5 +27,16 @@
     };
 
     scripts = [ pkgs.mpvScripts.mpris ];
+  };
+
+  # A FOSS, mpv-based video player for studying Japanese
+  # https://ripose-jp.github.io/Memento/
+  home = {
+    packages = [ pkgs.memento ];
+    # Use regular mpv's config for memento's mpv back-end too
+    file."${config.xdg.configHome}/memento" = {
+      source = "${config.xdg.configHome}/mpv";
+      recursive = true;
+    };
   };
 }
