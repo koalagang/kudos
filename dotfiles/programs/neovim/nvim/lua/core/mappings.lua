@@ -14,7 +14,7 @@ end
 -- The vim leader key.
 -- It's vim's master modifier -- like the superkey of your text editor.
 -- It is only used for very special mappings.
-vim.g.mapleader = ','
+vim.g.mapleader = " "
 -- Not many people know of it but leader also has a little brother called localleader.
 -- It serves a similar purpose but is used less often.
 vim.g.localleader = '\\' -- Double-backslash used to escape it
@@ -22,7 +22,7 @@ vim.g.localleader = '\\' -- Double-backslash used to escape it
 -- [[ Basics ]]
 -- Basic bindings
 nmap("<c-s>", "<cmd>w<cr>")
-nmap("<space>", "<cmd>noh<cr>")
+nmap(",", "<cmd>noh<cr>")
 nmap("cc", "<cmd>set cursorcolumn!<cr>")
 vmap("<", "<gv")
 vmap(">", ">gv")
@@ -31,21 +31,11 @@ nmap("N", "Nzzzv")
 -- Swap redo and replace around
 nmap("r", "<c-r>")
 nmap("<c-r>", "r")
--- Move lines up and down with alt-j and alt-k
-nmap("<m-k>", "<cmd>m .-2<cr>==")
-nmap("<m-j>", "<cmd>m .+1<cr>==")
-vmap("<m-k>", ":m '<-2<cr>gv=gv")
-vmap("<m-j>", ":m '>+1<cr>gv=gv")
 -- Find and replace
 nmap("S", ":%s//g<left><left>")
 vmap("S", ":s/\\%V/g<left><left>")
 
 -- [[ Navigate multiple files ]]
--- Splits
---nmap("<c-h>", "<c-w><c-h>")
---nmap("<c-j>", "<c-w><c-j>")
---nmap("<c-k>", "<c-w><c-k>")
---nmap("<c-l>", "<c-w><c-l>")
 -- Tabs
 --nmap("<Tab>", "gt")
 --nmap("<S-Tab>", "gT")
@@ -54,6 +44,7 @@ vmap("S", ":s/\\%V/g<left><left>")
 
 -- [[ Surround ]]
 -- foot terminal seems to have issues with ctl+shift+character
+-- will probably switch to nvim-surround
 --imap('<m-">', '""<left>')
 imap("<m-2>", '""<left>')
 imap("<m-'>", "''<left>")
@@ -85,7 +76,7 @@ nmap("<c-x>", '"+dd')
 vmap("y", '"ay')
 vmap("d", '"ad')
 
--- [[ Other shortcuts ]]
+-- [[ Other shortcuts/remaps ]]
 vmap("$", "$<left>")
 nmap("M", "<cmd>marks<cr>")
 nmap("<leader>ss", "<cmd>set spell!<cr>") -- spellcheck
@@ -94,6 +85,7 @@ nmap("gI", "ggI")
 nmap("K", "kddpkJ")
 nmap("cD", "Da")
 nmap("<bs>", "<cmd>b#<cr>") -- backspace to return to previous buffer
+nmap("<cr>", "<cmd>bp<cr>") -- return to go to next buffer
 nmap("<tab>", "za") -- tab to toggle currently selected fold
 nmap("Q", "V}gqkA<space>")
 
