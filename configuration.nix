@@ -131,6 +131,23 @@
     #texlive -- figure out later what package you need
     #biber
 
+    # Base
+    # These are some basic commandline tools that come installed with almost all GNU/Linux distributions
+    # Most (or even all) of them are probably pulled as dependencies of other packages or my scripts
+    # but I may as well declare them here too
+    coreutils
+    curl
+    file
+    findutils
+    gawk
+    gnugrep
+    gnused
+    gnutar
+    killall
+    poppler_utils
+    procps
+    wget
+
     # GUI
     #anki-bin
     signal-desktop
@@ -149,7 +166,7 @@
 
     # Simple but useful CLI tools
     xclip
-    poppler_utils
+    wl-clipboard
     colorpicker
     ddgr
     so
@@ -166,9 +183,6 @@
     bc
 
     # Misc CLI tools
-    curl
-    killall
-    file
     testdisk
 
     # Autostart tools
