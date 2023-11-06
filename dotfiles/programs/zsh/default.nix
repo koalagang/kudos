@@ -92,6 +92,9 @@
       bindkey -M menuselect 'l' vi-forward-char
       bindkey '^?' backward-delete-char # fix backspace bug when switching modes
 
+      # open vim
+      bindkey -s '^v' 'vi^M'
+
       # -- fzf
       # Fixes issue where I can't use fzf's cd widget (left alt + c doesn't give any input)
       # This weird letter is basically just right-alt (sometimes called AltGr) + c
@@ -100,7 +103,7 @@
 
       # search zoxide database using fzf and enter the selected path
       # 'bindkey -s' types out the full command before entering it, so using an alias makes it faster
-      alias Z='cd "$(zi)"'
+      alias Z='cd "$(${pkgs.zoxide}/bin/zoxide query --interactive)"'
       bindkey -s '^z' 'Z^M' # ctrl+z
       # See programs.fzf further down for fzf config
 
