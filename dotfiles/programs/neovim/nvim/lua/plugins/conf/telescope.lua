@@ -60,3 +60,11 @@ nmap("<c-t>m","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git/gross'}
 nmap("<c-t>l","<cmd>Telescope find_files search_dirs={'$HOME/Documents/latex'}<cr>") -- latex documents
 -- See respective extensions for their bindings
 -- HINT: <c-t> is usually used for those too, e.g. <c-t>n for neorg-telescope, <c-t>z for telescope-zoxide, etc.
+
+-- same as above but with live_grep
+nmap("<c-g>~","<cmd>Telescope live_grep search_dirs={'$HOME'}<cr>") -- home directory
+nmap("<c-g>v","<cmd>Telescope live_grep search_dirs={'$HOME/.config/nvim'}<cr>") -- neovim config
+nmap("<c-g>g","<cmd>Telescope live_grep search_dirs={'$HOME/Desktop/git'}<cr>") -- local git repos
+nmap("<c-g>m","<cmd>Telescope live_grep search_dirs={'$HOME/Desktop/git/gross'}<cr>") -- nix config
+nmap("<c-g>l","<cmd>Telescope live_grep search_dirs={'$HOME/Documents/latex'}<cr>") -- latex documents
+nmap("<c-g>n","<cmd>Telescope live_grep search_dirs={'$HOME/Documents/neorg'}<cr>") -- neorg documents

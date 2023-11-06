@@ -158,7 +158,7 @@ require("lazy").setup({
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
         cmd = "Telescope",
-        keys = "<c-t>",
+        keys = { "<c-t>", "<c-g>" },
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons", -- EXTERNAL: any nerdfont
