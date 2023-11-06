@@ -1,14 +1,15 @@
 -- Bootstrap lazy.nvim
+-- EXTERNAL dependency: git
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -25,6 +26,8 @@ I like using lazy because:
     -- b) it makes setting up lazy-loading far easier
     -- c) whilst I do enjoy nix, I also really like lua
 ]]
+
+vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>")
 require("lazy").setup({
     -- [[ RULES ]]
     -- Lazy load (almost) everything
@@ -36,6 +39,8 @@ require("lazy").setup({
     -- Document everything (excluding obvious things); comments exist for a reason
     -- Try to avoid going overboard on the number of plugins
         -- I'm thinking like 30 plugins- or 40 at the max (excluding dependencies and smaller plugin extensions)
+    -- Plugin dependencies marked with '[N]' comments are not actually dependencies
+        -- I've just marked them as dependencies so that they load when their "dependents" loads
 
     -- [[ TO INSTALL ]]
     -- DEFINITELY
@@ -70,21 +75,21 @@ require("lazy").setup({
             -- or folke/zen-mode.nvim
         --  junegunn/limelight.vim
             -- or folke/twilight.nvim
-        -- karb94/neoscroll.nvim
         -- Zeioth/compiler.nvim
         -- Zeioth/dooku.nvim
         -- Bekaboo/deadcolumn.nvim
 
 
-    -- [[ Major plugins ]]
+    ---- [[ MAJOR PLUGINS ]] ----
     -- These are the real game-changers
 
+    -- [[ Treesitter and extensions ]]
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate", -- Check for updates to the parsers
         dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
         -- EXTERNAL: tar, curl, gcc
-        -- This weird-looking code is simply a way of inserting the languages table
+        -- The weird-looking line below is simply a way of inserting the languages table
         -- into the ft table alongside norg and markdown
         ft = { [ languages ] = {} , "norg", "markdown" },
         config = function()
@@ -95,6 +100,15 @@ require("lazy").setup({
         "HiPhish/rainbow-delimiters.nvim",
         ft = languages,
         dependencies = "nvim-treesitter/nvim-treesitter",
+    },
+    { -- Split/join blocks of code
+         "Wansmer/treesj",
+         keys = { "tsj" },
+         dependencies = { "nvim-treesitter/nvim-treesitter" },
+         config = function()
+            require("treesj").setup()
+            vim.keymap.set("n", "tsj", "<cmd>TSJToggle<cr>")
+         end,
     },
 
     { -- "An Organized Future"
@@ -130,7 +144,7 @@ require("lazy").setup({
 
     { -- "Neovim file explorer: edit your filesystem like a buffer"
         "stevearc/oil.nvim",
-        keys = { "-", "<C-n>" },
+        keys = { "-" },
         cmd = "Oil",
         dependencies = { "nvim-tree/nvim-web-devicons" }, -- EXTERNAL: any nerdfont
         -- EXTERNAL: trash-cli (for trash feature)
@@ -139,6 +153,7 @@ require("lazy").setup({
         end
     },
 
+    -- [[ Treesitter and extensions ]]
     { -- "Find, Filter, Preview, Pick. All lua, all the time."
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -155,7 +170,11 @@ require("lazy").setup({
     },
     {
         "jvgrootveld/telescope-zoxide",
-        dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+            "stevenarc/oil.nvim", -- [N]
+        },
         -- EXTERNAL: zoxide
         keys = "<c-t>z",
         config = function()
@@ -173,7 +192,7 @@ require("lazy").setup({
     { -- Auto-focusing and auto-resizing splits/windows
         "nvim-focus/focus.nvim",
         version = "*",
-        keys = { "<c-h>", "<c-j>", "<c-k>", "<c-l>", "<m-h>", "<m-j>", "<m-k>", "<m-l>" },
+        keys = { "<c-h>", "<c-j>", "<c-k>", "<c-l>", "<localleader>h", "<localleader>j", "<localleader>k", "<localleader>l" },
         config = function()
             require(conf .. "focus")
         end,
@@ -190,8 +209,21 @@ require("lazy").setup({
     -- neogit and octo will reduce (or even remove?) the need for using the commandline to interactive with git
     -- and if I still find myself needing to use shell commands, toggleterm will be right there.
 
+    { -- Visualises the undo history and makes it easy to browse and switch between different undo branches
+      -- Not to be confused with mbbill/undotree (which does mostly the same thing)
+        "jiaoshijie/undotree",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-focus/focus.nvim", -- [N]
+        },
+        keys = { "<leader>u" },
+        config = function()
+            require("undotree").setup()
+            vim.keymap.set("n", "<leader>u", require("undotree").toggle, { noremap = true, silent = true })
+        end,
+    },
 
-    -- [[ Minor plugins ]]
+    ---- [[ MINOR PLUGINS ]] ----
     -- These don't massively change how Neovim behaves but they are really nice to have
 
     --{ -- Dracula colourscheme
@@ -207,9 +239,11 @@ require("lazy").setup({
     {
         "catppuccin/nvim",
         name = "catppuccin",
+        -- One of the few plugins I don't lazy-load
         lazy = false,
+        -- High priority to make sure the colourscheme is loaded before everything else
         priority = 1000,
-        config = function ()
+        config = function()
             require(conf .. "catppuccin")
         end,
     },
@@ -248,8 +282,16 @@ require("lazy").setup({
         cmd = "TableModeEnable",
     },
 
+    {
+        "fedepujol/move.nvim",
+        keys = { "<A-h>", "<A-j>", "<A-k>", "<A-l>", },
+        config = function()
+            require(conf .. "move")
+        end,
+    },
+
     -- TESTING
-    --[['tpope/vim-unimpaired',
+    --[[
 
     {
         "kylechui/nvim-surround",

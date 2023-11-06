@@ -20,7 +20,7 @@ nmap("<c-l>", "<cmd>FocusSplitRight<cr>")
 
 -- Open oil in new splits
 -- Depends on stevearc/oil.nvim
-nmap("<m-h>", "<cmd>FocusSplitLeft<cr><cmd>Oil<cr>")
-nmap("<m-j>", "<cmd>FocusSplitDown<cr><cmd>Oil<cr>")
-nmap("<m-k>", "<cmd>FocusSplitUp<cr><cmd>Oil<cr>")
-nmap("<m-l>", "<cmd>FocusSplitRight<cr><cmd>Oil<cr>")
+nmap("<localleader>h", "<cmd>FocusSplitLeft<cr><cmd>Oil<cr>")
+nmap("<localleader>j", "<cmd>FocusSplitDown<cr><cmd>Oil<cr>")
+nmap("<localleader>k", "<cmd>FocusSplitUp<cr><cmd>Oil<cr>")
+nmap("<localleader>l", "<cmd>FocusSplitRight<cr><cmd>Oil<cr>")
