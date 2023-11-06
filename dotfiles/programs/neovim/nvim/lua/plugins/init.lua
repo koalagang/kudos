@@ -39,8 +39,11 @@ require("lazy").setup({
     -- Document everything (excluding obvious things); comments exist for a reason
     -- Try to avoid going overboard on the number of plugins
         -- I'm thinking like 30 plugins- or 40 at the max (excluding dependencies and smaller plugin extensions)
+
+    -- [[ BADGES ]]
     -- Plugin dependencies marked with '[N]' comments are not actually dependencies
         -- I've just marked them as dependencies so that they load when their "dependents" loads
+    -- My absolute favourite plugins are marked with <3
 
     -- [[ TO INSTALL ]]
     -- DEFINITELY
@@ -85,7 +88,7 @@ require("lazy").setup({
 
     -- [[ Treesitter and extensions ]]
     {
-        "nvim-treesitter/nvim-treesitter",
+        "nvim-treesitter/nvim-treesitter", -- <3
         build = ":TSUpdate", -- Check for updates to the parsers
         dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
         -- EXTERNAL: tar, curl, gcc
@@ -115,7 +118,7 @@ require("lazy").setup({
       -- NOTE: sometimes neorg's folds break
       -- However, refreshing the file with ':e' fixes this
       -- In my experience, though, this seems to have been fixed recently
-        "nvim-neorg/neorg",
+        "nvim-neorg/neorg", -- <3
         build = ":Neorg sync-parsers",
         dependencies = {
             "nvim-lua/plenary.nvim",
@@ -143,7 +146,7 @@ require("lazy").setup({
     },
 
     { -- "Neovim file explorer: edit your filesystem like a buffer"
-        "stevearc/oil.nvim",
+        "stevearc/oil.nvim", -- <3
         keys = { "-" },
         cmd = "Oil",
         dependencies = { "nvim-tree/nvim-web-devicons" }, -- EXTERNAL: any nerdfont
@@ -155,7 +158,7 @@ require("lazy").setup({
 
     -- [[ Treesitter and extensions ]]
     { -- "Find, Filter, Preview, Pick. All lua, all the time."
-        "nvim-telescope/telescope.nvim",
+        "nvim-telescope/telescope.nvim", -- <3
         branch = "0.1.x",
         cmd = "Telescope",
         keys = { "<c-t>", "<c-g>" },
@@ -190,7 +193,7 @@ require("lazy").setup({
     -- Enter focus and winshift!
     -- This beautiful duo makes using splits an actual comfortable experience.
     { -- Auto-focusing and auto-resizing splits/windows
-        "nvim-focus/focus.nvim",
+        "nvim-focus/focus.nvim", -- <3
         version = "*",
         keys = { "<c-h>", "<c-j>", "<c-k>", "<c-l>", "<localleader>h", "<localleader>j", "<localleader>k", "<localleader>l" },
         config = function()
@@ -237,7 +240,7 @@ require("lazy").setup({
     --},
     -- TEST
     {
-        "catppuccin/nvim",
+        "catppuccin/nvim", -- <3
         name = "catppuccin",
         -- One of the few plugins I don't lazy-load
         lazy = false,
