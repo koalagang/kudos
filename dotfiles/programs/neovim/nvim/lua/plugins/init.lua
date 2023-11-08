@@ -280,17 +280,35 @@ require("lazy").setup({
         end,
     },
 
-    { -- Makes creating markdown tables not pure suffering
-        "dhruvasagar/vim-table-mode",
-        cmd = "TableModeEnable",
-    },
+    ---- [[ EASING PLUGINS ]] ---
+    -- These are very simple plugins that just make life easier.
+    -- I suppose winshift and focus could go here
+    -- but I think those make a big enough difference that I categorise them as 'major plugins'.
 
-    {
+    { -- Makes moving lines and words easier
         "fedepujol/move.nvim",
         keys = { "<A-h>", "<A-j>", "<A-k>", "<A-l>", },
         config = function()
             require(conf .. "move")
         end,
+    },
+
+    { -- Makes creating markdown tables not pure suffering
+        "dhruvasagar/vim-table-mode",
+        cmd = "TableModeToggle",
+    },
+
+    { -- Align text by selecting it in visual block mode
+      -- and then hitting :SimpleAlign followed by the character you'd like to align the text to (no spaces).
+        "kg8m/vim-simple-align",
+        cmd = "SimpleAlign",
+      --[[
+      There are more complex and powerful align plugins out there,
+      like junegunn/vim-easy-align and godlygeek/tabular
+      (and even echasnovski/mini.align and Vonr/align.nvim for those determined to use lua plugins)
+      but simple-align is... well exactly that -- simple
+      -- and it does exactly what I need it to do and nothing more.
+      ]]
     },
 
     -- TESTING

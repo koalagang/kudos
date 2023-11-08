@@ -20,6 +20,7 @@
   "telescope.nvim": { "branch": "0.1.x", "commit": "7011eaae0ac1afe036e30c95cf80200b8dc3f21a" },
   "treesj": { "branch": "main", "commit": "070e6761d0b11a55446d988a69908f7a0928dbab" },
   "undotree": { "branch": "main", "commit": "a88c8ab7f780bc14ab9356c2311c44f49213d47c" },
+  "vim-simple-align": { "branch": "master", "commit": "52911480ef071199cb26ab9503dde0d6810a4eb8" },
   "vim-table-mode": { "branch": "master", "commit": "4ff8de2ac93431ee6d85a9e04177012752e6abdc" },
   "winshift.nvim": { "branch": "main", "commit": "37468ed6f385dfb50402368669766504c0e15583" }
 }
