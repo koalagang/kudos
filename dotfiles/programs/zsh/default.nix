@@ -78,11 +78,11 @@
       # Load complist module to allow rebinding menu keys
       zmodload zsh/complist
 
-      # enter vi mode with escape
+      # enter zsh's vi normal mode with escape
       bindkey '^[' vi-cmd-mode
       export KEYTIMEOUT=1
 
-      # edit line in vim buffer with ctrl-v when in vi mode
+      # edit line in vim buffer with ctrl+v when in zsh's vi normal mode
       autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd '^v' edit-command-line
 
       # use vi keys in tab complete menu
@@ -92,7 +92,7 @@
       bindkey -M menuselect 'l' vi-forward-char
       bindkey '^?' backward-delete-char # fix backspace bug when switching modes
 
-      # open vim
+      # open vim with ctrl+v in zsh's vi insert mode
       bindkey -s '^v' 'vi^M'
 
       # -- fzf
@@ -112,17 +112,26 @@
       # Any of the following formats can be opened in the respective software just by entering the filepath
       # (no need for prefixing it with vim or anything else).
       # This is particularly useful with the ctrl+t fzf widget
-      # because it allows you to simply search for the file with fzf and then hit enter twice to open it
-      # text files
-      alias -s lua="$EDITOR"  # lua
-      alias -s nix="$EDITOR"  # nix
-      alias -s rs="$EDITOR"   # rust
-      alias -s sh="$EDITOR"   # shell
-      alias -s gd="$EDITOR"   # gdscript
-      alias -s md="$EDITOR"   # markdown
-      alias -s norg="$EDITOR" # neorg
-      alias -s tex="$EDITOR"  # latex
-      alias -s txt="$EDITOR"  # regular, uninterpreted text
+      # because it allows you to simply search for the file with fzf and then hit enter twice to open it.
+
+      # programming
+      alias -s lua="$EDITOR"      # lua
+      alias -s nix="$EDITOR"      # nix
+      alias -s rs="$EDITOR"       # rust
+      alias -s sh="$EDITOR"       # shell
+      alias -s gd="$EDITOR"       # gdscript
+
+      # documents
+      alias -s md="$EDITOR"       # markdown
+      alias -s norg="$EDITOR"     # neorg
+      alias -s tex="$EDITOR"      # latex
+      alias -s txt="$EDITOR"      # regular, uninterpreted text
+      # NOTE: I'm not sure how to handle libreoffice declaratively here
+      # because it's not located in ${pkgs.libreoffice}/bin/libreoffice
+      alias -s docx="libreoffice" # office document
+      alias -s xlsx="libreoffice" # spreadsheet
+
+      # media
       # you probably want to have window swallowing enabled in your WM/compositor for the following
       # alternatively, prefix them with setsid or with devour (latter only works on X)
       # video and audio files
@@ -131,11 +140,13 @@
       alias -s webm="mpv"
       alias -s mp3="mpv"
       alias -s flac="mpv"
+
       # image files
       # swiv is a wayland port of sxiv
       alias -s png="swiv || sxiv"
       alias -s jpg="swiv || sxiv"
       alias -s jpeg="swiv || sxiv"
+      alias -s webp="swiv || sxiv"
       # I've included these in initExtra because I don't believe homemanager has an option for suffix aliases.
       # It only has global aliases and regular aliases.
     '';
@@ -158,9 +169,9 @@
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
     changeDirWidgetOptions = [
       # preview file tree when using cd widget
-      # I usually use 'eza --tree' instead of tree but it doesn't seem to work in this case
       # {} = directory being previewed
       "--preview '${pkgs.tree}/bin/tree -C {} | head -200'"
+      # I usually use 'eza --tree' instead of tree but it doesn't seem to work in this case
     ];
 
     defaultCommand = "${pkgs.fd}/bin/fd --type f";
@@ -178,8 +189,8 @@
     #historyWidgetOptions = {}
 
     # NOTE: although not exactly an fzf widget,
-    # I also have a binding for live grepping files with a different fuzzy finder
-    # see programs/neovim/default.nix if you're interested in that
+    # I also have a binding for live grepping files with a different fuzzy finder.
+    # See programs/neovim/default.nix if you're interested in that.
   };
 
   # My favourite shell prompt
