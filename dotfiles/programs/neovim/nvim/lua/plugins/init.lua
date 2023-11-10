@@ -57,7 +57,7 @@ require("lazy").setup({
         -- pwntester/octo.nvim
         -- L3MON4D3/LuaSnip
             -- write your own snippets in lua
-        -- ekickx/clipboard.nvim
+        -- ekickx/clipboard-image.nvim
             -- configure it to support norg syntax
         -- mfussenegger/nvim-dap
         -- ledger/vim-ledger
@@ -207,10 +207,10 @@ require("lazy").setup({
             require(conf .. "winshift")
         end,
     },
-    -- Once I've also setup toggleterm, neogit and octo, I'll have no excuse to leave neovim.
+    -- Once I've also setup toggleterm, gitsigns, neogit and octo, I'll have no excuse to leave neovim.
     -- focus, winshift, oil and telescope will allow me to navigate files with ease,
-    -- neogit and octo will reduce (or even remove?) the need for using the commandline to interactive with git
-    -- and if I still find myself needing to use shell commands, toggleterm will be right there.
+    -- gitsigns, neogit and octo will reduce (or even remove?) the need for using the commandline to interactive with git
+    -- and if I still find myself needing to use the commandline alongside neovim, toggleterm will be right there.
 
     { -- Visualises the undo history and makes it easy to browse and switch between different undo branches
       -- Not to be confused with mbbill/undotree (which does mostly the same thing)
