@@ -1,7 +1,7 @@
 require("neorg").setup {
     load = {
         -- Modules in core.defaults
-        -- Double-comment = considering enabling
+        -- Double-comment (i.e. ----) = considering enabling
         --["core.clipboard.code-blocks"] = {},
         ["core.esupports.hop"] = {},
         ["core.esupports.indent"] = {},
@@ -13,17 +13,18 @@ require("neorg").setup {
                 hook = function(keybinds)
                     -- depends on nvim-neorg/neorg-telescope
                     keybinds.map_event('norg', 'n', '<c-t>n', 'core.integrations.telescope.find_linkable')
-                    keybinds.map_event('norg', 'i', '<c-t>n', 'core.integrations.telescope.insert_link')
                     keybinds.map_event('norg', 'n', '<c-t>h', 'core.integrations.telescope.search_headings')
+                    -- <c-t> is used by core.promo in insert mode
+                    keybinds.map_event('norg', 'i', '<A-n>', 'core.integrations.telescope.insert_link')
                 end,
             },
         },
-        --["core.looking-glass"] = {},
+        --["core.looking-glass"] = {}, -- will use this if I ever decide to write a literate config, unless I decide to use otter.nvim
         --["core.pivot"] = {},
         ["core.promo"] = {},
         ----["core.qol.toc"] = {},
         ["core.qol.todo_items"] = {},
-        --["core.tangle"] = {},
+        ----["core.tangle"] = {}, -- will use this if I ever decide to write a literate config
         --["core.upgrade"] = {},
 
         -- Add pretty icons to documents
