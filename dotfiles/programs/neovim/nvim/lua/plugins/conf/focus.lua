@@ -24,3 +24,5 @@ nmap("<localleader>h", "<cmd>FocusSplitLeft<cr><cmd>Oil<cr>")
 nmap("<localleader>j", "<cmd>FocusSplitDown<cr><cmd>Oil<cr>")
 nmap("<localleader>k", "<cmd>FocusSplitUp<cr><cmd>Oil<cr>")
 nmap("<localleader>l", "<cmd>FocusSplitRight<cr><cmd>Oil<cr>")
+
+-- TODO: create toggleable FocusAutoresize

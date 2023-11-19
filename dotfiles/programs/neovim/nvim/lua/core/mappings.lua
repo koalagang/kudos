@@ -84,8 +84,8 @@ nmap("gA", "GA")
 nmap("gI", "ggI")
 nmap("K", "kddpkJ")
 nmap("cD", "Da")
-nmap("<bs>", "<cmd>b#<cr>") -- backspace to return to previous buffer
-nmap("<cr>", "<cmd>bp<cr>") -- return to go to next buffer
+nmap("<cr>", "<cmd>bn<cr>") -- backspace to go to next buffer
+nmap("<bs>", "<cmd>bp<cr>") -- return to go to previous buffer
 nmap("<tab>", "za") -- tab to toggle currently selected fold
 nmap("Q", "V}gqkA<space>")
 

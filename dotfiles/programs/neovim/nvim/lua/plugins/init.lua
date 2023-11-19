@@ -226,6 +226,18 @@ require("lazy").setup({
         end,
     },
 
+    { -- "A snazzy bufferline for Neovim"
+        "akinsho/bufferline.nvim",
+        version = "*",
+        dependencies = "nvim-tree/nvim-web-devicons",
+        -- Load only after adding another buffer to the buffer list
+        event = "BufAdd",
+        config = function()
+            vim.opt.termguicolors = true
+            require("bufferline").setup()
+        end,
+    },
+
     ---- [[ MINOR PLUGINS ]] ----
     -- These don't massively change how Neovim behaves but they are really nice to have
 
@@ -238,7 +250,6 @@ require("lazy").setup({
     --    --    require(conf .. "dracula")
     --    --end,
     --},
-    -- TEST
     {
         "catppuccin/nvim", -- <3
         name = "catppuccin",
@@ -298,17 +309,24 @@ require("lazy").setup({
         cmd = "TableModeToggle",
     },
 
-    { -- Align text by selecting it in visual block mode
-      -- and then hitting :SimpleAlign followed by the character you'd like to align the text to (no spaces).
-        "kg8m/vim-simple-align",
-        cmd = "SimpleAlign",
-      --[[
-      There are more complex and powerful align plugins out there,
-      like junegunn/vim-easy-align and godlygeek/tabular
-      (and even echasnovski/mini.align and Vonr/align.nvim for those determined to use lua plugins)
-      but simple-align is... well exactly that -- simple
-      -- and it does exactly what I need it to do and nothing more.
-      ]]
+    { -- Align text
+      -- by selecting it in visual block mode
+      -- and hitting <leader>a followed by your character to align to
+        'Vonr/align.nvim',
+        branch = "v2",
+        keys = {{ "<leader>a", mode = "v" }},
+        config = function()
+            vim.keymap.set(
+                'v',
+                '<leader>a',
+                function()
+                    require'align'.align_to_string({
+                        preview = true,
+                    })
+                end,
+                { noremap = true, silent = true }
+            )
+        end,
     },
 
     -- TESTING
