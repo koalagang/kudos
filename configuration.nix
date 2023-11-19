@@ -42,7 +42,8 @@
   #  };
   #};
 
-  networking.hostName = "Myla"; # Define your hostname.
+  # Define your hostname.
+  networking.hostName = "Myla";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -105,8 +106,8 @@
   programs.zsh.enable = true;
 
   # Swap out sudo for doas
-  # If for whatever reason doas does not work
-  # Resort to entering root via `su` as your backup plan
+  # If for whatever reason doas does not work,
+  # resort to entering root via `su` as your backup plan
   security.sudo.enable = false;
   security.doas = {
     enable = true;
