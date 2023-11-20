@@ -68,7 +68,6 @@ require("lazy").setup({
     -- MAYBE
         -- nvim-neotest/neotest
         -- kevinhwang91/nvim-ufo
-        -- chentoast/marks.nvim
         -- mracos/mermaid.vim
         -- folke/todo-comments.nvim
         -- folke/trouble.nvim
@@ -312,7 +311,7 @@ require("lazy").setup({
     { -- Align text
       -- by selecting it in visual block mode
       -- and hitting <leader>a followed by your character to align to
-        'Vonr/align.nvim',
+        "Vonr/align.nvim",
         branch = "v2",
         keys = {{ "<leader>a", mode = "v" }},
         config = function()
@@ -327,6 +326,19 @@ require("lazy").setup({
                 { noremap = true, silent = true }
             )
         end,
+    },
+
+    { -- "A better user experience for viewing and interacting with Vim marks"
+        "chentoast/marks.nvim",
+        keys = { "m", "dm", "m,", "m;", "dmx", "dm-", "dm<space>", "m]", "m[", "m:", "m}", "m{", "dm=" },
+        config = function()
+            require("marks").setup()
+        end,
+        -- TIP: if like me, you're having issues where marks persist
+        -- even when you delete them, run :wshada! after deleting them all to permanently clear them.
+        -- See https://github.com/neovim/neovim/issues/7198#issuecomment-323649157
+        -- I'm not sure if is relevant to marks.nvim but
+        -- I hadn't noticed this before because I didn't use marks prior to this plugin
     },
 
     -- TESTING
