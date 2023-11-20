@@ -34,11 +34,11 @@
   };
 
   home.sessionVariables = {
-    XDG_DESKTOP_HOME = "${config.xdg.userDirs.desktop}";
-    XDG_DOCUMENTS_HOME = "${config.xdg.userDirs.documents}";
-    XDG_DOWNLOAD_HOME = "${config.xdg.userDirs.download}";
-    XDG_PICTURES_HOME = "${config.xdg.userDirs.pictures}";
-    XDG_VIDEOS_HOME = "${config.xdg.userDirs.videos}";
+    XDG_DESKTOP_DIR = "${config.xdg.userDirs.desktop}";
+    XDG_DOCUMENTS_DIR = "${config.xdg.userDirs.documents}";
+    XDG_DOWNLOAD_DIR = "${config.xdg.userDirs.download}";
+    XDG_PICTURES_DIR = "${config.xdg.userDirs.pictures}";
+    XDG_VIDEOS_DIR = "${config.xdg.userDirs.videos}";
     XDG_CACHE_HOME = "${config.xdg.cacheHome}";
     XDG_CONFIG_HOME = "${config.xdg.configHome}";
     XDG_DATA_HOME = "${config.xdg.dataHome}";
