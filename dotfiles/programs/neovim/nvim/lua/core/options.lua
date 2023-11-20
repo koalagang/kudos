@@ -22,8 +22,10 @@ local options = {
     -- local to window,
     number = true,
     relativenumber = true,
-    signcolumn = "yes",
     cursorline = true,
+    -- permanently enable sign column
+    -- this is because I find it annoying for it to open and close all the time
+    signcolumn = "yes",
 
     -- global
     laststatus = 3,
@@ -33,13 +35,15 @@ local options = {
     wildignore = "*.jpg,*.png,*.gif,*.bmp,*.ico,*.pdf,*.a,*.o,*.so,*.pyc,*.git,*.tmp,*.swp",
     wildignorecase = true,
     autowrite = false,
-    --termguicolors = true,
-    mouse = "",
+    mousemodel = "extend", -- disable right-click menu
+    virtualedit = "block",
+    inccommand = "split",
 }
 
 for k, v in pairs(options) do
     vim.opt[k] = v
 end
 
+-- might re-enable backups and/or swapfiles at some point
 vim.g.nobackup = true
 vim.g.noswapfile = true

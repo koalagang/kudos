@@ -77,8 +77,6 @@ vmap("y", '"ay')
 vmap("d", '"ad')
 
 -- [[ Other shortcuts/remaps ]]
-vmap("$", "$<left>")
-nmap("M", "<cmd>marks<cr>")
 nmap("<leader>ss", "<cmd>set spell!<cr>") -- spellcheck
 nmap("gA", "GA")
 nmap("gI", "ggI")
