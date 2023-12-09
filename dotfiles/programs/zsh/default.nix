@@ -2,7 +2,7 @@
 
 # This file consists of my zsh configuration,
 # as well as other tools I've got integrated into zsh
-# i.e. starship, zoxide and fzf
+# i.e. starship, zoxide, fzf and direnv
 
 # See https://thevaluable.dev/zsh-install-configure-mouseless/
 # and https://thevaluable.dev/zsh-completion-guide-examples/
@@ -78,19 +78,19 @@
       # Load complist module to allow rebinding menu keys
       zmodload zsh/complist
 
-      # enter zsh's vi normal mode with escape
-      bindkey '^[' vi-cmd-mode
-      export KEYTIMEOUT=1
-
-      # edit line in vim buffer with ctrl+v when in zsh's vi normal mode
-      autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd '^v' edit-command-line
-
       # use vi keys in tab complete menu
       bindkey -M menuselect 'h' vi-backward-char
       bindkey -M menuselect 'j' vi-down-line-or-history
       bindkey -M menuselect 'k' vi-up-line-or-history
       bindkey -M menuselect 'l' vi-forward-char
       bindkey '^?' backward-delete-char # fix backspace bug when switching modes
+
+      # enter zsh's vi normal mode with escape
+      bindkey '^[' vi-cmd-mode
+      export KEYTIMEOUT=1
+
+      # edit line in vim buffer with ctrl+v when in zsh's vi normal mode
+      autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd '^v' edit-command-line
 
       # open vim with ctrl+v in zsh's vi insert mode
       bindkey -s '^v' 'vi^M'
@@ -115,44 +115,40 @@
       # because it allows you to simply search for the file with fzf and then hit enter twice to open it.
 
       # programming
-      alias -s lua="$EDITOR"      # lua
-      alias -s nix="$EDITOR"      # nix
-      alias -s rs="$EDITOR"       # rust
-      alias -s sh="$EDITOR"       # shell
-      alias -s gd="$EDITOR"       # gdscript
+      alias -s lua="${config.home.sessionVariables.EDITOR}"  # lua
+      alias -s nix="${config.home.sessionVariables.EDITOR}"  # nix
+      alias -s rs="${config.home.sessionVariables.EDITOR}"   # rust
+      alias -s sh="${config.home.sessionVariables.EDITOR}"   # shell
+      alias -s gd="${config.home.sessionVariables.EDITOR}"   # gdscript
 
       # documents
-      alias -s md="$EDITOR"       # markdown
-      alias -s norg="$EDITOR"     # neorg
-      alias -s tex="$EDITOR"      # latex
-      alias -s txt="$EDITOR"      # regular, uninterpreted text
-      # NOTE: I'm not sure how to handle libreoffice declaratively here
-      # because it's not located in ${pkgs.libreoffice}/bin/libreoffice
-      alias -s docx="libreoffice" # office document
-      alias -s xlsx="libreoffice" # spreadsheet
+      alias -s md="${config.home.sessionVariables.EDITOR}"   # markdown
+      alias -s norg="${config.home.sessionVariables.EDITOR}" # neorg
+      alias -s tex="${config.home.sessionVariables.EDITOR}"  # latex
+      alias -s txt="${config.home.sessionVariables.EDITOR}"  # regular, uninterpreted text
+      alias -s docx="${pkgs.libreoffice}/bin/swriter"        # office document
+      alias -s xlsx="${pkgs.libreoffice}/bin/scalc"          # spreadsheet
 
-      # media
-      # you probably want to have window swallowing enabled in your WM/compositor for the following
-      # alternatively, prefix them with setsid or with devour (latter only works on X)
       # video and audio files
-      alias -s mp4="mpv"
-      alias -s mkv="mpv"
-      alias -s webm="mpv"
-      alias -s mp3="mpv"
-      alias -s flac="mpv"
+      alias -s mp4="${pkgs.mpv}/bin/mpv"
+      alias -s mkv="${pkgs.mpv}/bin/mpv"
+      alias -s webm="${pkgs.mpv}/bin/mpv"
+      alias -s mp3="${pkgs.mpv}/bin/mpv"
+      alias -s flac="${pkgs.mpv}/bin/mpv"
 
       # image files
       # swiv is a wayland port of sxiv
-      alias -s png="swiv || sxiv"
-      alias -s jpg="swiv || sxiv"
-      alias -s jpeg="swiv || sxiv"
-      alias -s webp="swiv || sxiv"
-      # I've included these in initExtra because I don't believe homemanager has an option for suffix aliases.
+      #alias -s png="swiv || sxiv"
+      #alias -s jpg="swiv || sxiv"
+      #alias -s jpeg="swiv || sxiv"
+      #alias -s webp="swiv || sxiv"
+
+      # I've included these aliases in initExtra because I don't believe homemanager has an option for suffix aliases.
       # It only has global aliases and regular aliases.
     '';
   };
 
-  # The general-purpose commandline fuzzy finder
+  # "A general-purpose commandline fuzzy finder"
   # It's so cute and fuzzy
   programs.fzf = {
     enable = true;
@@ -161,11 +157,11 @@
     # TODO: stylix
     #colors = {};
 
-    # -- fzf shell widgets
-    # [right]alt + c = search with fzf and cd into output
-    # ctrl + r = search history and paste output onto the commandline
-    # ctrl + t = search for files and paste output onto the commandline
-    # use fd instead of find (much faster)
+    /* -- fzf shell widgets
+    [right]alt + c = search with fzf and cd into output
+    ctrl + r = search history and paste output onto the commandline
+    ctrl + t = search for files and paste output onto the commandline
+    use fd instead of find (much faster) */
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
     changeDirWidgetOptions = [
       # preview file tree when using cd widget
@@ -178,30 +174,29 @@
     #defaultOptions = {};
 
     fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
-    #fileWidgetOptions = [
-      #"--preview 'head {}'"
+    /*fileWidgetOptions = [
+      "--preview 'head {}'"
       # TODO: write a previewer script
       # this could use glow, bat, ueberzugpp, etc.
       # see https://github.com/jstkdng/ueberzugpp/blob/master/scripts/fzfub
       # and https://github.com/thimc/vifmimg for ideas on how to preview images
-    #];
+    ]; */
 
     #historyWidgetOptions = {}
-
-    # NOTE: although not exactly an fzf widget,
-    # I also have a binding for live grepping files with a different fuzzy finder.
-    # See programs/neovim/default.nix if you're interested in that.
   };
 
-  # My favourite shell prompt
+  # "The minimal, blazing-fast, and infinitely customizable prompt for any shell!"
   # I wouldn't leave Earth without it
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-    settings.line_break.disabled = true;
+    settings = {
+      line_break.disabled = true;
+      command_timeout = 1000;
+    };
   };
 
-  # A smarter cd command
+  # "A smarter cd command"
   # Catching Zs
   programs.zoxide = {
     enable = true;
@@ -214,4 +209,15 @@
     _ZO_RESOLVE_SYMLINKS = 1;
     _ZO_EXCLUDE_DIRS = "$HOME/.*:$XDG_DOCUMENTS_HOME/archive/*:/nix/store/*";
   };
+
+  # "unclutter your .profile" (even though I don't have one ':D)
+  # I can't think of a pun for this one
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+  # Ironically (in more ways than one),
+  # I need to add an environmental variable to my shell to unclutter the screen from log output
+  home.sessionVariables.DIRENV_LOG_FORMAT="";
 }
