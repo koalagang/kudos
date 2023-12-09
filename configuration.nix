@@ -7,7 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      /etc/nixos/hardware-configuration.nix
     ];
 
   # Bootloader
@@ -17,7 +17,7 @@
       device = "/dev/sda";
       # Enable encryption support
       enableCryptodisk = true;
-      # Limit the number of generations to save space in /boot
+      # Limit the number of generations accessible with grub to save space in /boot
       configurationLimit = 30;
     };
     # Set wait time to 1 (boot in faster)
@@ -33,6 +33,7 @@
   # so that it is easily reproducible on any system.
   # It might require me to re-install but via the commandline
   # instead of using the calamares installer.
+  # Will probably use disko.
   # I'll sort this out at some point but for now I'm gonna focus on other areas of nix.
   boot.initrd.luks.devices."luks-6cb12de3-3fc0-4cb0-9cf2-b16342b7aa3e".keyFile = "/crypto_keyfile.bin";
   #boot.initrd.luks.devices = {
@@ -81,7 +82,6 @@
       lightdm = {
         enable = true;
         # Respect the XDG base directory spec
-        # and stop dumping Xauthority files into the home directory
         extraConfig = "user-authority-in-system-dir=true";
       };
       defaultSession = "none+dwm";
@@ -94,16 +94,16 @@
   # Configure console keymap
   console.keyMap = "uk";
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account
   users.users.dante = {
     isNormalUser = true;
     description = "dante";
     extraGroups = [ "wheel" ];
-    initialPassword = "zoteboat";
+    initialPassword = "zoteboat"; # Don't forget to change the password with 'passwd'
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
-  programs.zsh.enable = true;
+  programs.zsh.enable = true; # See home-manager for config
 
   # Swap out sudo for doas
   # If for whatever reason doas does not work,
@@ -120,9 +120,15 @@
     }];
   };
 
-  # Intel microcode is the only unfree software allowed
-  nixpkgs.config.allowUnfree = false;
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "microcodeIntel" ];
+  # I generally avoid proprietary software in almost all cases
+  # but refusing to update your CPU microcode exposes you to exploits
+  # because then you do not get security updates for your CPU firmware
+  nixpkgs.config.allowUnfree = false;     # reject most nonfree software...
+  hardware = {
+    enableRedistributableFirmware = true; # ...but make exceptions for redistributable firmware
+    cpu.intel.updateMicrocode = true;     # and make sure to update the Intel microcode
+    # cpu.amd.updateMicrocode = true;     # use this option instead if you have an AMD CPU
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -150,7 +156,6 @@
     wget
 
     # GUI
-    #anki-bin
     signal-desktop
     keepassxc
     libreoffice-still jre_minimal
@@ -163,7 +168,7 @@
     sox
     # DO NOT REMOVE GIT
     # see https://discourse.nixos.org/t/getting-the-head-of-the-git-tree-failed/21837 for why
-    git
+    git # will probably switch to programs.git options
 
     # Simple but useful CLI tools
     xclip
@@ -187,6 +192,7 @@
     testdisk
 
     # Autostart tools
+    # Will remove these once I've migrated to wayland
     xorg.xkbcomp
     xwallpaper
     dunst libnotify
@@ -194,6 +200,7 @@
     xcompmgr
 
     # suckless
+    # Will remove these once I've migrated to wayland
     dmenu
     dwm
     dwmblocks
@@ -335,30 +342,12 @@
     };
 
     # optimise battery life and health
-    tlp = {
-        enable = true;
-        settings = {
-            # start charging when the battery power is <=65%
-            START_CHARGE_THRESH_BAT0=65;
-            # stop  charging when the battery power is >=80%
-            STOP_CHARGE_THRESH_BAT0=80;
-            # this is better for battery health
-            # because lithium-ion batteries are most efficient at 20-80%
+    auto-cpufreq.enable = true;
 
-            # keep the soundcard on
-            SOUND_POWER_SAVE_ON_AC=1;
-            SOUND_POWER_SAVE_ON_BAT=1;
-            # tlp offers the ability to have it automatically turn off if not in use
-            # because this saves battery power.
-            # However, for me it seems that it does not turn itself back on
-            # even when I play audio.
+    # reduce overheating of Intel CPUs
+    thermald.enable = true;
 
-            CPU_SCALING_GOVERNOR_ON_AC = "performance";
-            CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-        };
-    };
-
-    # optimise SSD health
+    # optimise SSD health and performance
     fstrim.enable = true;
   };
 
@@ -368,7 +357,7 @@
       # Enable flakes
       experimental-features = nix-command flakes
 
-      # Tell nix to stop dumping stuff into my home directory
+      # Respect the XDG base directory spec
       use-xdg-base-directories = true
     '';
   };
