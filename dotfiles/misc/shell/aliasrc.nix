@@ -12,6 +12,7 @@
     C = "cut";
     E = "echo";
     S = "sed";
+    df = "df -h";
 
     gdir = "cd ${config.xdg.userDirs.desktop}/git";
     desk = "cd ${config.xdg.userDirs.desktop}";
