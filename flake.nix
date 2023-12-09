@@ -38,9 +38,5 @@
         ];
       };
     };
-    imports = [
-      ./dotfiles
-      ./scripts
-    ];
   };
 }
