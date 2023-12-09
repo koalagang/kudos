@@ -9,7 +9,7 @@
 #     |   |
 #     |   |
 {
-  description = "Gabriel's Reproducible Open-Source System";
+  description = "Koala's Unified and Declarative Operating System ";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
