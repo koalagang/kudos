@@ -39,6 +39,7 @@
   programs.fuzzel.enable = true;
 
   # make sure to add `security.pam.services.swaylock = {};` to configuration.nix
+  # am considering switching to waylock
   programs.swaylock.enable = true;
 
   # doesn't seem to work atm
@@ -46,7 +47,7 @@
   services.swayidle = {
     enable = true;
     timeouts = [{
-      timeout = 60;
+      timeout = 120;
       command = "${pkgs.swaylock}/bin/swaylock";
     }];
   };
