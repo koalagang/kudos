@@ -59,7 +59,7 @@
     # install and configure taskopen
     packages = [ pkgs.taskopen ];
     file."${config.xdg.configHome}/task/taskopenrc".text = ''
-      TASKBIN='task'
+      TASKBIN='${pkgs.taskwarrior}/bin/task'
       # Directory has to be manually created
       NOTES_FOLDER="$HOME/Documents/neorg/tasknotes/" # the leading slash here is important
       NOTES_EXT=".norg" # Neorg
