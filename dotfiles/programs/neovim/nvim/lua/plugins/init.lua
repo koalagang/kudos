@@ -19,14 +19,6 @@ local languages = { "sh", "bib", "tex", "make", "rust", "toml", "lua", "nix" }
 -- Set plugin config path in a variable in case I decide to move them
 local conf = "plugins.conf."
 
---[[
-Despite using homemanager which does actually allow me to install neovim plugins with nix
-I like using lazy because:
-    -- a) it provides a nice interface
-    -- b) it makes setting up lazy-loading far easier
-    -- c) whilst I do enjoy nix, I also really like lua
-]]
-
 vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>")
 require("lazy").setup({
     -- [[ RULES ]]
@@ -89,7 +81,7 @@ require("lazy").setup({
     {
         "nvim-treesitter/nvim-treesitter", -- <3
         build = ":TSUpdate", -- Check for updates to the parsers
-        dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+        --dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
         -- EXTERNAL: tar, curl, gcc
         -- The weird-looking line below is simply a way of inserting the languages table
         -- into the ft table alongside norg and markdown
@@ -125,6 +117,9 @@ require("lazy").setup({
             {
                 "nvim-neorg/neorg-telescope",
                 dependencies = { "nvim-telescope/telescope.nvim" },
+                --config = function()
+                --    vim.wo.foldlevel = 99
+                --end,
             },
         },
         cmd = "Neorg",
@@ -335,7 +330,7 @@ require("lazy").setup({
             require("marks").setup()
         end,
         -- TIP: if like me, you're having issues where marks persist
-        -- even when you delete them, run :wshada! after deleting them all to permanently clear them.
+        -- even when you delete them, run :delmarks A-Z0-9 and then :wshada! to permanently clear them.
         -- See https://github.com/neovim/neovim/issues/7198#issuecomment-323649157
         -- I'm not sure if is relevant to marks.nvim but
         -- I hadn't noticed this before because I didn't use marks prior to this plugin

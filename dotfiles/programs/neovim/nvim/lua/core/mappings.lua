@@ -80,7 +80,7 @@ vmap("d", '"ad')
 nmap("<leader>ss", "<cmd>set spell!<cr>") -- spellcheck
 nmap("gA", "GA")
 nmap("gI", "ggI")
-nmap("K", "kddpkJ")
+nmap("K", "kddpkJ") -- like J but for the line above
 nmap("cD", "Da")
 nmap("<cr>", "<cmd>bn<cr>") -- backspace to go to next buffer
 nmap("<bs>", "<cmd>bp<cr>") -- return to go to previous buffer

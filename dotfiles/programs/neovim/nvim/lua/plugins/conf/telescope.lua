@@ -54,22 +54,29 @@ end
 -- I could probably make a function or a for loop that creates the following find_files and live_grep mappings
 
 -- find_files in...
-nmap("<c-t>.","<cmd>Telescope find_files<cr>") -- current directory
-nmap("<c-t>~","<cmd>Telescope find_files search_dirs={'$HOME'}<cr>") -- home directory
-nmap("<c-t>v","<cmd>Telescope find_files search_dirs={'$HOME/.config/nvim'}<cr>") -- neovim config
-nmap("<c-t>g","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git'}<cr>") -- local git repos
-nmap("<c-t>m","<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git/gross'}<cr>") -- nix config
-nmap("<c-t>l","<cmd>Telescope find_files search_dirs={'$HOME/Documents/latex'}<cr>") -- latex documents
-nmap("<c-t>t","<cmd>Telescope find_files search_dirs={'$HOME/Documents/neorg/tech'}<cr>") -- tech ideas
+nmap("<c-t>.", "<cmd>Telescope find_files<cr>") -- current directory
+nmap("<c-t>~", "<cmd>Telescope find_files search_dirs={'$HOME'}<cr>") -- home directory
+nmap("<c-t>v", "<cmd>Telescope find_files search_dirs={'$HOME/.config/nvim'}<cr>") -- neovim config
+nmap("<c-t>g", "<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git'}<cr>") -- local git repos
+nmap("<c-t>r", "<cmd>Telescope find_files search_dirs={'$HOME/Desktop/git/gross'}<cr>") -- nix config
+nmap("<c-t>l", "<cmd>Telescope find_files search_dirs={'$HOME/Documents/latex'}<cr>") -- latex documents
+nmap("<c-t>t", "<cmd>Telescope find_files search_dirs={'$HOME/Documents/neorg/tech'}<cr>") -- tech ideas
 -- See respective extensions for their bindings
 -- HINT: <c-t> is usually used for those too, e.g. <c-t>n for neorg-telescope, <c-t>z for telescope-zoxide, etc.
 
 -- same as above but with live_grep
-nmap("<c-g>.","<cmd>Telescope live_grep<cr>") -- current directory
-nmap("<c-g>~","<cmd>Telescope live_grep search_dirs={'$HOME'}<cr>") -- home directory
-nmap("<c-g>v","<cmd>Telescope live_grep search_dirs={'$HOME/.config/nvim'}<cr>") -- neovim config
-nmap("<c-g>g","<cmd>Telescope live_grep search_dirs={'$HOME/Desktop/git'}<cr>") -- local git repos
-nmap("<c-g>m","<cmd>Telescope live_grep search_dirs={'$HOME/Desktop/git/gross'}<cr>") -- nix config
-nmap("<c-g>l","<cmd>Telescope live_grep search_dirs={'$HOME/Documents/latex'}<cr>") -- latex documents
-nmap("<c-g>n","<cmd>Telescope live_grep search_dirs={'$HOME/Documents/neorg'}<cr>") -- neorg documents
-nmap("<c-g>t","<cmd>Telescope live_grep search_dirs={'$HOME/Documents/neorg/tech'}<cr>") -- tech ideas
+nmap("<c-g>.", "<cmd>Telescope live_grep<cr>") -- current directory
+nmap("<c-g>~", "<cmd>Telescope live_grep search_dirs={'$HOME'}<cr>") -- home directory
+nmap("<c-g>v", "<cmd>Telescope live_grep search_dirs={'$HOME/.config/nvim'}<cr>") -- neovim config
+nmap("<c-g>g", "<cmd>Telescope live_grep search_dirs={'$HOME/Desktop/git'}<cr>") -- local git repos
+nmap("<c-g>r", "<cmd>Telescope live_grep search_dirs={'$HOME/Desktop/git/gross'}<cr>") -- nix config
+nmap("<c-g>l", "<cmd>Telescope live_grep search_dirs={'$HOME/Documents/latex'}<cr>") -- latex documents
+nmap("<c-g>n", "<cmd>Telescope live_grep search_dirs={'$HOME/Documents/neorg'}<cr>") -- neorg documents
+nmap("<c-g>t", "<cmd>Telescope live_grep search_dirs={'$HOME/Documents/neorg/tech'}<cr>") -- tech ideas
+
+-- TIP: check out chentoast/marks.nvim for a better marks experience.
+-- I don't like its MarksList commands though,
+-- so it's nice that telescope has a builtin extension for marks.
+-- It does, annoyingly though, show the marks vim creates automatically
+-- so at some point I'd like to write an extension that only lists number and letter marks.
+nmap("<c-t>m", "<cmd>Telescope marks<cr>")
