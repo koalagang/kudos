@@ -3,6 +3,7 @@
 {
   gtk = {
     enable = true;
+
     # TODO: stylix
     #font = {};
     theme = {
@@ -18,7 +19,12 @@
       package = pkgs.capitaine-cursors;
     };
 
-    # Don't dump the gtk2 config in the home directory
+    # Respect the XDG base directory spec for gtk2
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+
+    # Don't log opened files (~/.local/share/recently-used.xbel)
+    gtk2.extraConfig = "gtk-recent-files-max-age = 0";
+    gtk3.extraConfig.gtk-recent-files-max-age = 0;
+    gtk4.extraConfig.gtk-recent-files-max-age = 0;
   };
 }
