@@ -7,13 +7,11 @@
     # TODO: stylix
 
     options = {
-      # enable clipboard
-      selection-clipboard = "clipboard";
-      # disable notification which displays when copying
-      selection-notification = false;
-      # disable the statusbar by default
-      guioptions = "";
-      page-padding = 6;
+      page-padding = 6; # number of pixels between pages
+      selection-clipboard = "clipboard"; # copy selected text to clipboard
+      selection-notification = false; # disable notification which displays when copying
+      guioptions = ""; # disable the statusbar by default
+      database = "null"; # don't keep history and bookmark files
     };
 
     mappings = {
