@@ -53,5 +53,19 @@
         esac
       done
     '')
+
+    (pkgs.writeShellScriptBin "hm" ''
+      while getopts 'h:m:' OPT; do
+        case $OPT in
+          # take a number of minutes as input and output it in hours and minutes, e.g.
+          # $ hm -h 152
+          # 2 hours + 32 minutes
+          h) ${pkgs.units}/bin/units "$OPTARG"mins 'hours;minutes' ;;
+          # same as above but seconds -> mins+secs
+          m) ${pkgs.units}/bin/units "$OPTARG"secs 'minutes;seconds' ;;
+          *) ${pkgs.coreutils}/bin/echo 'error: invalid flag'
+        esac
+      done
+    '')
   ];
 }

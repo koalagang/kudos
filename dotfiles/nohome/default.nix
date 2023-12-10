@@ -2,9 +2,7 @@
 {
   imports = [
     ./anki
-    ./dust
     ./timewarrior
-    ./trash-cli
     ./wget
   ];
 }
