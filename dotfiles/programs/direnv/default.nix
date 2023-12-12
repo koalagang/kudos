@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.direnv = {
@@ -9,9 +9,7 @@
     enableBashIntegration    = true;
     enableNushellIntegration = true;
     enableZshIntegration     = true;
-    # direnv is enabled by default for fish
-    # and manually enabling it will cause a conflict for some reason
-    enableFishIntegration = pkgs.mkDefault true;
+    enableFishIntegration    = pkgs.mkDefault true;
   };
 
   # Ironically (in more ways than one),
