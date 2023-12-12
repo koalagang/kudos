@@ -2,18 +2,22 @@
   imports = [
     ./bat
     ./btop
+    ./direnv
     ./eza
     ./firefox
+    ./fzf
     ./git
     ./gpg
     ./mpv
     ./neovim
     ./pandoc
+    ./starship
     ./taskwarrior
     ./tealdeer
     ./translate-shell
     ./yt-dlp
     ./zathura
+    ./zoxide
     ./zsh
   ];
 }

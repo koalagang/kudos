@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
 
-# This file consists of my zsh configuration,
-# as well as other tools I've got integrated into zsh
-# i.e. starship, zoxide, fzf and direnv
-
 # See https://thevaluable.dev/zsh-install-configure-mouseless/
 # and https://thevaluable.dev/zsh-completion-guide-examples/
 # to learn how the contents of completionInit and initExtra below work.
@@ -105,7 +101,6 @@
       # 'bindkey -s' types out the full command before entering it, so using an alias makes it faster
       alias Z='cd "$(${pkgs.zoxide}/bin/zoxide query --interactive)"'
       bindkey -s '^z' 'Z^M' # ctrl+z
-      # See programs.fzf further down for fzf config
 
       # -- suffix aliases
       # Like autocd but for files.
@@ -138,86 +133,14 @@
 
       # image files
       # swiv is a wayland port of sxiv
-      #alias -s png="swiv || sxiv"
-      #alias -s jpg="swiv || sxiv"
-      #alias -s jpeg="swiv || sxiv"
-      #alias -s webp="swiv || sxiv"
+      # TODO: specify package
+      #alias -s png="sxiv"
+      #alias -s jpg="sxiv"
+      #alias -s jpeg="sxiv"
+      #alias -s webp="sxiv"
 
       # I've included these aliases in initExtra because I don't believe homemanager has an option for suffix aliases.
       # It only has global aliases and regular aliases.
     '';
   };
-
-  # "A general-purpose commandline fuzzy finder"
-  # It's so cute and fuzzy
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-
-    # TODO: stylix
-    #colors = {};
-
-    /* -- fzf shell widgets
-    [right]alt + c = search with fzf and cd into output
-    ctrl + r = search history and paste output onto the commandline
-    ctrl + t = search for files and paste output onto the commandline
-    use fd instead of find (much faster) */
-    changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
-    changeDirWidgetOptions = [
-      # preview file tree when using cd widget
-      # {} = directory being previewed
-      "--preview '${pkgs.tree}/bin/tree -C {} | head -200'"
-      # I usually use 'eza --tree' instead of tree but it doesn't seem to work in this case
-    ];
-
-    defaultCommand = "${pkgs.fd}/bin/fd --type f";
-    #defaultOptions = {};
-
-    fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
-    /*fileWidgetOptions = [
-      "--preview 'head {}'"
-      # TODO: write a previewer script
-      # this could use glow, bat, ueberzugpp, etc.
-      # see https://github.com/jstkdng/ueberzugpp/blob/master/scripts/fzfub
-      # and https://github.com/thimc/vifmimg for ideas on how to preview images
-    ]; */
-
-    #historyWidgetOptions = {}
-  };
-
-  # "The minimal, blazing-fast, and infinitely customizable prompt for any shell!"
-  # I wouldn't leave Earth without it
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      line_break.disabled = true;
-      command_timeout = 1000;
-    };
-  };
-
-  # "A smarter cd command"
-  # Catching Zs
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-  # zoxide configuration
-  home.sessionVariables = {
-    _ZO_DATA_DIR = "${config.xdg.dataHome}/zsh";
-    _ZO_MAXAGE = 10000;
-    _ZO_RESOLVE_SYMLINKS = 1;
-    _ZO_EXCLUDE_DIRS = "$HOME/.*:$XDG_DOCUMENTS_HOME/archive/*:/nix/store/*";
-  };
-
-  # "unclutter your .profile" (even though I don't have one ':D)
-  # I can't think of a pun for this one
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-    nix-direnv.enable = true;
-  };
-  # Ironically (in more ways than one),
-  # I need to add an environmental variable to my shell to unclutter the screen from log output
-  home.sessionVariables.DIRENV_LOG_FORMAT="";
 }
