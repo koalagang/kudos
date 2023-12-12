@@ -130,6 +130,12 @@
     # cpu.amd.updateMicrocode = true;     # use this option instead if you have an AMD CPU
   };
 
+  # I don't use nano, perl, rsync or strace (the defaults).
+  # However, I do need to make sure I've always got an editor around (hence neovim)
+  # and git must always be present too in case I want to revert my flake.lock.
+  # There's also this issue https://discourse.nixos.org/t/getting-the-head-of-the-git-tree-failed/21837
+  environment.defaultPackages = with pkgs; [ neovim git ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -352,14 +358,15 @@
   };
 
   nix = {
+    # Install and...
     package = pkgs.nixFlakes;
-    extraOptions = ''
-      # Enable flakes
-      experimental-features = nix-command flakes
+    settings = {
+      # enable flakes
+      experimental-features = "nix-command flakes";
 
       # Respect the XDG base directory spec
-      use-xdg-base-directories = true
-    '';
+      use-xdg-base-directories = true;
+    };
   };
 
   # For some reason, git opens an annoying graphical askpass window
