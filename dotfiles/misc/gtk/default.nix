@@ -20,6 +20,7 @@
     };
 
     # Respect the XDG base directory spec for gtk2
+    # (gtk3 and 4 respect this by default but gtk2 does not)
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
     # Don't log opened files (~/.local/share/recently-used.xbel)
