@@ -5,7 +5,6 @@
 # to learn how the contents of completionInit and initExtra below work.
 
 {
-  # If there ever was a shell I'd hide under, it's the trusty Z shell
   programs.zsh = {
     enable = true;
 
@@ -59,12 +58,14 @@
         # allows for using my zsh config inside the nix ephemeral shell
         name = "zsh-nix-shell";
         file = "nix-shell.plugin.zsh";
-        src = pkgs.fetchFromGitHub {
-          owner = "chisui";
-          repo = "zsh-nix-shell";
-          rev = "v0.7.0";
-          sha256 = "149zh2rm59blr2q458a5irkfh82y3dwdich60s9670kl3cl5h2m1";
-        };
+        src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
+      }
+
+      {
+        # auto-close and delete matching delimiters
+        name = "zsh-autopair";
+        file = "autopair.zsh";
+        src = "${pkgs.zsh-autopair}/share/zsh/zsh-autopair";
       }
     ];
 
@@ -91,16 +92,19 @@
       # open vim with ctrl+v in zsh's vi insert mode
       bindkey -s '^v' 'vi^M'
 
-      # -- fzf
-      # Fixes issue where I can't use fzf's cd widget (left alt + c doesn't give any input)
-      # This weird letter is basically just right-alt (sometimes called AltGr) + c
-      # I use the British keyboard layout on a classic ThinkPad keyboard if that is of relevance
+      # Fixes issue where I can't use fzf's cd widget (left alt + c doesn't give any input).
+      # This weird letter is basically just right-alt (sometimes called AltGr) + c.
+      # I use the British keyboard layout on a classic ThinkPad keyboard fwiw
       bindkey '¢' fzf-cd-widget
 
-      # search zoxide database using fzf and enter the selected path
+      # search zoxide database using fzf and enter the selected path with ctrl+f
       # 'bindkey -s' types out the full command before entering it, so using an alias makes it faster
       alias Z='cd "$(${pkgs.zoxide}/bin/zoxide query --interactive)"'
-      bindkey -s '^z' 'Z^M' # ctrl+z
+      bindkey -s '^f' 'Z^M'
+
+      # quickly push an application (e.g. vim) into the background with ctrl+z
+      # and then just as quickly pull it into the foreground again with ctrl+z
+      bindkey -s '^z' 'fg^M'
 
       # -- suffix aliases
       # Like autocd but for files.
