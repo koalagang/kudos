@@ -3,9 +3,10 @@
 {
   home = {
     packages = [ pkgs.wget ];
-    # prevents wget from dumping files into the home directory
+
+    # Follow XDG base directory spec
     file."${config.xdg.configHome}/wget/wgetrc".text = ''
-      hsts-file = "${config.xdg.cacheHome}/wget-hsts"
+      hsts-file = "${config.xdg.dataHome}/wget-hsts"
     '';
     sessionVariables.WGETRC = "${config.xdg.configHome}/wget/wgetrc";
   };
