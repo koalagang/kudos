@@ -18,8 +18,8 @@
     ctrl + r = search history and paste output onto the commandline
     ctrl + t = search for files and paste output onto the commandline
     */
-    # use fd instead of find (much faster)
-    changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
+    # use bfs instead of find or fd (much faster; so fast I never even see fzf's loading symbol)
+    changeDirWidgetCommand = "${pkgs.bfs}/bin/bfs -nohidden -type d";
 
     changeDirWidgetOptions = [
       # preview file tree when using cd widget
@@ -28,10 +28,10 @@
       # I usually use 'eza --tree' instead of tree but it doesn't seem to work in this case
     ];
 
-    defaultCommand = "${pkgs.fd}/bin/fd --type f";
+    defaultCommand = "${pkgs.bfs}/bin/bfs -nohidden -type f";
     #defaultOptions = {};
 
-    fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
+    fileWidgetCommand = "${pkgs.bfs}/bin/bfs -nohidden -type f";
     /*fileWidgetOptions = [
       "--preview 'head {}'"
       # TODO: write a previewer script
