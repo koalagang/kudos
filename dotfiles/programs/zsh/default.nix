@@ -32,10 +32,27 @@
     # -- History
     history = {
       extended = true; # save timestamps into the history file
-      ignorePatterns = [ # do not add these very dangerous commands to the history
-        "rm *"
-        "rm -rf *"
+      # do not add these very dangerous commands to the history
+      # this is very important if you use the fzf history widget
+      ignorePatterns = [
+        # kills all running processes
+        "kill *"
+        "killall *"
         "pkill *"
+
+        # deletes all files and folders in the current directory
+        "rm *"
+        "rm -r *"
+        "rm * -r"
+        "rm * -f"
+        "rm -f *"
+        "rm -rf *"
+        "rm * -rf"
+        "bfs -rm *"
+        "bfs * -rm"
+        "bfs * -delete"
+        "bfs -delete *"
+        "find * -delete"
       ];
       ignoreSpace = true; # do not save commands beginning with a space
       path = "${config.xdg.dataHome}/zsh/zsh_history";
