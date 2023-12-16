@@ -11,11 +11,28 @@
     # where to store the zshrc and zshenv
     # can't use ${config.xdg.configHome}/zsh because then it does /home/user//home/user/.config/zsh
     # as the dotDir option is relative to the user's home directory
+    # NOTE: homemanager will still place a .zshenv in the home directory, which sources a second .zshenv
     dotDir = ".config/zsh";
 
     # Allow entering directories by entering path into shell (without need for 'cd' command)
     # For example, `Documents/neorg` would be equivalent to `cd Documents/neorg`
+    # Works really well with dirHashes and cdpath
     autocd = true;
+
+    # start zsh in vi insert mode
+    defaultKeymap = "viins";
+
+    # cd into directories just by typing 'cd ~<hash>'
+    # e.g. 'cd ~v' will send you to Videos
+    # the cd can be dropped if you have autocd enabled
+    dirHashes = {
+      de = "${config.xdg.userDirs.desktop}";
+      dl = "${config.xdg.userDirs.download}";
+      do = "${config.xdg.userDirs.documents}";
+      g  = "${config.xdg.userDirs.desktop}/git";
+      p  = "${config.xdg.userDirs.pictures}";
+      v  = "${config.xdg.userDirs.videos}";
+    };
 
     # -- Completion
     enableCompletion = true;
@@ -28,9 +45,14 @@
       # Auto-completion with case insensitivity
       zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
     '';
+    cdpath =  [
+     "${config.xdg.userDirs.desktop}/git"
+     "${config.xdg.userDirs.documents}"
+    ];
 
     # -- History
     history = {
+      path = "${config.xdg.dataHome}/zsh/zsh_history";
       extended = true; # save timestamps into the history file
       # do not add these very dangerous commands to the history
       # this is very important if you use the fzf history widget
@@ -54,8 +76,12 @@
         "bfs -delete *"
         "find * -delete"
       ];
-      ignoreSpace = true; # do not save commands beginning with a space
-      path = "${config.xdg.dataHome}/zsh/zsh_history";
+      # if a command is a duplicate of a previous command, remove the old entry from the history
+      ignoreDups = false; ignoreAllDups = true;
+      # do not save commands beginning with a space
+      # (useful for if you want to enter a command that you don't want in your history, e.g. one containing a password)
+      ignoreSpace = true;
+      expireDuplicatesFirst = true;
       # save 10,000 lines (this is actually the default behaviour)
       save = 10000;
       size = 10000;
@@ -63,43 +89,13 @@
       share = true;
     };
 
-    # -- Plugins
-    enableAutosuggestions = true;
-    syntaxHighlighting = {
-      enable = true;
-      # TODO: nix-colors
-      #styles = {};
-    };
-    plugins = [
-      {
-        # allows for using my zsh config inside the nix ephemeral shell
-        name = "zsh-nix-shell";
-        file = "nix-shell.plugin.zsh";
-        src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
-      }
-
-      {
-        # auto-close and delete matching delimiters
-        name = "zsh-autopair";
-        file = "autopair.zsh";
-        src = "${pkgs.zsh-autopair}/share/zsh/zsh-autopair";
-      }
-    ];
-
-    # -- vi mode
-    defaultKeymap = "viins"; # start zsh in vi insert mode
+    # zsh settings neglected by the homemanager module
+    # this includes bindings (bindkey), suffixes (alias -s) and some options (setopt)
     initExtra = ''
-      # Load complist module to allow rebinding menu keys
+      # Load complist module to allow rebinding keys
       zmodload zsh/complist
 
       # -- vi and vim
-      # use vi keys in tab complete menu
-      bindkey -M menuselect 'h' vi-backward-char
-      bindkey -M menuselect 'j' vi-down-line-or-history
-      bindkey -M menuselect 'k' vi-up-line-or-history
-      bindkey -M menuselect 'l' vi-forward-char
-      bindkey '^?' backward-delete-char # fix backspace bug when switching modes
-
       # enter zsh's vi normal mode with escape
       bindkey '^[' vi-cmd-mode
       export KEYTIMEOUT=1
@@ -127,12 +123,11 @@
 
       # -- suffix aliases
       # Like autocd but for files.
-      # I've included these aliases in initExtra because I don't believe homemanager has an option for suffix aliases.
-      # It only has global aliases and regular aliases (shellGlobalAliases and shellAliases respectively).
       # Any of the following formats can be opened in the respective software just by entering the filepath
       # (no need for prefixing it with vim or anything else).
       # This is particularly useful with the ctrl+t fzf widget
       # because it allows you to simply search for the file with fzf and then hit enter twice to open it.
+      # Another usecase is 'git add ' <ctrl+t> search for file <enter>.
 
       # programming
       alias -s lua="${config.home.sessionVariables.EDITOR}"  # lua
@@ -163,6 +158,39 @@
       #alias -s jpg="sxiv"
       #alias -s jpeg="sxiv"
       #alias -s webp="sxiv"
+
+      # -- options
+      setopt HIST_REDUCE_BLANKS # strip superfluous blanks before adding to history, e.g. 'vi  foo ' -> 'vi foo'
     '';
+
+    # -- Plugins
+    enableAutosuggestions = true;
+    syntaxHighlighting = {
+      enable = true;
+      # TODO: nix-colors
+      #styles = {};
+    };
+    plugins = [
+      {
+        # allows for using zsh inside the nix ephemeral shell
+        name = "zsh-nix-shell";
+        file = "nix-shell.plugin.zsh";
+        src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
+      }
+      {
+        # jump back to a specific directory, without doing `cd ../../..`
+        name = "zsh-bd";
+        file = "bd.zsh";
+        src = "${pkgs.zsh-bd}/share/zsh-bd";
+      }
+      {
+        # replace zsh's default completion selection menu with fzf
+        # NOTE: this plugin uses the results of zsh completion so enabling zsh completion is still necessary
+        # this simply replaces the built-in menu
+        name = "fzf-tab";
+        file = "fzf-tab.zsh";
+        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+      }
+    ];
   };
 }
