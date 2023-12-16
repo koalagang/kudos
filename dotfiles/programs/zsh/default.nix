@@ -21,11 +21,11 @@
     enableCompletion = true;
     completionInit = ''
       # Basic tab completion
-      autoload -U compinit && compinit -u # load the compinit function
+      autoload -U compinit && compinit # load the compinit function
       zstyle ':completion:*' menu select
       _comp_options+=(globdots) # include hidden files
 
-      # Auto completion with case insensitivity
+      # Auto-completion with case insensitivity
       zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
     '';
 
@@ -92,6 +92,7 @@
       # Load complist module to allow rebinding menu keys
       zmodload zsh/complist
 
+      # -- vi and vim
       # use vi keys in tab complete menu
       bindkey -M menuselect 'h' vi-backward-char
       bindkey -M menuselect 'j' vi-down-line-or-history
@@ -109,6 +110,7 @@
       # open vim with ctrl+v in zsh's vi insert mode
       bindkey -s '^v' 'vi^M'
 
+      # -- misc bindings
       # Fixes issue where I can't use fzf's cd widget (left alt + c doesn't give any input).
       # This weird letter is basically just right-alt (sometimes called AltGr) + c.
       # I use the British keyboard layout on a classic ThinkPad keyboard fwiw
@@ -125,6 +127,8 @@
 
       # -- suffix aliases
       # Like autocd but for files.
+      # I've included these aliases in initExtra because I don't believe homemanager has an option for suffix aliases.
+      # It only has global aliases and regular aliases (shellGlobalAliases and shellAliases respectively).
       # Any of the following formats can be opened in the respective software just by entering the filepath
       # (no need for prefixing it with vim or anything else).
       # This is particularly useful with the ctrl+t fzf widget
@@ -133,24 +137,24 @@
       # programming
       alias -s lua="${config.home.sessionVariables.EDITOR}"  # lua
       alias -s nix="${config.home.sessionVariables.EDITOR}"  # nix
-      alias -s rs="${config.home.sessionVariables.EDITOR}"   # rust
-      alias -s sh="${config.home.sessionVariables.EDITOR}"   # shell
-      alias -s gd="${config.home.sessionVariables.EDITOR}"   # gdscript
+      alias -s rs ="${config.home.sessionVariables.EDITOR}"  # rust
+      alias -s sh ="${config.home.sessionVariables.EDITOR}"  # shell
+      alias -s gd ="${config.home.sessionVariables.EDITOR}"  # gdscript
 
       # documents
-      alias -s md="${config.home.sessionVariables.EDITOR}"   # markdown
+      alias -s md  ="${config.home.sessionVariables.EDITOR}" # markdown
       alias -s norg="${config.home.sessionVariables.EDITOR}" # neorg
-      alias -s tex="${config.home.sessionVariables.EDITOR}"  # latex
-      alias -s txt="${config.home.sessionVariables.EDITOR}"  # regular, uninterpreted text
+      alias -s tex ="${config.home.sessionVariables.EDITOR}" # latex
+      alias -s txt ="${config.home.sessionVariables.EDITOR}" # regular, uninterpreted text
       alias -s docx="${pkgs.libreoffice}/bin/swriter"        # office document
       alias -s xlsx="${pkgs.libreoffice}/bin/scalc"          # spreadsheet
 
       # video and audio files
-      alias -s mp4="${pkgs.mpv}/bin/mpv"
-      alias -s mkv="${pkgs.mpv}/bin/mpv"
-      alias -s webm="${pkgs.mpv}/bin/mpv"
-      alias -s mp3="${pkgs.mpv}/bin/mpv"
       alias -s flac="${pkgs.mpv}/bin/mpv"
+      alias -s mkv ="${pkgs.mpv}/bin/mpv"
+      alias -s mp3 ="${pkgs.mpv}/bin/mpv"
+      alias -s mp4 ="${pkgs.mpv}/bin/mpv"
+      alias -s webm="${pkgs.mpv}/bin/mpv"
 
       # image files
       # swiv is a wayland port of sxiv
@@ -159,9 +163,6 @@
       #alias -s jpg="sxiv"
       #alias -s jpeg="sxiv"
       #alias -s webp="sxiv"
-
-      # I've included these aliases in initExtra because I don't believe homemanager has an option for suffix aliases.
-      # It only has global aliases and regular aliases.
     '';
   };
 }
