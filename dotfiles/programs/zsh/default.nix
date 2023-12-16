@@ -5,6 +5,10 @@
 # to learn how the contents of completionInit and initExtra below work.
 
 {
+  # I have an fzf config elsewhere in the repo
+  # but I'm specifying this here too because parts of my zsh config depend on fzf
+  home.packages = [ pkgs.fzf ];
+
   programs.zsh = {
     enable = true;
 
@@ -95,10 +99,12 @@
       # Load complist module to allow rebinding keys
       zmodload zsh/complist
 
+
       # -- vi and vim
       # enter zsh's vi normal mode with escape
       bindkey '^[' vi-cmd-mode
       export KEYTIMEOUT=1
+      bindkey '^?' backward-delete-char # fix backspace bug when switching modes
 
       # edit line in vim buffer with ctrl+v when in zsh's vi normal mode
       autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd '^v' edit-command-line
