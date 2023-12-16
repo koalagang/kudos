@@ -6,5 +6,6 @@
   imports = [
     ./aliasrc.nix
     ./functionrc.nix
+    ./variables.nix
   ];
 }
