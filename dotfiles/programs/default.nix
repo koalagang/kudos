@@ -11,6 +11,7 @@
     ./mpv
     ./neovim
     ./pandoc
+    ./ripgrep
     ./starship
     ./taskwarrior
     ./tealdeer
