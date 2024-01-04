@@ -21,6 +21,7 @@
 
     # misc
     ./pomo.nix
+    ./pingable.nix
 
     # More to come...
   ];
