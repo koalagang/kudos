@@ -12,7 +12,7 @@
 
         while true; do
           ${pkgs.unixtools.ping}/bin/ping -q -c1 "$server" &&
-            printf '\npingable: connection established!\n' &&
+            ${pkgs.coreutils}/bin/printf '\npingable: connection established!\n' &&
             ${pkgs.libnotify}/bin/notify-send 'pingable' 'connection established!' &&
             break
         done
