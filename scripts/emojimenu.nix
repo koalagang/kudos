@@ -11,7 +11,7 @@
       (pkgs.writeShellScriptBin "emojimenu" ''
         # Get user selection via dmenu from emoji file
         # TODO: move emoji file to gross repo via glfs
-        emoji="$(${pkgs.coreutils}/bin/cut -d ';' -f1 ~/.local/share/emojis |
+        emoji="$(${pkgs.coreutils}/bin/cut -d ';' -f1 "${config.xdg.dataHome}/emojis" |
           ${config.home.sessionVariables.DMENU_CMD} -i -l 30 | ${pkgs.gnused}/bin/sed 's/ .*//')"
 
         # Exit if none chosen
