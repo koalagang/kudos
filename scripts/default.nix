@@ -18,6 +18,7 @@
     ./emojimenu.nix
     ./killmenu.nix
     ./transmenu.nix
+    ./radiomenu.nix
 
     # misc
     ./pomo.nix
