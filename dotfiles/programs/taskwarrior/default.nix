@@ -25,12 +25,12 @@
         an = "annotate";
         bd = "burndown.daily";
         c = "complete";
-        d = "done";
+        d = "delete";
         e = "edit";
+        f = "done"; # f for finish
         l = "list";
         m = "mod";
         n = "next";
-        r = "delete"; # r for remove
       };
 
       # Set 'low priority' to reduce the urgency
