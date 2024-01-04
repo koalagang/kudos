@@ -21,7 +21,7 @@
     server.enable = true;
   };
   home.file."${config.xdg.configHome}/foot/foot.ini" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/gross/dotfiles/misc/hyprland/foot.ini";
+    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/foot.ini";
   };
 
   #programs.waybar = {
@@ -29,12 +29,12 @@
   #  systemdIntegration.enable = true;
   #};
   home.file."${config.xdg.configHome}/waybar" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/gross/dotfiles/misc/hyprland/waybar";
+    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/waybar";
     recursive = true;
   };
 
   home.file."${config.xdg.configHome}/fuzzel/fuzzel.ini" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/gross/dotfiles/misc/hyprland/fuzzel.ini";
+    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/fuzzel.ini";
   };
   programs.fuzzel.enable = true;
 
@@ -53,7 +53,7 @@
   };
 
   home.file."${config.xdg.configHome}/mako/config" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/gross/dotfiles/misc/hyprland/mako/config";
+    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/mako/config";
   };
 
   home.packages = with pkgs; [ mako waybar wlsunset ];
@@ -63,7 +63,7 @@
 
   # hyprland has support for hot-reloading
   home.file."${config.xdg.configHome}/hypr/hyprland.conf" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/gross/dotfiles/misc/hyprland/hyprland.conf";
+    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/hyprland.conf";
   };
 
   # modified keyboard layout
