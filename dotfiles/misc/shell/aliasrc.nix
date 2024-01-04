@@ -21,19 +21,8 @@
     trm = "${pkgs.trash-cli}/bin/trash-rm";
     tre = "${pkgs.trash-cli}/bin/trash-restore"; # tr is already a different command so an 'e' is added
 
-    # cd commands
-    # might remove these aliases in favour of the hash table
-    gdir = "cd ${config.xdg.userDirs.desktop}/git";
-    desk = "cd ${config.xdg.userDirs.desktop}";
-    doc  = "cd ${config.xdg.userDirs.documents}";
-    dl   = "cd ${config.xdg.userDirs.download}";
-    pic  = "cd ${config.xdg.userDirs.pictures}";
-    vid  = "cd ${config.xdg.userDirs.videos}";
-
     "..." = "cd ../..";
     "...." = "cd ../../..";
-    # TODO: write a function that allows you to write any number+dots
-    # e.g. 7. should send you seven directories up
 
     # misc
     du = "${pkgs.du-dust}/bin/dust";
