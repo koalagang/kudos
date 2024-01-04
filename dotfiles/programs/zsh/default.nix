@@ -15,20 +15,28 @@
     # where to store the zshrc and zshenv
     # can't use ${config.xdg.configHome}/zsh because then it does /home/user//home/user/.config/zsh
     # as the dotDir option is relative to the user's home directory
-    # NOTE: homemanager will still place a .zshenv in the home directory, which sources a second .zshenv
+    # NOTE: homemanager will still place a .zshenv in the home directory,
+    # which sources a second .zshenv located in the dotDir
     dotDir = ".config/zsh";
-
-    # Allow entering directories by entering path into shell (without need for 'cd' command)
-    # For example, `Documents/neorg` would be equivalent to `cd Documents/neorg`
-    # Works really well with dirHashes and cdpath
-    autocd = true;
 
     # start zsh in vi insert mode
     defaultKeymap = "viins";
 
+    # -- Easy cd'ing
+    # Allow entering directories by entering path into shell (without need for 'cd' command)
+    # For example, `Documents/neorg` would be equivalent to `cd Documents/neorg`
+    # Works really well with dirHashes and cdpath
+    autocd = true;
+    # I go into these directories a lot
+    # so it's nice to be able to cd into them from anywhere
+    cdpath =  [
+     "${config.xdg.userDirs.desktop}/git"
+     "${config.xdg.userDirs.documents}/neorg"
+     "${config.xdg.userDirs.videos}/immersion"
+    ];
     # cd into directories just by typing 'cd ~<hash>'
     # e.g. 'cd ~v' will send you to Videos
-    # the cd can be dropped if you have autocd enabled
+    # the 'cd' can be dropped from the command if you have autocd enabled
     dirHashes = {
       de = "${config.xdg.userDirs.desktop}";
       dl = "${config.xdg.userDirs.download}";
@@ -49,10 +57,6 @@
       # Auto-completion with case insensitivity
       zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
     '';
-    cdpath =  [
-     "${config.xdg.userDirs.desktop}/git"
-     "${config.xdg.userDirs.documents}"
-    ];
 
     # -- History
     history = {
@@ -80,15 +84,15 @@
         "bfs -delete *"
         "find * -delete"
       ];
-      # if a command is a duplicate of a previous command, remove the old entry from the history
-      ignoreDups = false; ignoreAllDups = true;
       # do not save commands beginning with a space
-      # (useful for if you want to enter a command that you don't want in your history, e.g. one containing a password)
+      # (useful for if you want to enter a command that you don't want in your history,
+      # e.g. one containing a password)
       ignoreSpace = true;
-      expireDuplicatesFirst = true;
-      # save 10,000 lines (this is actually the default behaviour)
+      # save 10,000 lines
       save = 10000;
       size = 10000;
+      # when the line limit is reached, begin deleting duplicates first
+      expireDuplicatesFirst = true;
       # share command history between zsh sessions
       share = true;
     };
@@ -98,7 +102,6 @@
     initExtra = ''
       # Load complist module to allow rebinding keys
       zmodload zsh/complist
-
 
       # -- vi and vim
       # enter zsh's vi normal mode with escape
@@ -133,7 +136,6 @@
       # (no need for prefixing it with vim or anything else).
       # This is particularly useful with the ctrl+t fzf widget
       # because it allows you to simply search for the file with fzf and then hit enter twice to open it.
-      # Another usecase is 'git add ' <ctrl+t> search for file <enter>.
 
       # programming
       alias -s lua="${config.home.sessionVariables.EDITOR}"  # lua
@@ -166,7 +168,8 @@
       #alias -s webp="sxiv"
 
       # -- options
-      setopt HIST_REDUCE_BLANKS # strip superfluous blanks before adding to history, e.g. 'vi  foo ' -> 'vi foo'
+      # strip superfluous blanks before adding to history, e.g. 'vi  foo ' -> 'vi foo'
+      setopt HIST_REDUCE_BLANKS
     '';
 
     # -- Plugins
@@ -191,8 +194,8 @@
       }
       {
         # replace zsh's default completion selection menu with fzf
-        # NOTE: this plugin uses the results of zsh completion so enabling zsh completion is still necessary
-        # this simply replaces the built-in menu
+        # NOTE: this plugin uses the results of zsh completion so enabling zsh completion is still necessary.
+        # This simply replaces the built-in menu.
         name = "fzf-tab";
         file = "fzf-tab.zsh";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
