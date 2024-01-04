@@ -103,7 +103,10 @@
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
-  programs.zsh.enable = true; # See home-manager for config
+
+  # See home-manager for configs
+  programs.zsh.enable = true;
+  programs.git.enable = true;
 
   # Swap out sudo for doas
   # If for whatever reason doas does not work,
@@ -134,6 +137,7 @@
   # However, I do need to make sure I've always got an editor around (hence neovim)
   # and git must always be present too in case I want to revert my flake.lock.
   # There's also this issue https://discourse.nixos.org/t/getting-the-head-of-the-git-tree-failed/21837
+  # so DO NOT REMOVE GIT
   environment.defaultPackages = with pkgs; [ neovim git ];
 
   # List packages installed in system profile. To search, run:
@@ -172,9 +176,6 @@
     imagemagick
     ffmpeg
     sox
-    # DO NOT REMOVE GIT
-    # see https://discourse.nixos.org/t/getting-the-head-of-the-git-tree-failed/21837 for why
-    git # will probably switch to programs.git options
 
     # Simple but useful CLI tools
     xclip
@@ -184,6 +185,8 @@
     so
     ytfzf
     devour
+    crunchy-cli # seems to be broken so I'll submit an issue on nixpkgs
+    vimv-rs
 
     # Script dependencies
     # Will remove these once I've moved my scripts to nix via `writeShellScriptBin`
