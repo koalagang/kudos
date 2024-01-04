@@ -13,10 +13,15 @@
   };
 
   imports = [
-    ./pomo.nix
-    ./killmenu.nix
+    # dmenu scripts
+    ./calcmenu.nix
     ./emojimenu.nix
+    ./killmenu.nix
     ./transmenu.nix
+
+    # misc
+    ./pomo.nix
+
     # More to come...
   ];
 }
