@@ -23,6 +23,7 @@
     # misc
     ./pomo.nix
     ./pingable.nix
+    ./taskdue.nix
 
     # More to come...
   ];
