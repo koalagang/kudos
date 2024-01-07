@@ -137,27 +137,17 @@
       # This is particularly useful with the ctrl+t fzf widget
       # because it allows you to simply search for the file with fzf and then hit enter twice to open it.
 
-      # programming
-      alias -s lua="${config.home.sessionVariables.EDITOR}"  # lua
-      alias -s nix="${config.home.sessionVariables.EDITOR}"  # nix
-      alias -s rs ="${config.home.sessionVariables.EDITOR}"  # rust
-      alias -s sh ="${config.home.sessionVariables.EDITOR}"  # shell
-      alias -s gd ="${config.home.sessionVariables.EDITOR}"  # gdscript
+      # programming: lua, nix, rust, shell and gdscript
+      # plain text documents: markdown, neorg, latex and non-markup text file
+      # config files: ini, conf, cfg, toml and clifm
+      # (unfortunately there seems to be no way of using suffixes for rc files)
+      alias -s {lua,nix,rs,sh,gd,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml,clifm}="${config.home.sessionVariables.EDITOR}"
 
-      # documents
-      alias -s md  ="${config.home.sessionVariables.EDITOR}" # markdown
-      alias -s norg="${config.home.sessionVariables.EDITOR}" # neorg
-      alias -s tex ="${config.home.sessionVariables.EDITOR}" # latex
-      alias -s txt ="${config.home.sessionVariables.EDITOR}" # regular, uninterpreted text
-      alias -s docx="${pkgs.libreoffice}/bin/swriter"        # office document
-      alias -s xlsx="${pkgs.libreoffice}/bin/scalc"          # spreadsheet
+      # wysiwig documents and spreadsheets
+      alias -s {odf,docx,doc,xlsx,csv,tsv}="${pkgs.libreoffice}/bin/libreoffice --nologo"
 
       # video and audio files
-      alias -s flac="${pkgs.mpv}/bin/mpv"
-      alias -s mkv ="${pkgs.mpv}/bin/mpv"
-      alias -s mp3 ="${pkgs.mpv}/bin/mpv"
-      alias -s mp4 ="${pkgs.mpv}/bin/mpv"
-      alias -s webm="${pkgs.mpv}/bin/mpv"
+      alias -s {flac,mp3,mp4,mkv,webm}="${pkgs.mpv}/bin/mpv"
 
       # image files
       # swiv is a wayland port of sxiv
