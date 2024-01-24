@@ -137,11 +137,11 @@
       # This is particularly useful with the ctrl+t fzf widget
       # because it allows you to simply search for the file with fzf and then hit enter twice to open it.
 
-      # programming: lua, nix, rust, shell and gdscript
+      # programming: lua, nix, rust and gdscript
       # plain text documents: markdown, neorg, latex and non-markup text file
       # config files: ini, conf, cfg, toml and clifm
       # (unfortunately there seems to be no way of using suffixes for rc files)
-      alias -s {lua,nix,rs,sh,gd,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml,clifm}="${config.home.sessionVariables.EDITOR}"
+      alias -s {lua,nix,rs,gd,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml,clifm}="${config.home.sessionVariables.EDITOR}"
 
       # wysiwig documents and spreadsheets
       alias -s {odf,docx,doc,xlsx,csv,tsv}="${pkgs.libreoffice}/bin/libreoffice --nologo"
@@ -150,16 +150,21 @@
       alias -s {flac,mp3,mp4,mkv,webm}="${pkgs.mpv}/bin/mpv"
 
       # image files
-      # swiv is a wayland port of sxiv
-      # TODO: specify package
-      #alias -s png="sxiv"
-      #alias -s jpg="sxiv"
-      #alias -s jpeg="sxiv"
-      #alias -s webp="sxiv"
+      alias -s {png,jpg,jpeg,webp}="${pkgs.swayimg}/bin/swayimg"
 
       # -- options
       # strip superfluous blanks before adding to history, e.g. 'vi  foo ' -> 'vi foo'
       setopt HIST_REDUCE_BLANKS
+
+      # -- functions
+      # automatically run eza whenever you cd into a new directory
+      # basically just an eza version of auto-ls (https://github.com/aikow/zsh-auto-ls)
+      auto_eza() {
+        emulate -L zsh
+        ${pkgs.eza}/bin/eza --all --long --no-permissions --no-user --no-time --group-directories-first --sort=size \
+          --binary --colour=always --icons=always
+      }
+      chpwd_functions=(auto_eza $chpwd_functions)
     '';
 
     # -- Plugins
@@ -190,6 +195,9 @@
         file = "fzf-tab.zsh";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
+
+      # TODO: install https://github.com/momo-lab/zsh-abbrev-alias
+      # TODO: install https://github.com/oknowton/zsh-dwim
     ];
   };
 }
