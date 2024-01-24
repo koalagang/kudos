@@ -133,6 +133,17 @@
     # cpu.amd.updateMicrocode = true;     # use this option instead if you have an AMD CPU
   };
 
+  # add support for hardware acceleration
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
+
   # I don't use nano, perl, rsync or strace (the defaults).
   # However, I do need to make sure I've always got an editor around (hence neovim)
   # and git must always be present too in case I want to revert my flake.lock.
@@ -181,12 +192,20 @@
     xclip
     wl-clipboard
     colorpicker
-    ddgr
+    #ddgr
     so
     ytfzf
     devour
-    crunchy-cli # seems to be broken so I'll submit an issue on nixpkgs
     vimv-rs
+    # crunchy-cli
+    # the package is broken and outdated so I've submitted an issue on nixpkgs to update it
+    # see the issue https://github.com/NixOS/nixpkgs/issues/279867
+    # and the respective pull request https://github.com/NixOS/nixpkgs/pull/279881
+
+    # TEST
+    #ffsubsync
+    alass
+    pyprland
 
     # Script dependencies
     # Will remove these once I've moved my scripts to nix via `writeShellScriptBin`
@@ -373,8 +392,8 @@
       # Automatically run garbage collection whenever there is not enough space left
       # The below options tell nix to collect garbage when the partition with /nix has less than 20 GB free
       # but it will clear only as much as is necessary to free up 60 GB
-      min-free = "${toString (1024 * 1024 * 1024 * 20 )}"; # 20 GB
-      max-free = "${toString (1024 * 1024 * 1024 * 60 )}"; # 60 GB
+      #min-free = "${toString (1024 * 1024 * 1024 * 20 )}"; # 20 GB
+      #max-free = "${toString (1024 * 1024 * 1024 * 60 )}"; # 60 GB
     };
 
     # Automatically optimise the store monthly to avoid wasting storage
