@@ -15,22 +15,31 @@
       # Sunday is on the weekend, mate
       weekstart = "Monday";
 
+      # Make setting due date easier, e.g.
+      # $ task add dentist appointment due:26-2
+      # This will set the due date of 'dentist appointment' to 26 February this year
+      # If your task is not due this year, just use Y-M-D (e.g. 2025-02-26)
+      dateformat = "d-m";
+
       # running `task next` should never show me more than 5 tasks
       # and this should only include tasks I can currently complete
       report.next.filter = "+PENDING -WAITING -BLOCKING limit:5";
 
+      # some of these aliases might be predefined
       alias = {
         a = "add";
-        al = "all";
-        an = "annotate";
         bd = "burndown.daily";
-        c = "complete";
+        bm = "burndown.monthly";
+        bw = "burndown.weekly";
+        by = "burndown.yearly";
+        c = "calendar";
         d = "delete";
         e = "edit";
         f = "done"; # f for finish
+        i = "information";
         l = "list";
-        m = "mod";
-        n = "next";
+        m = "modify";
+        n = "annotate"; # n for note
       };
 
       # Set 'low priority' to reduce the urgency
