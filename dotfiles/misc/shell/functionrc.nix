@@ -1,5 +1,7 @@
 { pkgs, ... }:
 
+# I may consider moving these to my scripts directory
+
 {
   home.packages = [
     # Extract an archive (compressed files/folders)

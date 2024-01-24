@@ -14,18 +14,23 @@
     E  = "${pkgs.coreutils}/bin/echo";
     df = "${pkgs.coreutils}/bin/df -h";
 
-    # trash-cli
-    tp  = "${pkgs.trash-cli}/bin/trash-put";
-    tl  = "${pkgs.trash-cli}/bin/trash-list";
-    te  = "${pkgs.trash-cli}/bin/trash-empty";
-    trm = "${pkgs.trash-cli}/bin/trash-rm";
-    tre = "${pkgs.trash-cli}/bin/trash-restore"; # tr is already a different command so an 'e' is added
+    # trashy
+    tp = "${pkgs.trashy}/bin/trash put";
+    tl = "${pkgs.trashy}/bin/trash list";
+    te = "${pkgs.trashy}/bin/trash empty --all";
+    trm = "${pkgs.trashy}/bin/trash empty";
+    trf = "${pkgs.trashy}/bin/trash list | ${pkgs.fzf}/bin/fzf --multi | ${pkgs.gawk}/bin/awk '{ print $NF }' |
+      ${pkgs.findutils}/bin/xargs ${pkgs.trashy}/bin/trash restore --match=exact";
+    tef = "${pkgs.trashy}/bin/trash list | ${pkgs.fzf}/bin/fzf --multi | ${pkgs.gawk}/bin/awk '{ print $NF }' |
+      ${pkgs.findutils}/bin/xargs ${pkgs.trashy}/bin/trash empty --match=exact";
 
+    # faster backwards cd'ing
     "..." = "cd ../..";
     "...." = "cd ../../..";
 
     # misc
     du = "${pkgs.du-dust}/bin/dust";
+    img = "${pkgs.swayimg}/bin/swayimg";
 
     # TODO: write iwtui (an iwd tui) using dialog
     iwc = "iwctl station wlan0";
