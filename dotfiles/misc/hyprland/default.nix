@@ -8,6 +8,8 @@
 
 {
   # make sure hyprland is installed via configuration.nix
+  # TODO: pyprland
+  # See here for a useful video https://www.youtube.com/watch?v=CwGlm-rpok4
 
   #wayland.windowManager.hyprland = {
   #  enable = true;
