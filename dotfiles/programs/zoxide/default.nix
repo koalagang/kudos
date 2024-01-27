@@ -6,9 +6,9 @@
 
     # Enable this for any shell installed and configured by home-manager
     enableBashIntegration    = true;
+    enableFishIntegration    = true;
     enableNushellIntegration = true;
     enableZshIntegration     = true;
-    enableFishIntegration    = true;
   };
 
   # zoxide's configuration is done via environmental variables

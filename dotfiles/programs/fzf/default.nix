@@ -8,7 +8,6 @@
     enableBashIntegration = true;
     enableFishIntegration = true;
     enableZshIntegration  = true;
-    # NOTE: fzf does not have nushell integration
 
     # TODO: stylix
     #colors = {};
