@@ -18,7 +18,7 @@
       # Make setting due date easier, e.g.
       # $ task add dentist appointment due:26-2
       # This will set the due date of 'dentist appointment' to 26 February this year
-      # If your task is not due this year, just use the default Y-M-D (e.g. 2025-02-26)
+      # If your task is not due this year, just use Y-M-D (e.g. 2025-02-26)
       dateformat = "d-m";
 
       # running `task next` should never show me more than 5 tasks
