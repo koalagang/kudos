@@ -18,11 +18,11 @@
       o = "checkout";
       d = "diff";
       p = "push";
-      l = "pull";
+      pl = "pull";
       r = "rm";
       rs= "restore --staged";
       s = "status";
-      lol = "log --graph --decorate --pretty=oneline --abbrev-commit";
+      l = "log --graph --decorate --pretty=oneline --abbrev-commit";
     };
 
   };
@@ -30,7 +30,7 @@
     g = "git"; # yes, I am that lazy
     diff = "difft"; # difftastic
     # Search the git log and copy the commit to the clipboard
-    flog = ''
+    glf = ''
       ${pkgs.git}/bin/git log --graph --decorate --pretty=oneline --abbrev-commit | ${pkgs.fzf}/bin/fzf | \
       ${pkgs.coreutils}/bin/cut -d' ' -f2 | ${pkgs.xclip}/bin/xclip -select clipboard
     '';
