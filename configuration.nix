@@ -51,7 +51,21 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enables wireless support via iwd
-  networking.wireless.iwd.enable = true;
+  # TODO: enable MAC address randomisation
+  # TODO: figure out how to get built-in dhcp client working
+  networking.wireless.iwd = {
+    enable = true;
+  #  settings = {
+  #    general.EnableNetworkConfiguration = true;
+  #    Network = {
+  #      EnableIPv6 = true;
+  #      RoutePriorityOffset = 300;
+  #    };
+  #    Settings = {
+  #      AutoConnect = true;
+  #    };
+  #  };
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/London";
@@ -205,6 +219,8 @@
     # TEST
     #ffsubsync
     alass
+    subtitleeditor
+    subedit
     pyprland
 
     # Script dependencies
@@ -357,8 +373,10 @@
     # audio server
     pipewire = {
         enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
+        alsa = {
+          enable = true;
+          support32Bit = true;
+        };
         pulse.enable = true;
         wireplumber.enable = true;
     };
@@ -370,7 +388,21 @@
     };
 
     # optimise battery life and health
-    auto-cpufreq.enable = true;
+    tlp = {
+        enable = true;
+        settings = {
+            # start charging when the battery power is <=25%
+            START_CHARGE_THRESH_BAT0=25;
+            # stop  charging when the battery power is >=80%
+            STOP_CHARGE_THRESH_BAT0=80;
+            # this is better for battery health
+            # because lithium-ion batteries are most efficient at 20-80%
+
+            # self-explanatory
+            CPU_SCALING_GOVERNOR_ON_AC = "performance";
+            CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        };
+    };
 
     # reduce overheating of Intel CPUs
     thermald.enable = true;
