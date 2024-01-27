@@ -15,12 +15,18 @@
     df = "${pkgs.coreutils}/bin/df -h";
 
     # trashy
+    # trash a file
     tp = "${pkgs.trashy}/bin/trash put";
+    # list contents of trash
     tl = "${pkgs.trashy}/bin/trash list";
+    # delete all files in trash
     te = "${pkgs.trashy}/bin/trash empty --all";
+    # follow this with the ID of the trashed file you want to delete
     trm = "${pkgs.trashy}/bin/trash empty";
+    # search the trash and *restore* the file(s) you select (can select multiple by using shift+tab)
     trf = "${pkgs.trashy}/bin/trash list | ${pkgs.fzf}/bin/fzf --multi | ${pkgs.gawk}/bin/awk '{ print $NF }' |
       ${pkgs.findutils}/bin/xargs ${pkgs.trashy}/bin/trash restore --match=exact";
+    # search the trash and *delete* the file(s) you select (can select multiple by using shift+tab)
     tef = "${pkgs.trashy}/bin/trash list | ${pkgs.fzf}/bin/fzf --multi | ${pkgs.gawk}/bin/awk '{ print $NF }' |
       ${pkgs.findutils}/bin/xargs ${pkgs.trashy}/bin/trash empty --match=exact";
 
