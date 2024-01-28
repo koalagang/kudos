@@ -1,10 +1,14 @@
+{ pkgs, ... }:
+
 {
   name = "browsing";
+  id = 0;
   isDefault = true;
   settings = import ../settings.nix;
   search = {
     force = true;
     default = "DuckDuckGo";
+    privateDefault = "DuckDuckGo";
     order = [
       "DuckDuckGo"
       "Wikipedia (en)"
@@ -16,13 +20,20 @@
     engines = {
       "Nix Packages" = {
         urls = [{ template = "https://search.nixos.org/options?type=packages&query={searchTerms}"; }];
-        iconUpdateURL = "https://nixos.wiki/favicon.png";
+        iconUpdateURL = "https://nixos.wiki/favicon.png"; # having trouble with nix-icons so I'm using this for now
+        #icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
         definedAliases = [ "@np" ];
       };
       "Nix Options" = {
         urls = [{ template = "https://search.nixos.org/options?type=options&query={searchTerms}"; }];
         iconUpdateURL = "https://nixos.wiki/favicon.png";
+        #icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
         definedAliases = [ "@no" ];
+      };
+      "Google Scholar" = {
+        urls = [{ template = "https://scholar.google.co.uk/scholar?hl=en&as_sdt=0%2C5&q={searchTerms}"; }];
+        #icon = "";
+        definedAliases = [ "@g" ];
       };
 
       # disable these
