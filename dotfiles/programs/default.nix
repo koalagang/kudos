@@ -7,7 +7,7 @@
     ./firefox
     ./fzf
     ./git
-    ./gpg
+    ./gnupg
     ./mpv
     ./neovim
     ./pandoc
