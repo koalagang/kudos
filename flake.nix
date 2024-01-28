@@ -17,6 +17,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }: {
@@ -33,6 +38,7 @@
               users.dante = import ./home.nix;
               # Optionally, use home-manager.extraSpecialArgs to pass
               # arguments to home.nix
+              extraSpecialArgs = { inherit inputs; };
             };
           }
         ];

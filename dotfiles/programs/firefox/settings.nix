@@ -68,6 +68,7 @@
 ******/
 
 {
+  programs.firefox.profiles.profile0.settings = {
   ### KOALA CUSTOM ###
   # Most of this config is based on arkenfox's user.js.
   # However, there were a few things they missed out.
@@ -1261,4 +1262,6 @@
      # [-] https:#bugzilla.mozilla.org/1842457
      # "dom.webnotifications.serviceworker.enabled" = false;
   # ***/
+
+  };
 }
