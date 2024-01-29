@@ -29,6 +29,9 @@
     "/crypto_keyfile.bin" = null;
   };
 
+  # Delete contents of /tmp on boot
+  boot.tmp.cleanOnBoot = true;
+
   # I'm trying to find a way to use the label instead of the UUID
   # so that it is easily reproducible on any system.
   # It might require me to re-install but via the commandline
@@ -66,6 +69,10 @@
   #    };
   #  };
   };
+  #networking.dhcpcd = {
+  #  enable = true;
+  #  wait = "ipv6";
+  #};
 
   # Set your time zone.
   time.timeZone = "Europe/London";
