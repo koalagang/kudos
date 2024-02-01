@@ -1,6 +1,7 @@
 local api = vim.api
 
 -- [[ File templates ]]
+-- TODO: move these into ftplugin
 local templates = api.nvim_create_augroup("templates", { clear = true })
 -- shell
 api.nvim_create_autocmd("BufNewFile", {

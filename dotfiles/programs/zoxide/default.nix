@@ -4,7 +4,8 @@
   programs.zoxide = {
     enable = true;
 
-    # Enable this for any shell installed and configured by home-manager
+    # Enable this for any of the following shells
+    # if they have been installed and configured by home-manager
     enableBashIntegration    = true;
     enableFishIntegration    = true;
     enableNushellIntegration = true;

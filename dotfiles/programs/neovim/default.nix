@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 
-# Once I've got a comfy neovim setup that I think is unlikely to change,
-# I'll probably switch to nixvim or use homemanager for configuring neovim
-# but using lazy.nvim as I described here
-# https://github.com/nix-community/nixvim/issues/421#issuecomment-1834169572
-# I might also use nix for installing treesitter parsers rather than compiling them.
+# I may consider switching to nixvim at some point in the future
+# but I'll at least wait for it to have lazy-loading support.
+# See relevant issues:
+# https://github.com/nix-community/nixvim/issues/421
+# https://github.com/nix-community/nixvim/issues/797
 
 {
   programs.neovim = {
@@ -18,7 +18,7 @@
 
     # Dependencies
     extraPackages = with pkgs; [
-      # Neovim system clipboard support
+      # System clipboard support (i.e. the plus+ register)
       wl-clipboard # Wayland
       xclip # X11
       #xsel # X11
@@ -34,14 +34,10 @@
 
       # nvim-telescope
       ripgrep # telescope.nvim
-      fd # telescope.nvim
       gnumake # telescope-fzf-native.nvim
 
       # pwntester/octo.nvim
       github-cli
-
-      # stevearc/oil.nvim
-      trash-cli
 
       # 3rd/image.nvim
       imagemagick
@@ -50,8 +46,16 @@
       # jvgrootveld/telescope-zoxide
       zoxide
 
-      # TODO:
-      # LSP?
+      # nvim-tree/nvim-web-devicons and nvim-neorg/neorg
+      (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
+
+      # LSP
+      # I'll probably move these to per-project flakes
+      texlab
+      lua-language-server
+      rnix-lsp
+      taplo
+      rust-analyzer cargo
       # formatters?
       # linters?
 
@@ -62,21 +66,16 @@
     extraLuaPackages = luaPkgs: with luaPkgs; [ magick ];
   };
 
-  home = {
-    # nvim-tree/nvim-web-devicons and nvim-neorg/neorg
-    packages = [ (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
-
-    # Source lua config
-    file."${config.xdg.configHome}/nvim" = {
-      # Link the file outside of the nix store.
-      # This allows me to edit my lua config without rebuilding nix
-      # (unless I need to add another package as seen above).
-      # Specifying absolute path is necessary because flakes live in the nix store
-      # but using an absolute path will allow us to create a symlink outside of the store.
-      # I will probably change this once my neovim config has fewer moving parts.
-      # See https://github.com/nix-community/home-manager/issues/257 for more.
-      source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/programs/neovim/nvim";
-      recursive = true;
-    };
+  # Source lua config
+  home.file."${config.xdg.configHome}/nvim" = {
+    /* Link the file outside of the nix store.
+    This allows me to edit my lua config without rebuilding nix
+    (unless I need to add another package as seen above).
+    Specifying absolute path is necessary because flakes live in the nix store
+    but using an absolute path will allow us to create a symlink outside of the store.
+    I will probably change this once my neovim config has fewer moving parts.
+    See https://github.com/nix-community/home-manager/issues/257 for more. */
+    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/programs/neovim/nvim";
+    recursive = true;
   };
 }
