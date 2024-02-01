@@ -7,6 +7,7 @@
     config.screenshot-directory = "~/Pictures/mpv";
 
     bindings = {
+      R = "sub-reload 1";
       h = "seek -5";
       l = "seek 5";
       H = "seek -15";
