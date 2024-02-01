@@ -77,6 +77,15 @@ require("lazy").setup({
     ---- [[ MAJOR PLUGINS ]] ----
     -- These are the real game-changers
 
+    -- [[ LSP ]]
+    {
+        "neovim/nvim-lspconfig",
+        ft = languages,
+        config = function()
+            require(conf .. "lsp")
+        end,
+    },
+
     -- [[ Treesitter and extensions ]]
     {
         "nvim-treesitter/nvim-treesitter", -- <3
@@ -170,7 +179,7 @@ require("lazy").setup({
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
-            "stevenarc/oil.nvim", -- [N]
+            "stevearc/oil.nvim", -- [N]
         },
         -- EXTERNAL: zoxide
         keys = "<c-t>z",
@@ -227,8 +236,7 @@ require("lazy").setup({
         -- Load only after adding another buffer to the buffer list
         event = "BufAdd",
         config = function()
-            vim.opt.termguicolors = true
-            require("bufferline").setup()
+            require(conf .. "bufferline")
         end,
     },
 
@@ -260,7 +268,6 @@ require("lazy").setup({
         "norcalli/nvim-colorizer.lua",
         cmd = "ColorizerToggle",
         config = function()
-            vim.g.termguicolors = true,
             require("colorizer").setup()
         end,
     },
@@ -277,7 +284,7 @@ require("lazy").setup({
 
     { -- Bringing images to Neovim
         "3rd/image.nvim",
-        ft = { "norg", "markdown "},
+        ft = { "norg", "markdown" },
         dependencies = "nvim-treesitter/nvim-treesitter",
         -- EXTERNAL: magick (luarock), imagemagick, curl
         config = function()

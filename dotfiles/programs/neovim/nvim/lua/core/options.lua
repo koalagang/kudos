@@ -9,7 +9,7 @@ local options = {
     ignorecase = true,
     undofile = true,
 
-    -- local to buffer,
+    -- [[local to buffer]]
     swapfile = false,
     tabstop = 4,
     softtabstop = 4,
@@ -19,7 +19,7 @@ local options = {
     spelllang = "en_gb,nb_no",
     textwidth = 120,
 
-    -- local to window,
+    -- [[local to window]]
     number = true,
     relativenumber = true,
     cursorline = true,
@@ -27,8 +27,15 @@ local options = {
     -- this is because I find it annoying for it to open and close all the time
     signcolumn = "yes",
 
-    -- global
-    laststatus = 3,
+    -- [[global]]
+    -- declutter vim screen
+    laststatus = 0,
+    ruler = false,
+    showmode = false,
+    showcmd = false,
+    shm = "IF",
+    -- other global options
+    termguicolors = true,
     smartcase = true,
     lazyredraw = true,
     wildmenu = true,

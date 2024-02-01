@@ -65,16 +65,23 @@ imap("<c-k>", "<up>")
 imap("<c-l>", "<right>")
 
 -- [[ Registers ]]
--- Yanking to system clipboard
--- NOTE: as ctrl-v has been remapped, use ctrl-q instead if you wish to enter visual block mode
+-- System clipboard
+-- NOTE: as ctrl-v has been remapped, use ctrl-q, instead, if you wish to enter visual block mode
 -- EXTERNAL DEPENDENCY: xclip or xsel (X11), wl-clipboard (wayland)
 vmap("<c-c>", '"+y')
-vmap("<c-x>", '"+d')
 nmap("<c-c>", '"+yy')
 nmap("<c-v>", '"+p')
-nmap("<c-x>", '"+dd')
+-- Using a and b registers
+nmap("yy", '"ayy')
+nmap("dd", '"add')
 vmap("y", '"ay')
 vmap("d", '"ad')
+nmap("p", '"ap')
+nmap("YY", '"byy')
+nmap("DD", '"bdd')
+nmap("P", '"bp')
+vmap("Y", '"by')
+vmap("D", '"bd')
 
 -- [[ Other shortcuts/remaps ]]
 nmap("<leader>ss", "<cmd>set spell!<cr>") -- spellcheck
@@ -82,8 +89,9 @@ nmap("gA", "GA")
 nmap("gI", "ggI")
 nmap("K", "kddpkJ") -- like J but for the line above
 nmap("cD", "Da")
-nmap("<cr>", "<cmd>bn<cr>") -- backspace to go to next buffer
-nmap("<bs>", "<cmd>bp<cr>") -- return to go to previous buffer
+nmap("<cr>", "<cmd>bnext<cr>") -- backspace to go to next buffer
+nmap("<bs>", "<cmd>bprev<cr>") -- return to go to previous buffer
+nmap("<leader>bd", "<cmd>bdelete<cr>") -- delete buffer
 nmap("<tab>", "za") -- tab to toggle currently selected fold
 nmap("Q", "V}gqkA<space>")
 
