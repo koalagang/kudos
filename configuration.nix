@@ -121,9 +121,10 @@
     description = "dante";
     extraGroups = [ "wheel" ];
     initialPassword = "zoteboat"; # Don't forget to change the password with 'passwd'
-    packages = with pkgs; [];
-    shell = pkgs.zsh;
   };
+
+  # Set default user shell for all users (including root)
+  users.defaultUserShell = pkgs.zsh;
 
   # See home-manager for configs
   programs.zsh.enable = true;
@@ -182,20 +183,19 @@
 
     # Base
     # These are some basic commandline tools that come installed with almost all GNU/Linux distributions
-    # Most (or even all) of them are probably pulled as dependencies of other packages or my scripts
-    # but I may as well declare them here too
+    # but I may as well declare them
     coreutils
-    curl
-    file
     findutils
+    util-linux
+    curl
+    wget
+    file
     gawk
     gnugrep
     gnused
     gnutar
     killall
     poppler_utils
-    procps
-    wget
 
     # GUI
     signal-desktop
@@ -229,6 +229,7 @@
     subtitleeditor
     subedit
     pyprland
+    manix
 
     # Script dependencies
     # Will remove these once I've moved my scripts to nix via `writeShellScriptBin`
@@ -399,7 +400,7 @@
         enable = true;
         settings = {
             # start charging when the battery power is <=25%
-            START_CHARGE_THRESH_BAT0=25;
+            START_CHARGE_THRESH_BAT0=30;
             # stop  charging when the battery power is >=80%
             STOP_CHARGE_THRESH_BAT0=80;
             # this is better for battery health
