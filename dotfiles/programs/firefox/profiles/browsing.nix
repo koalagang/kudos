@@ -5,7 +5,6 @@
     name = "browsing";
     id = 0;
     isDefault = true;
-    #settings = import ../settings.nix;
 
     search = {
       force = true;
@@ -49,11 +48,20 @@
       };
     };
 
+    # TODO: configure these extensions and add configs here with home.file
     extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
       ublock-origin
       cookie-autodelete
-      vimium-c
       darkreader
+      tridactyl # see below for tridactyl-native
     ];
+
   };
+
+  # TODO: bukubrow
+  # keepassxc?
+  # TODO: nix-colors
+  programs.firefox.nativeMessagingHosts = with pkgs; [
+    tridactyl-native
+  ];
 }
