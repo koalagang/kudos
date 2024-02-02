@@ -5,7 +5,6 @@
     enable = true;
     nix-direnv.enable = true;
 
-    # Enable this for any shell installed and configured by home-manager
     enableBashIntegration    = true;
     enableNushellIntegration = true;
     enableZshIntegration     = true;

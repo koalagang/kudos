@@ -4,7 +4,6 @@
   programs.fzf = {
     enable = true;
 
-    # Enable fzf widgets for any shell installed and configured by home-manager
     enableBashIntegration = true;
     enableFishIntegration = true;
     enableZshIntegration  = true;
@@ -17,8 +16,12 @@
 
     /* -- fzf shell widgets
     alt + c = search with fzf and cd into output
-    ctrl + r = search history and paste output onto the commandline
     ctrl + t = search for files and paste output onto the commandline
+    ctrl + r = search history and paste output onto the commandline
+
+    Note that I don't use the ctrl+r widget as I use McFly instead, which also uses the ctrl+r widget
+    McFly with fzf integration enabled is basically a smarter fzf history widget
+    See programs/mcfly for the config
     */
 
     # -- alt + c widget
@@ -43,8 +46,5 @@
       # see https://github.com/jstkdng/ueberzugpp/blob/master/scripts/fzfub
       # and https://github.com/thimc/vifmimg for ideas on how to preview images
     ]; */
-
-    # ctrl + r widget
-    #historyWidgetOptions = {}
   };
 }
