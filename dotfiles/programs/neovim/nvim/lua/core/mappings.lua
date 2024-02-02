@@ -71,17 +71,6 @@ imap("<c-l>", "<right>")
 vmap("<c-c>", '"+y')
 nmap("<c-c>", '"+yy')
 nmap("<c-v>", '"+p')
--- Using a and b registers
-nmap("yy", '"ayy')
-nmap("dd", '"add')
-vmap("y", '"ay')
-vmap("d", '"ad')
-nmap("p", '"ap')
-nmap("YY", '"byy')
-nmap("DD", '"bdd')
-nmap("P", '"bp')
-vmap("Y", '"by')
-vmap("D", '"bd')
 
 -- [[ Other shortcuts/remaps ]]
 nmap("<leader>ss", "<cmd>set spell!<cr>") -- spellcheck
