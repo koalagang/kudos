@@ -8,6 +8,7 @@
     ./fzf
     ./git
     ./gnupg
+    ./mcfly
     ./mpv
     ./neovim
     ./pandoc
