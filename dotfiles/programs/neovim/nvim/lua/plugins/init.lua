@@ -52,10 +52,12 @@ require("lazy").setup({
         -- ekickx/clipboard-image.nvim
             -- configure it to support norg syntax
         -- mfussenegger/nvim-dap
-        -- ledger/vim-ledger
         -- null-ls replacement
             -- stevearc/conform.nvim and mfussenegger/nvim-lint
             -- or nvimtools/none-ls.nvim? (probably this)
+        -- jghauser/papis.nvim
+        -- ledger/vim-ledger
+        -- direnv/direnv.vim
     -- + related extensions (for nvim-cmp, telescope, neorg)
     -- MAYBE
         -- nvim-neotest/neotest
