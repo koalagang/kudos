@@ -96,8 +96,10 @@
   services.xserver = {
     enable = true;
 
-    layout = "gb";
-    xkbVariant = "";
+    xkb = {
+      layout = "gb";
+      variant = "";
+    };
 
     displayManager = {
       lightdm = {
