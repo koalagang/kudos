@@ -128,9 +128,32 @@
   # Set default user shell for all users (including root)
   users.defaultUserShell = pkgs.zsh;
 
-  # See home-manager for configs
-  programs.zsh.enable = true;
-  programs.git.enable = true;
+  # If setting zsh to be the default interactive shell
+  # but without the nixos module enabled, you get this warning:
+  # programs.zsh.enable is not true. This will cause the zsh
+  # shell to lack the basic nix directories in its PATH and might make
+  # logging in as that user impossible.
+
+  # However, enabling it will create /etc/zshrc, which has a number of default options.
+  # Given that I use the home-manager module to configure zsh,
+  # all the nixos-generated config does is slow down the startup time.
+  # The below options are an attempt to minimise this.
+
+  programs = {
+    zsh = {
+      enable = true;
+
+      # disable as much as possible
+      setOptions = [];
+      promptInit = "";
+      enableLsColors = false;
+      enableCompletion = false; # most significant
+    };
+
+    # marginally useful but adds to startup time,
+    # plus it adds to the time before you can type another command after making a typo
+    command-not-found.enable = false;
+  };
 
   # Swap out sudo for doas
   # If for whatever reason doas does not work,
