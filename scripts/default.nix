@@ -14,7 +14,6 @@
 
   imports = [
     # dmenu scripts
-    ./calcmenu.nix
     ./colourmenu.nix
     ./emojimenu.nix
     ./killmenu.nix
