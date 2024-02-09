@@ -98,7 +98,7 @@
     };
 
     # zsh settings neglected by the homemanager module
-    # this includes bindings (bindkey), suffixes (alias -s) and some options (setopt)
+    # this includes functions, bindings (bindkey), suffixes (alias -s) and some options (setopt)
     initExtra = ''
       # Load complist module to allow rebinding keys
       zmodload zsh/complist
@@ -153,10 +153,14 @@
       alias -s {png,jpg,jpeg,webp}="${pkgs.swayimg}/bin/swayimg"
 
       # -- options
-      # strip superfluous blanks before adding to history, e.g. 'vi  foo ' -> 'vi foo'
-      setopt HIST_REDUCE_BLANKS
+      setopt HIST_REDUCE_BLANKS # strip superfluous blanks before adding to history, e.g. `vi  foo ` -> `vi foo`
+                                # note that this does not apply to arguments, e.g. `echo 'hello    world'` does not change
+      # file globbing
+      setopt EXTENDED_GLOB      # add a few extra globbing options, e.g. `^foo*` matches all except foo
+      setopt NOMATCH            # produce an error if no match is found
+      # `man zshoptions` for more
 
-      # -- functions
+      # -- functions and modules
       # automatically run eza whenever you cd into a new directory
       # basically just an eza version of auto-ls (https://github.com/aikow/zsh-auto-ls)
       auto_eza() {
@@ -165,11 +169,56 @@
           --binary --colour=always --icons=always
       }
       chpwd_functions=(auto_eza $chpwd_functions)
+
+      # calculator
+      # make sure to use spaces (e.g. `= 2 * 3`, not `= 2*3`)
+      autoload -U zcalc
+      \=(){
+        zcalc -f -e "$1"
+      }
+
+      # bulk mv/cp files by means of shell patterns
+      autoload -U zmv
+      alias zr='noglob zmv -W -M' # easily rename files (demonstrated below)
+      alias zc='noglob zmv -W -C' # same as above but cp instead of mv
+                                  # useful for backing up files, e.g. $ zc *.srt *.srt.bak
+      # $ ls -1
+      #   Gamers!.S01E01.JA.srt
+      #   Gamers!.S01E02.JA.srt
+      #   Gamers!.S01E03.JA.srt
+      #   Gamers!.S01E04.JA.srt
+      #   Gamers!.S01E05.JA.srt
+      #   Gamers!.S01E06.JA.srt
+      #   Gamers!.S01E07.JA.srt
+      #   Gamers!.S01E08.JA.srt
+      #   Gamers!.S01E09.JA.srt
+      #   Gamers!.S01E10.JA.srt
+      #   Gamers!.S01E11.JA.srt
+      #   Gamers!.S01E12.JA.srt
+      # $ zr Gamers\!.*.JA.srt *.srt
+      # $ ls -1
+      #   S01E01.srt
+      #   S01E02.srt
+      #   S01E03.srt
+      #   S01E04.srt
+      #   S01E05.srt
+      #   S01E06.srt
+      #   S01E07.srt
+      #   S01E08.srt
+      #   S01E09.srt
+      #   S01E10.srt
+      #   S01E11.srt
+      #   S01E12.srt
     '';
 
     # -- Plugins
     enableAutosuggestions = true;
     syntaxHighlighting = {
+      # I would like to zsh-fast-syntax-highlighting (f-sy-h)
+      # but, ironically, it adds a lot to my zsh startup time
+      # so I'll stick to regular syntax highlighting for now
+      # (though I might consider switching to f-sy-h next time I buy a
+      # laptop, which will more than likely have a far stronger CPU)
       enable = true;
       # TODO: nix-colors
       #styles = {};
@@ -189,15 +238,15 @@
       }
       {
         # replace zsh's default completion selection menu with fzf
-        # NOTE: this plugin uses the results of zsh completion so enabling zsh completion is still necessary.
-        # This simply replaces the built-in menu.
+        # NOTE: this plugin uses zsh's native completion
+        # so you should still enable and configure it just as you would otherwise
+        # (see enableCompletion and completionInit earlier in the config).
+        # This simply replaces the *menu*.
         name = "fzf-tab";
         file = "fzf-tab.zsh";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
-
       # TODO: install https://github.com/momo-lab/zsh-abbrev-alias
-      # TODO: install https://github.com/oknowton/zsh-dwim
     ];
   };
 }
