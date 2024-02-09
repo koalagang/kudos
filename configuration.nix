@@ -158,16 +158,18 @@
   # Swap out sudo for doas
   # If for whatever reason doas does not work,
   # resort to entering root via `su` as your backup plan
-  security.sudo.enable = false;
-  security.doas = {
-    enable = true;
-    extraRules = [{
-      groups = [ "wheel" ];
-      persist = true;
-      # this option is crucial
-      # `doas nixos-rebuild switch` will not work without it
-      keepEnv = true;
-    }];
+  security = {
+    sudo.enable = false;
+    doas = {
+      enable = true;
+      extraRules = [{
+        groups = [ "wheel" ];
+        persist = true;
+        # this option is crucial
+        # `doas nixos-rebuild switch` will not work without it
+        keepEnv = true;
+      }];
+    };
   };
 
   # I generally avoid proprietary software in almost all cases
