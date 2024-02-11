@@ -157,6 +157,7 @@
                                 # note that this does not apply to arguments, e.g. `echo 'hello    world'` does not change
       # file globbing
       setopt EXTENDED_GLOB      # add a few extra globbing options, e.g. `^foo*` matches all except foo
+                                # NOTE: you will have to escape the hash in flake rebuild commands, i.e. `--flake .\#`
       setopt NOMATCH            # produce an error if no match is found
       # `man zshoptions` for more
 
