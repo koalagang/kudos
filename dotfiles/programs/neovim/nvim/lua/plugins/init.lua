@@ -345,6 +345,17 @@ require("lazy").setup({
         -- I hadn't noticed this before because I didn't use marks prior to this plugin
     },
 
+    {
+        "ledger/vim-ledger",
+        ft = { "ledger", "journal" },
+        config = function()
+            -- set tabs to two spaces
+            vim.opt.tabstop = 2
+            vim.opt.softtabstop = 2
+            vim.opt.shiftwidth = 2
+        end,
+    },
+
     -- TESTING
     --[[
 

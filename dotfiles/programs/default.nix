@@ -21,5 +21,8 @@
     ./zathura
     ./zoxide
     ./zsh
+
+    # WIP
+    ./ledger
   ];
 }
