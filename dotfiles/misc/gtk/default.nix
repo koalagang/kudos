@@ -4,7 +4,7 @@
   gtk = {
     enable = true;
 
-    # TODO: stylix
+    # TODO: nix-colors
     #font = {};
     theme = {
       name = "Dracula";

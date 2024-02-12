@@ -8,7 +8,7 @@
     enableFishIntegration = true;
     enableZshIntegration  = true;
 
-    # TODO: stylix
+    # TODO: nix-colors
     #colors = {};
 
     defaultCommand = "${pkgs.bfs}/bin/bfs -nohidden -type f";

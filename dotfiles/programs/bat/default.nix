@@ -4,7 +4,7 @@
   programs.bat = {
     enable = true;
 
-    # TODO: stylix
+    # TODO: nix-colors
     config.theme = "Dracula";
 
     extraPackages = with pkgs.bat-extras; [ batman batgrep ];

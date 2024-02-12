@@ -4,7 +4,7 @@
   programs.zathura = {
     enable = true;
 
-    # TODO: stylix
+    # TODO: nix-colors
 
     options = {
       page-padding = 6; # number of pixels between pages
