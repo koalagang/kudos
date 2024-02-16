@@ -7,7 +7,7 @@
   home = {
     packages = [
       (pkgs.writeShellScriptBin "foobar" ''
-        echo 'hello world'
+        ${pkgs.coreutils}/bin/echo 'hello world'
       '')
     ];
   };
