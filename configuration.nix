@@ -245,10 +245,7 @@
     ytfzf
     devour
     vimv-rs
-    # crunchy-cli
-    # the package is broken and outdated so I've submitted an issue on nixpkgs to update it
-    # see the issue https://github.com/NixOS/nixpkgs/issues/279867
-    # and the respective pull request https://github.com/NixOS/nixpkgs/pull/279881
+    crunchy-cli
 
     # TEST
     #ffsubsync
