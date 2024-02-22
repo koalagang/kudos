@@ -172,17 +172,15 @@
       chpwd_functions=(auto_eza $chpwd_functions)
 
       # calculator
-      # make sure to use spaces (e.g. `= 2 * 3`, not `= 2*3`)
+      # make sure *not* to use spaces (e.g. `zc 2*3`, not `= 2 * 3`)
       autoload -U zcalc
-      \=(){
-        zcalc -f -e "$1"
-      }
+      alias 'zc'='noglob zcalc -f -e'
 
       # bulk mv/cp files by means of shell patterns
       autoload -U zmv
       alias zr='noglob zmv -W -M' # easily rename files (demonstrated below)
-      alias zc='noglob zmv -W -C' # same as above but cp instead of mv
-                                  # useful for backing up files, e.g. $ zc *.srt *.srt.bak
+      alias zcp='noglob zmv -W -C' # same as above but cp instead of mv
+                                  # useful for backing up files, e.g. $ zcp *.srt *.srt.bak
       # $ ls -1
       #   Gamers!.S01E01.JA.srt
       #   Gamers!.S01E02.JA.srt
