@@ -22,7 +22,11 @@
       r = "rm";
       rs= "restore --staged";
       s = "status";
-      l = "log --graph --decorate --pretty=oneline --abbrev-commit";
+      # Credits to OP for this alias: https://www.reddit.com/r/git/comments/1ajh2ll/my_favorite_alias_for_git_log/
+      # TODO: nix-colors
+      l = ''log --graph
+        --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset'
+        --abbrev-commit --date=relative'';
     };
 
   };
