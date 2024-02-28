@@ -152,6 +152,9 @@
       # image files
       alias -s {png,jpg,jpeg,webp}="${pkgs.swayimg}/bin/swayimg"
 
+      # pdfs
+      alias -s pdf="${pkgs.zathura}/bin/zathura"
+
       # -- options
       setopt HIST_REDUCE_BLANKS # strip superfluous blanks before adding to history, e.g. `vi  foo ` -> `vi foo`
                                 # note that this does not apply to arguments, e.g. `echo 'hello    world'` does not change
