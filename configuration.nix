@@ -234,7 +234,6 @@
     # Powerful CLI tools
     imagemagick
     ffmpeg
-    sox
 
     # Simple but useful CLI tools
     xclip
