@@ -1,14 +1,6 @@
 { config, pkgs, ... }:
 
-# See https://thevaluable.dev/zsh-install-configure-mouseless/
-# and https://thevaluable.dev/zsh-completion-guide-examples/
-# to learn how the contents of completionInit and initExtra below work.
-
 {
-  # I have an fzf config elsewhere in the repo
-  # but I'm specifying this here too because parts of my zsh config depend on fzf
-  home.packages = [ pkgs.fzf ];
-
   programs.zsh = {
     enable = true;
 
@@ -30,7 +22,6 @@
     # I go into these directories a lot
     # so it's nice to be able to cd into them from anywhere
     cdpath =  [
-     "${config.xdg.userDirs.desktop}/git"
      "${config.xdg.userDirs.documents}/neorg"
      "${config.xdg.userDirs.videos}/immersion"
     ];
@@ -63,7 +54,6 @@
       path = "${config.xdg.dataHome}/zsh/zsh_history";
       extended = true; # save timestamps into the history file
       # do not add these very dangerous commands to the history
-      # this is very important if you use the fzf history widget
       ignorePatterns = [
         # kills all running processes
         "kill *"
@@ -122,9 +112,12 @@
       bindkey '¢' fzf-cd-widget
 
       # search zoxide database using fzf and enter the selected path with ctrl+f
-      # 'bindkey -s' types out the full command before entering it, so using an alias makes it faster
-      alias Z='cd "$(${pkgs.zoxide}/bin/zoxide query --interactive)"'
-      bindkey -s '^f' 'Z^M'
+      _zoxide_interactive(){
+        local selection="$(${pkgs.zoxide}/bin/zoxide query --interactive)"
+        [ -n "$selection" ] && cd "$selection"
+      }
+      zle -N _zoxide_interactive
+      bindkey '^f' _zoxide_interactive
 
       # quickly push an application (e.g. vim) into the background with ctrl+z
       # and then just as quickly pull it into the foreground again with ctrl+z
@@ -139,9 +132,9 @@
 
       # programming: lua, nix, rust and gdscript
       # plain text documents: markdown, neorg, latex and non-markup text file
-      # config files: ini, conf, cfg, toml and clifm
+      # config files: ini, conf, cfg, and toml
       # (unfortunately there seems to be no way of using suffixes for rc files)
-      alias -s {lua,nix,rs,gd,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml,clifm}="${config.home.sessionVariables.EDITOR}"
+      alias -s {lua,nix,rs,gd,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml}="${config.home.sessionVariables.EDITOR}"
 
       # wysiwig documents and spreadsheets
       alias -s {odf,docx,doc,xlsx,csv,tsv}="${pkgs.libreoffice}/bin/libreoffice --nologo"
@@ -157,7 +150,8 @@
 
       # -- options
       setopt HIST_REDUCE_BLANKS # strip superfluous blanks before adding to history, e.g. `vi  foo ` -> `vi foo`
-                                # note that this does not apply to arguments, e.g. `echo 'hello    world'` does not change
+                                # note that this does not apply to arguments in quotes,
+                                # e.g. `echo 'hello    world'` does not change
       # file globbing
       setopt EXTENDED_GLOB      # add a few extra globbing options, e.g. `^foo*` matches all except foo
                                 # NOTE: you will have to escape the hash in flake rebuild commands, i.e. `--flake .\#`
@@ -175,15 +169,15 @@
       chpwd_functions=(auto_eza $chpwd_functions)
 
       # calculator
-      # make sure *not* to use spaces (e.g. `zc 2*3`, not `= 2 * 3`)
+      # make sure *not* to use spaces (e.g. `zc 2*3`, not `zc 2 * 3`)
       autoload -U zcalc
       alias 'zc'='noglob zcalc -f -e'
 
       # bulk mv/cp files by means of shell patterns
       autoload -U zmv
-      alias zr='noglob zmv -W -M' # easily rename files (demonstrated below)
+      alias zr='noglob zmv -W -M'  # easily rename files (demonstrated below)
       alias zcp='noglob zmv -W -C' # same as above but cp instead of mv
-                                  # useful for backing up files, e.g. $ zcp *.srt *.srt.bak
+                                   # useful for backing up files, e.g. $ zcp *.srt *.srt.bak
       # $ ls -1
       #   Gamers!.S01E01.JA.srt
       #   Gamers!.S01E02.JA.srt
@@ -216,8 +210,8 @@
     # -- Plugins
     enableAutosuggestions = true;
     syntaxHighlighting = {
-      # I would like to zsh-fast-syntax-highlighting (f-sy-h)
-      # but, ironically, it adds a lot to my zsh startup time
+      # I would like to use zsh-fast-syntax-highlighting (f-sy-h)
+      # but, ironically, it adds a lot to my zsh startup time,
       # so I'll stick to regular syntax highlighting for now
       # (though I might consider switching to f-sy-h next time I buy a
       # laptop, which will more than likely have a far stronger CPU)
@@ -225,18 +219,13 @@
       # TODO: nix-colors
       #styles = {};
     };
+
     plugins = [
       {
         # allows for using zsh inside the nix ephemeral shell
         name = "zsh-nix-shell";
         file = "nix-shell.plugin.zsh";
         src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
-      }
-      {
-        # jump back to a specific directory, without doing `cd ../../..`
-        name = "zsh-bd";
-        file = "bd.zsh";
-        src = "${pkgs.zsh-bd}/share/zsh-bd";
       }
       {
         # replace zsh's default completion selection menu with fzf
@@ -251,4 +240,6 @@
       # TODO: install https://github.com/momo-lab/zsh-abbrev-alias
     ];
   };
+    # plugin dependencies
+    home.packages = with pkgs; [ fzf ];
 }
