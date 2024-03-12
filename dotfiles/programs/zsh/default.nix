@@ -94,6 +94,8 @@
       zmodload zsh/complist
 
       # -- vi and vim
+      # I want to use jeffreytse/zsh-vi-mode but, unfortunately, it is extremely slow on my system
+      # so I'll have to live with the native vi mode (which is still great, mind you)
       # enter zsh's vi normal mode with escape
       bindkey '^[' vi-cmd-mode
       export KEYTIMEOUT=1
