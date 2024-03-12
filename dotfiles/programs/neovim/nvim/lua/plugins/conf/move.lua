@@ -1,3 +1,5 @@
+require('move').setup()
+
 local opts = { noremap = true, silent = true }
 
 -- Normal-mode commands
