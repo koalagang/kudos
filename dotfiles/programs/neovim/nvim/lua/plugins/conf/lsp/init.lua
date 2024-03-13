@@ -59,7 +59,9 @@ end
 --local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 --local servers = { "texlab", "lua_ls", "rnix", "taplo", "rust_analyzer" }
-local servers = { "texlab", "lua_ls", "rnix", "taplo" }
+--local servers = { "texlab", "lua_ls", "rnix", "taplo" }
+-- I've temporarily disabled rnix because it depends on nix 2.15.3, which is affected by CVE-2024-27297
+local servers = { "texlab", "lua_ls", "taplo" }
 
 -- Ensure the servers above are installed
 for _, lsp in ipairs(servers) do

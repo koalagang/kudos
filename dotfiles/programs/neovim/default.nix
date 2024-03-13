@@ -53,7 +53,7 @@
       # I'll probably move these to per-project flakes
       texlab
       lua-language-server
-      rnix-lsp
+      #rnix-lsp # I've temporarily disabled rnix because it depends on nix 2.15.3, which is affected by CVE-2024-27297
       taplo
       rust-analyzer cargo
       # formatters?
