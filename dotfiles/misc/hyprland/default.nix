@@ -6,6 +6,8 @@
 # Once I've got wayland fully set up and ready to daily drive,
 # I'll port all my configs to homemanager modules and store them in their own separate directories.
 
+# Additionally, I'll switch from using the hyprland nixpkg to installing using flake+cachix
+
 {
   # make sure hyprland is installed via configuration.nix
   # TODO: pyprland
