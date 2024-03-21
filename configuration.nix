@@ -263,8 +263,9 @@
     pamixer
     bc
 
-    # Misc CLI tools
+    # Misc
     testdisk
+    nix-tree
 
     # Autostart tools
     # Will remove these once I've migrated to wayland
