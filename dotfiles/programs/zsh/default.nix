@@ -210,13 +210,12 @@
     '';
 
     # -- Plugins
-    enableAutosuggestions = true;
+    autosuggestion = {
+      enable = true;
+      # TODO: nix-colors
+      #highlight = {};
+    };
     syntaxHighlighting = {
-      # I would like to use zsh-fast-syntax-highlighting (f-sy-h)
-      # but, ironically, it adds a lot to my zsh startup time,
-      # so I'll stick to regular syntax highlighting for now
-      # (though I might consider switching to f-sy-h next time I buy a
-      # laptop, which will more than likely have a far stronger CPU)
       enable = true;
       # TODO: nix-colors
       #styles = {};
@@ -242,6 +241,6 @@
       # TODO: install https://github.com/momo-lab/zsh-abbrev-alias
     ];
   };
-    # plugin dependencies
-    home.packages = with pkgs; [ fzf ];
+  # plugin dependencies
+  home.packages = with pkgs; [ fzf ];
 }

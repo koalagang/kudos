@@ -32,6 +32,7 @@
   #  enable = true;
   #  systemdIntegration.enable = true;
   #};
+
   home.file."${config.xdg.configHome}/waybar" = {
     source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/waybar";
     recursive = true;
