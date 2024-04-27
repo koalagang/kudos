@@ -32,11 +32,6 @@ require("lazy").setup({
     -- Try to avoid going overboard on the number of plugins
         -- I'm thinking like 30 plugins- or 40 at the max (excluding dependencies and smaller plugin extensions)
 
-    -- [[ BADGES ]]
-    -- Plugin dependencies marked with '[N]' comments are not actually dependencies
-        -- I've just marked them as dependencies so that they load when their "dependents" loads
-    -- My absolute favourite plugins are marked with <3
-
     -- [[ TO INSTALL ]]
     -- DEFINITELY
         -- neovim/nvim-lspconfig
@@ -44,7 +39,6 @@ require("lazy").setup({
             -- I'm considering using `programs.neovim.extraPackages` in homemanager instead of mason
         -- hrsh7th/nvim-cmp
         -- lewis6991/gitsigns.nvim
-        -- NeogitOrg/neogit
         -- sindrets/diffview.nvim
         -- pwntester/octo.nvim
         -- L3MON4D3/LuaSnip
@@ -56,10 +50,11 @@ require("lazy").setup({
             -- stevearc/conform.nvim and mfussenegger/nvim-lint
             -- or nvimtools/none-ls.nvim? (probably this)
         -- jghauser/papis.nvim
-        -- ledger/vim-ledger
         -- direnv/direnv.vim
     -- + related extensions (for nvim-cmp, telescope, neorg)
     -- MAYBE
+        -- mrcjkb/rustaceanvim
+        -- kylechui/nvim-surround
         -- nvim-neotest/neotest
         -- kevinhwang91/nvim-ufo
         -- mracos/mermaid.vim
@@ -90,7 +85,7 @@ require("lazy").setup({
 
     -- [[ Treesitter and extensions ]]
     {
-        "nvim-treesitter/nvim-treesitter", -- <3
+        "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate", -- Check for updates to the parsers
         --dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
         -- EXTERNAL: tar, curl, gcc
@@ -116,21 +111,14 @@ require("lazy").setup({
          end,
     },
 
+    -- TODO: switch to nvim-neorg/nixpkgs-neorg-overlay? (once I've switched to nixvim)
     { -- "An Organized Future"
-      -- NOTE: sometimes neorg's folds break
-      -- However, refreshing the file with ':e' fixes this
-      -- In my experience, though, this seems to have been fixed recently
-        "nvim-neorg/neorg", -- <3
-        build = ":Neorg sync-parsers",
+        "nvim-neorg/neorg",
         dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
+            -- EXTERNAL: lua-utils.nvim nvim-nio nui.nvim plenary.nvim pathlib.nvim (all are luarocks)
             {
                 "nvim-neorg/neorg-telescope",
                 dependencies = { "nvim-telescope/telescope.nvim" },
-                --config = function()
-                --    vim.wo.foldlevel = 99
-                --end,
             },
         },
         cmd = "Neorg",
@@ -141,6 +129,7 @@ require("lazy").setup({
         end,
     },
 
+    -- TODO: consider switching to folke/flash.nvim?
     { -- "Neovim motions on speed!"
         "phaazon/hop.nvim",
         branch = "v2",
@@ -151,9 +140,10 @@ require("lazy").setup({
     },
 
     { -- "Neovim file explorer: edit your filesystem like a buffer"
-        "stevearc/oil.nvim", -- <3
+        "stevearc/oil.nvim",
         keys = { "-" },
         cmd = "Oil",
+        after = "jvgrootveld/telescope-zoxide",
         dependencies = { "nvim-tree/nvim-web-devicons" }, -- EXTERNAL: any nerdfont
         -- EXTERNAL: trash-cli (for trash feature)
         config = function()
@@ -163,7 +153,7 @@ require("lazy").setup({
 
     -- [[ Treesitter and extensions ]]
     { -- "Find, Filter, Preview, Pick. All lua, all the time."
-        "nvim-telescope/telescope.nvim", -- <3
+        "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
         cmd = "Telescope",
         keys = { "<c-t>", "<c-g>" },
@@ -181,7 +171,6 @@ require("lazy").setup({
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
-            "stevearc/oil.nvim", -- [N]
         },
         -- EXTERNAL: zoxide
         keys = "<c-t>z",
@@ -198,7 +187,7 @@ require("lazy").setup({
     -- Enter focus and winshift!
     -- This beautiful duo makes using splits an actual comfortable experience.
     { -- Auto-focusing and auto-resizing splits/windows
-        "nvim-focus/focus.nvim", -- <3
+        "nvim-focus/focus.nvim",
         version = "*",
         keys = { "<c-h>", "<c-j>", "<c-k>", "<c-l>", "<localleader>h", "<localleader>j", "<localleader>k", "<localleader>l" },
         config = function()
@@ -212,7 +201,27 @@ require("lazy").setup({
             require(conf .. "winshift")
         end,
     },
-    -- Once I've also setup toggleterm, gitsigns, neogit and octo, I'll have no excuse to leave neovim.
+    {
+        'akinsho/toggleterm.nvim',
+        version = "*",
+        keys = { "<m-cr>" },
+        config = function()
+            require(conf .. "toggleterm")
+        end,
+    },
+    { -- TODO: learn how to use this
+      "NeogitOrg/neogit",
+      cmd = "Neogit",
+      dependencies = {
+        "nvim-lua/plenary.nvim",         -- required
+        "sindrets/diffview.nvim",        -- optional - Diff integration
+        "nvim-telescope/telescope.nvim", -- optional
+      },
+      config = function()
+        require(conf .. "neogit")
+      end,
+    },
+    -- Once I've also setup gitsigns, neogit and octo, I'll have no excuse to leave neovim.
     -- focus, winshift, oil and telescope will allow me to navigate files with ease,
     -- gitsigns, neogit and octo will reduce (or even remove?) the need for using the commandline to interactive with git
     -- and if I still find myself needing to use the commandline alongside neovim, toggleterm will be right there.
@@ -222,7 +231,6 @@ require("lazy").setup({
         "jiaoshijie/undotree",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "nvim-focus/focus.nvim", -- [N]
         },
         keys = { "<leader>u" },
         config = function()
@@ -255,7 +263,7 @@ require("lazy").setup({
     --    --end,
     --},
     {
-        "catppuccin/nvim", -- <3
+        "catppuccin/nvim",
         name = "catppuccin",
         -- One of the few plugins I don't lazy-load
         lazy = false,
@@ -292,6 +300,7 @@ require("lazy").setup({
         config = function()
             require(conf .. "image")
         end,
+        enabled = false,
     },
 
     ---- [[ EASING PLUGINS ]] ---
@@ -332,6 +341,7 @@ require("lazy").setup({
         end,
     },
 
+    -- TODO: consider switching to harpoon
     { -- "A better user experience for viewing and interacting with Vim marks"
         "chentoast/marks.nvim",
         keys = { "m", "dm", "m,", "m;", "dmx", "dm-", "dm<space>", "m]", "m[", "m:", "m}", "m{", "dm=" },
@@ -355,21 +365,4 @@ require("lazy").setup({
             vim.opt.shiftwidth = 2
         end,
     },
-
-    -- TESTING
-    --[[
-
-    {
-        "kylechui/nvim-surround",
-        version = "*", -- Use for stability; omit to use `main` branch for the latest features
-        event = "VeryLazy",
-        config = function()
-            require("nvim-surround").setup({
-                -- Configuration here, or leave empty to use defaults
-            })
-        end
-    },
-    ]]
-    -- TESTING
-
 })

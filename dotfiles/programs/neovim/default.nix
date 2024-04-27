@@ -62,8 +62,17 @@
       # TODO: checkhealth on all plugins
     ];
 
-    # 3rd/image.nvim
-    extraLuaPackages = luaPkgs: with luaPkgs; [ magick ];
+    extraLuaPackages = luaPkgs: with luaPkgs; [
+      # 3rd/image.nvim
+      magick
+
+      # nvim-neorg/neorg
+      lua-utils-nvim
+      nvim-nio
+      nui-nvim
+      plenary-nvim
+      pathlib-nvim
+    ];
   };
 
   # Source lua config
