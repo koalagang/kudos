@@ -115,6 +115,8 @@ require("lazy").setup({
     { -- "An Organized Future"
         "nvim-neorg/neorg",
         dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+
             -- EXTERNAL: lua-utils.nvim nvim-nio nui.nvim plenary.nvim pathlib.nvim (all are luarocks)
             {
                 "nvim-neorg/neorg-telescope",
