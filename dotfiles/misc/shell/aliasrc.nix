@@ -34,6 +34,7 @@
     du = "${pkgs.du-dust}/bin/dust";
     img = "${pkgs.swayimg}/bin/swayimg";
     rd = "${pkgs.ripdrag}/bin/ripdrag";
+    nx = "${pkgs.nh}/bin/nh"; # I find 'nh' a bit awkward to type because of the placement of the keys
 
     # TODO: write iwtui (an iwd tui) using dialog
     iwc = "iwctl station wlan0";

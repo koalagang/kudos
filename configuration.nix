@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, inputs, pkgs, lib, ... }:
 
 {
   imports =
@@ -107,12 +107,13 @@
         # Respect the XDG base directory spec
         extraConfig = "user-authority-in-system-dir=true";
       };
-      defaultSession = "none+dwm";
     };
 
     # Don't install xterm
     excludePackages = [ pkgs.xterm ];
   };
+
+  services.displayManager.defaultSession = "none+dwm";
 
   # Configure console keymap
   console.keyMap = "uk";
@@ -244,13 +245,8 @@
     ytfzf
     devour
     vimv-rs
-    crunchy-cli
 
     # TEST
-    #ffsubsync
-    alass
-    subtitleeditor
-    subedit
     pyprland
     manix
 
@@ -356,8 +352,48 @@
     })
   ];
 
-  # WIP
-  programs.hyprland.enable = true;
+  nix = {
+    # Install and...
+    package = pkgs.nixFlakes;
+    settings = {
+      # enable flakes
+      experimental-features = "nix-command flakes";
+
+      # Respect the XDG base directory spec
+      use-xdg-base-directories = true;
+
+      # Automatically run garbage collection whenever there is not enough space left
+      # The below options tell nix to collect garbage when the partition with /nix has less than 20 GB free
+      # but it will clear only as much as is necessary to free up 60 GB
+      #min-free = "${toString (1024 * 1024 * 1024 * 20 )}"; # 20 GB
+      #max-free = "${toString (1024 * 1024 * 1024 * 60 )}"; # 60 GB
+
+      # cachix for hyprland flake
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    };
+
+    # Automatically optimise the store monthly to avoid wasting storage
+    #optimise.automatic = true;
+  };
+
+  # will enable once there's doas support
+  # see https://github.com/viperML/nh/pull/92
+  #programs.nh = {
+  #  enable = true;
+  #  flake = "/home/dante/Desktop/git/kudos"; # TODO: move to a variable?
+  #  #clean = {
+  #  #  enable = true;
+  #  #  extraArgs = "";
+  #  #}
+  #};
+
+  programs.hyprland = {
+    enable = true;
+    # from the hyprland flake
+    #package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+    #portalPackage = inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland;
+  };
   security.pam.services.swaylock = {};
 
   # Dconf is necessary for gtk theming if you're not using a DE.
@@ -371,6 +407,7 @@
     noto-fonts-emoji
     source-han-serif
     source-han-sans
+    victor-mono
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
@@ -441,27 +478,6 @@
 
     # optimise SSD health and performance
     fstrim.enable = true;
-  };
-
-  nix = {
-    # Install and...
-    package = pkgs.nixFlakes;
-    settings = {
-      # enable flakes
-      experimental-features = "nix-command flakes";
-
-      # Respect the XDG base directory spec
-      use-xdg-base-directories = true;
-
-      # Automatically run garbage collection whenever there is not enough space left
-      # The below options tell nix to collect garbage when the partition with /nix has less than 20 GB free
-      # but it will clear only as much as is necessary to free up 60 GB
-      #min-free = "${toString (1024 * 1024 * 1024 * 20 )}"; # 20 GB
-      #max-free = "${toString (1024 * 1024 * 1024 * 60 )}"; # 60 GB
-    };
-
-    # Automatically optimise the store monthly to avoid wasting storage
-    #optimise.automatic = true;
   };
 
   # For some reason, git opens an annoying graphical askpass window

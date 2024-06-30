@@ -24,10 +24,6 @@ require("lazy").setup({
     -- [[ RULES ]]
     -- Lazy load (almost) everything
     -- If a configuration is longer than two lines, put it in its own file
-    -- Be declarative:
-        -- just because you specified a plugin somewhere else in the file
-        -- doesn't mean you don't need to specify it as a dependency elsewhere
-        -- leave a comment regarding external dependencies where applicable
     -- Document everything (excluding obvious things); comments exist for a reason
     -- Try to avoid going overboard on the number of plugins
         -- I'm thinking like 30 plugins- or 40 at the max (excluding dependencies and smaller plugin extensions)
@@ -135,7 +131,7 @@ require("lazy").setup({
     { -- "Neovim motions on speed!"
         "phaazon/hop.nvim",
         branch = "v2",
-        keys = { "f", "F", "<localleader>1", "<localleader>2" },
+        keys = { "f", "F", "<localleader>1", "<localleader>2", { "f", mode = "v" }, { "F", mode = "v" } },
         config = function()
             require(conf .. "hop")
         end,
@@ -366,5 +362,15 @@ require("lazy").setup({
             vim.opt.softtabstop = 2
             vim.opt.shiftwidth = 2
         end,
+    },
+
+    -- for configuring eww
+    {
+        "elkowar/yuck.vim",
+        ft = "yuck",
+    },
+    {
+        "gpanders/nvim-parinfer",
+        ft = "yuck",
     },
 })

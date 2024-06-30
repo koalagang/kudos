@@ -9,10 +9,6 @@
 # Additionally, I'll switch from using the hyprland nixpkg to installing using flake+cachix
 
 {
-  # make sure hyprland is installed via configuration.nix
-  # TODO: pyprland
-  # See here for a useful video https://www.youtube.com/watch?v=CwGlm-rpok4
-
   #wayland.windowManager.hyprland = {
   #  enable = true;
   #  systemdIntegration = true;
@@ -28,9 +24,14 @@
     source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/foot.ini";
   };
 
+  # WORK IN PROGRESS (switching from waybar to eww)
   #programs.waybar = {
   #  enable = true;
   #  systemdIntegration.enable = true;
+  #};
+  #programs.eww = {
+  #  enable = true;
+  #  #configDir = ./config
   #};
 
   home.file."${config.xdg.configHome}/waybar" = {
@@ -41,14 +42,13 @@
   home.file."${config.xdg.configHome}/fuzzel/fuzzel.ini" = {
     source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/fuzzel.ini";
   };
-  programs.fuzzel.enable = true;
+  programs.fuzzel.enable = true; # TODO: switch to bemenu
 
+  # TODO: switch to hyprlock
   # make sure to add `security.pam.services.swaylock = {};` to configuration.nix
-  # am considering switching to waylock
   programs.swaylock.enable = true;
 
-  # doesn't seem to work atm
-  # maybe it'll start working once I've ported my hyprland config to nix
+  # TODO: switch to hypridle
   services.swayidle = {
     enable = true;
     timeouts = [{
@@ -61,11 +61,6 @@
     source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/mako/config";
   };
 
-  home.packages = with pkgs; [ mako waybar wlsunset ];
-  # I also have wlsunset configured with homemanager (see services/wlsunset)
-  # but it doesn't seem to work
-  # maybe because I'm not currently use hyprland's homemanager module?
-
   # hyprland has support for hot-reloading
   home.file."${config.xdg.configHome}/hypr/hyprland.conf" = {
     source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/hyprland.conf";
@@ -73,4 +68,65 @@
 
   # modified keyboard layout
   home.file."${config.xdg.configHome}/xkb/symbols/uk-no".source = ./uk-no;
+
+  home = {
+    packages = with pkgs; [
+      # I also have wlsunset configured with homemanager (see services/wlsunset)
+      # but it doesn't seem to work
+      # maybe because I'm not currently use hyprland's homemanager module?
+      mako waybar eww brightnessctl wlsunset hdrop
+
+      (writeShellScriptBin "eww-workspace" ''
+        # pass input to hyprctl
+        ${pkgs.hyprland}/bin/hyprctl dispatch "$@"
+
+        # add yuck code to an array
+        IFS=$'\n'
+        widgets=('(box :class "widgets" :space-evenly true :halign "start"'
+        '(button :class "workspace_inactive" :onclick "eww-workspace workspace 1" "󰠱")'
+        '(button :class "workspace_inactive" :onclick "eww-workspace workspace 2" "󰈹")'
+        '(button :class "workspace_inactive" :onclick "eww-workspace workspace 3" "󰅩")'
+        '(button :class "workspace_inactive" :onclick "eww-workspace workspace 4" "󰦨")'
+        '(button :class "workspace_inactive_star" :onclick "eww-workspace workspace 5" "")'
+        '(button :class "workspace_inactive" :onclick "eww-workspace workspace 6" "󰭹")'
+        '(button :class "workspace_inactive" :onclick "eww-workspace workspace 7" "󰠱"))')
+
+        # find which workspace is currently focused...
+        focused="$(${pkgs.hyprland}/bin/hyprctl activeworkspace -j | ${pkgs.jq}/bin/jq '.id')"
+
+        # ...and update the respective element in the widgets array
+        widgets[$focused]="''${widgets[$focused]/inactive/focused}"
+
+        # get all workspaces that have open windows...
+        active=($(${pkgs.hyprland}/bin/hyprctl -j clients | \
+          ${pkgs.jq}/bin/jq '.[] | .workspace.id' | ${pkgs.coreutils}/bin/sort -u))
+
+        # ...and update the respective element in the widgets array
+        # (excludes focused workspace because of previous commands)
+        for i in "''${active[@]}"; do
+            widgets[$i]="''${widgets[$i]/inactive/active}"
+        done
+
+        # now we can update the focused variable inside eww
+        # this loads the yuck code stored within the widgets array
+        ${pkgs.eww}/bin/eww update focused="$(${pkgs.coreutils}/bin/echo ''${widgets[@]} | ${pkgs.coreutils}/bin/tr -d '\n')"
+      '')
+
+      # toggle do not disturb mode
+      (writeShellScriptBin "eww-dnd" ''
+        if [[ "$(makoctl mode)" =~ 'do-not-disturb' ]]; then
+            # disable
+            makoctl mode -r do-not-disturb
+            notify-send 'Do Not Disturb' 'disabled'
+            #eww update dnd_class=':class "button_disabled"'
+        else
+            # enable
+            notify-send 'Do Not Disturb' 'enabled'
+            #sleep 4
+            makoctl mode -a do-not-disturb
+            #eww update dnd_class=':class "button_enabled"'
+        fi
+      '')
+      ];
+  };
 }

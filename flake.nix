@@ -23,12 +23,17 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # use the hyprland flake
+    # because its package is usually slightly more up-to-date than its nixpkgs counterpart
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }: {
     nixosConfigurations = {
       Myla = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; }; # so we can use the hyprland flake
         modules = [
           ./configuration.nix
           home-manager.nixosModules.home-manager

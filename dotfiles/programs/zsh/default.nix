@@ -73,6 +73,9 @@
         "bfs * -delete"
         "bfs -delete *"
         "find * -delete"
+
+        # misc
+        "timew delete"
       ];
       # do not save commands beginning with a space
       # (useful for if you want to enter a command that you don't want in your history,
@@ -114,12 +117,13 @@
       bindkey '¢' fzf-cd-widget
 
       # search zoxide database using fzf and enter the selected path with ctrl+f
-      _zoxide_interactive(){
+      zoxide_interactive(){
         local selection="$(${pkgs.zoxide}/bin/zoxide query --interactive)"
         [ -n "$selection" ] && cd "$selection"
+        zle reset-prompt
       }
-      zle -N _zoxide_interactive
-      bindkey '^f' _zoxide_interactive
+      zle -N zoxide_interactive
+      bindkey '^f' zoxide_interactive
 
       # quickly push an application (e.g. vim) into the background with ctrl+z
       # and then just as quickly pull it into the foreground again with ctrl+z
@@ -151,13 +155,16 @@
       alias -s pdf="${pkgs.zathura}/bin/zathura"
 
       # -- options
-      setopt HIST_REDUCE_BLANKS # strip superfluous blanks before adding to history, e.g. `vi  foo ` -> `vi foo`
-                                # note that this does not apply to arguments in quotes,
-                                # e.g. `echo 'hello    world'` does not change
-      # file globbing
-      setopt EXTENDED_GLOB      # add a few extra globbing options, e.g. `^foo*` matches all except foo
-                                # NOTE: you will have to escape the hash in flake rebuild commands, i.e. `--flake .\#`
-      setopt NOMATCH            # produce an error if no match is found
+      setopt HIST_REDUCE_BLANKS     # strip superfluous blanks before adding to history, e.g. `vi  foo ` -> `vi foo`
+                                    # note that this does not apply to arguments in quotes,
+                                    # e.g. `echo 'hello    world'` does not change
+                                    # file globbing
+      setopt EXTENDED_GLOB          # add a few extra globbing options, e.g. `^foo*` matches all except foo
+                                    # NOTE: you will have to escape the hash in flake rebuild commands, i.e. `--flake .\#`
+      setopt NOMATCH                # produce an error if no match is found
+      setopt autopushd pushdsilent  # make cd commmand use pushd and don't print dirs whenever you run it
+                                    # this can be thought of as dynamically creating per-session aliases
+                                    # TODO: add completion for cd or pushd commands beginning with tilda~
       # `man zshoptions` for more
 
       # -- functions and modules

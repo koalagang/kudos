@@ -32,6 +32,8 @@
       record full desktop
       stop recording'
 
+      # script is slightly broken
+      # TODO: fix it
       case "$(${pkgs.coreutils}/bin/printf '%s' "$selections" | ${config.home.sessionVariables.DMENU_CMD} -l 9)" in
           'copy selected area') screenshot_selected - | ${pkgs.wl-clipboard}/bin/wl-copy ;;
           'save selected area') screenshot_selected ;;
