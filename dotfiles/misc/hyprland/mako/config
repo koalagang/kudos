@@ -12,5 +12,6 @@ border-radius=10
 default-timeout=5000
 history=0
 
-[mode=do-not-disturb]
+# do not disturb
+[mode=dnd]
 invisible=1

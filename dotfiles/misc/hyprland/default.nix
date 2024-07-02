@@ -150,22 +150,6 @@
         # this loads the yuck code stored within the widgets array
         ${pkgs.eww}/bin/eww update focused="$(${pkgs.coreutils}/bin/echo ''${widgets[@]} | ${pkgs.coreutils}/bin/tr -d '\n')"
       '')
-
-      # toggle do not disturb mode
-      (writeShellScriptBin "eww-dnd" ''
-        if [[ "$(makoctl mode)" =~ 'do-not-disturb' ]]; then
-            # disable
-            makoctl mode -r do-not-disturb
-            notify-send 'Do Not Disturb' 'disabled'
-            #eww update dnd_class=':class "button_disabled"'
-        else
-            # enable
-            notify-send 'Do Not Disturb' 'enabled'
-            #sleep 4
-            makoctl mode -a do-not-disturb
-            #eww update dnd_class=':class "button_enabled"'
-        fi
-      '')
       ];
   };
 }
