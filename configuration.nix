@@ -388,13 +388,15 @@
   #  #}
   #};
 
+  security.pam.services.hyprlock = {};
+  programs.hyprlock.enable = true;
+  services.hypridle.enable = true;
   programs.hyprland = {
     enable = true;
     # from the hyprland flake
     #package = inputs.hyprland.packages."${pkgs.system}".hyprland;
     #portalPackage = inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland;
   };
-  security.pam.services.swaylock = {};
 
   # Dconf is necessary for gtk theming if you're not using a DE.
   # See https://github.com/nix-community/home-manager/issues/3113 for more

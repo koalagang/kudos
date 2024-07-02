@@ -44,18 +44,57 @@
   };
   programs.fuzzel.enable = true; # TODO: switch to bemenu
 
-  # TODO: switch to hyprlock
-  # make sure to add `security.pam.services.swaylock = {};` to configuration.nix
-  programs.swaylock.enable = true;
-
-  # TODO: switch to hypridle
-  services.swayidle = {
+  # make sure to add `security.pam.services.hyprlock = {};` to configuration.nix
+  programs.hyprlock = {
     enable = true;
-    timeouts = [{
-      timeout = 120;
-      command = "${pkgs.swaylock}/bin/swaylock";
-    }];
+    # TODO: configure hyprlock more
+    settings = {
+      general.hide_cursor = true;
+
+      # TODO: change?
+      background = [ { path = "~/Pictures/wallpapers/catppuccin/unicat.png"; } ];
+
+      input-field = [
+        {
+          size = "200, 50";
+          position = "0, -60";
+          monitor = "";
+          dots_center = true;
+          fade_on_empty = false;
+          font_color = "rgb(202, 211, 245)";
+          inner_color = "rgb(91, 96, 120)";
+          outer_color = "rgb(24, 25, 38)";
+          outline_thickness = 5;
+          placeholder_text = "Type in your password";
+          shadow_passes = 2;
+          hide_input = true;
+        }
+      ];
+    };
   };
+
+  services.hypridle = {
+    enable = true;
+    settings = {
+      listener = [
+        {
+          timeout = 120;
+          on-timeout = "hyprlock";
+        }
+        {
+          timeout = 180;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+        {
+          timeout = 240;
+          on-timeout = "systemctl suspend";
+        }
+      ];
+    };
+  };
+
+  # TODO: install hyprpaper
 
   home.file."${config.xdg.configHome}/mako/config" = {
     source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/mako/config";
