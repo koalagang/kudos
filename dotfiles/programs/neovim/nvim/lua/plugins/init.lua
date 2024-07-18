@@ -190,7 +190,17 @@ require("lazy").setup({
     { -- Auto-focusing and auto-resizing splits/windows
         "nvim-focus/focus.nvim",
         version = "*",
-        keys = { "<c-h>", "<c-j>", "<c-k>", "<c-l>", "<localleader>h", "<localleader>j", "<localleader>k", "<localleader>l" },
+        keys = {
+            "<c-h>",
+            "<c-j>",
+            "<c-k>",
+            "<c-l>",
+            "<localleader>h",
+            "<localleader>j",
+            "<localleader>k",
+            "<localleader>l",
+            "<localleader>f",
+        },
         config = function()
             require(conf .. "focus")
         end,
