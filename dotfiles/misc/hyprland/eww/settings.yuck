@@ -1,0 +1,125 @@
+; Android-like 'quick settings' menu
+; will be opened by clicking a 󰇘 icon on the bar
+(defwindow settings
+  :monitor 0
+  :exclusive false
+  :stacking "overlay"
+  :geometry (geometry :anchor "top center") ; TODO: change this (once menu is complete)
+  ; If you're wondering why I didn't just create a single widget and use arguments,
+  ; it's because the stack widget's ":select" option doesn't accept arguments
+  (box
+      :class "settings_popup"
+      (box :orientation "v"
+        ; TODO: interacts with iwd (through iwctl)
+       (button
+         :class "button_enabled"
+         "󰤨\  WiFi") ; TODO: change icon depending on strength (like with battery)
+       ; 󰤭 󰤯 󰤟 󰤥 󰤨 󰈀
+       ; TODO: create a separate wifi menu that opens up when you click on wifi (like with the Android wifi menu)
+       ; left-click should scan and open up the menu, right-click should simply toggle wifi
+       ; TODO: interacts with mako (through makoctl)
+       (dnd)
+       (button :class "button_enabled" "\  Power menu")) ; power menu: shutdown, reboot, suspend, lock
+      (box :orientation "v"
+       (vpn)
+       (nightlight)
+       (caffeine))))
+
+; TODO: make icons separate and with padding instead of using spaces
+
+; COMPLETE
+(defvar dnd_toggle "")
+(defwidget dnd []
+  (stack
+     :transition "crossfade"
+     :same-size true
+     :selected dnd_toggle
+     (button
+       :class "button_disabled"
+       :onclick "${EWW_CMD} update dnd_toggle=1 && makoctl mode -a dnd"
+      "󰍷\  Do Not Disturb")
+     (button
+       :class "button_enabled"
+       :onclick "${EWW_CMD} update dnd_toggle=0 && makoctl mode -r dnd"
+      "󰍷\  Do Not Disturb")))
+
+; TODO: interacts with wireguard (COMING SOON)
+(defvar vpn_toggle "")
+(defwidget vpn []
+  (stack
+     :transition "crossfade"
+     :same-size true
+     :selected vpn_toggle
+     (button
+       :class "button_disabled"
+       :onclick "${EWW_CMD} update vpn_toggle=1"
+      " \  VPN (TODO)") ; dragon icon because it looks a bit like the wireguard logo
+     (button
+       :class "button_enabled"
+       :onclick "${EWW_CMD} update vpn_toggle=0"
+      " \  VPN (TODO)"))) ; dragon icon because it looks a bit like the wireguard logo
+
+; TODO: interacts with wlsunset
+; for some reason neither wlsunset nor gammastep works on my system (ThinkPad T420)
+(defvar nightlight_toggle "")
+(defwidget nightlight []
+  (stack
+     :transition "crossfade"
+     :same-size true
+     :selected nightlight_toggle
+     (button
+       :class "button_disabled"
+       :onclick "${EWW_CMD} update nightlight_toggle=1"
+      "\  Nightlight") ; TODO: have 'Until 05:00' like on my phone
+     (button
+       :class "button_enabled"
+       :onclick "${EWW_CMD} update nightlight_toggle=0"
+      "\  Nightlight"))) ; TODO: have 'Until 05:00' like on my phone
+
+; COMPLETE
+(defvar caffeine_toggle "")
+(defwidget caffeine []
+  (stack
+     :transition "crossfade"
+     :same-size true
+     :selected caffeine_toggle
+     (button
+       :class "button_disabled"
+       :onclick "killall hypridle && ${EWW_CMD} update caffeine_toggle=1"
+       "󰛊\  Caffeine")
+     (button
+       :class "button_enabled"
+       :onclick "hypridle & ${EWW_CMD} update caffeine_toggle=0"
+      "󰛊\  Caffeine")))
+
+; TODO: add brightness and volume sliders at the bottom of settings menu?
+; to get volume: `wpctl get-volume @DEFAULT_AUDIO_SINK@`
+
+; 󰤭 󰤯 󰤟 󰤥 󰤨 󰈀
+(defwindow wifi
+  :monitor 0
+  :exclusive false
+  :stacking "overlay"
+  :geometry (geometry :anchor "center") ; TODO: change this (once menu is complete)
+  (box :orientation "v"
+    :class "popup"
+    (button
+      :class "wifi_button_enabled"
+      (box :space-evenly false
+        (label :class "wifi_icon" :text "󰤥")
+        (box :orientation "v"
+          (label :class "wifi_name_connected" :text "Ragnarok_2.4G")
+          (label :class "wifi_undertext_connected" :text "Connected")))) ; TODO: different colour
+    (button
+      :class "wifi_button_disabled"
+      (box :space-evenly false
+        (label :class "wifi_icon" :text "󰤥")
+        (box :orientation "v"
+          (label :text "Ragnarok_5G")
+          (label :class "wifi_undertext_saved" :text "Saved")))) ; TODO: different colour
+    (button
+      :class "wifi_button_disabled"
+      (box :space-evenly false
+        (label :class "wifi_icon" :text "󰤟")
+        (box :orientation "v"
+          (label :text "EE Wifi"))))))

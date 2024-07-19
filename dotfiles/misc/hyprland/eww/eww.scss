@@ -1,0 +1,244 @@
+* { all: unset; }
+
+// catppuccin mocha
+$base00: #1e1e2e; // base
+$base01: #181825; // mantle
+$base02: #313244; // surface0
+$base03: #45475a; // surface1
+$base04: #585b70; // surface2
+$base05: #cdd6f4; // text
+$base06: #f5e0dc; // rosewater
+$base07: #b4befe; // lavender
+$base08: #f38ba8; // red
+$base09: #fab387; // peach
+$base0A: #f9e2af; // yellow
+$base0B: #a6e3a1; // green
+$base0C: #94e2d5; // teal
+$base0D: #89b4fa; // blue
+$base0E: #cba6f7; // mauve
+$base0F: #f2cdcd; // flamingo
+
+// dracula (temporary)
+//$base00: #282936; // background
+//$base01: #3a3c4e;
+//$base02: #4d4f68;
+//$base03: #626483;
+//$base04: #62d6e8;
+//$base05: #e9e9f4; // foreground
+//$base06: #f1f2f8;
+//$base07: #f7f7fb;
+//$base08: #ea51b2;
+//$base09: #b45bcf;
+//$base0A: #00f769;
+//$base0B: #ebff87;
+//$base0C: #a1efe4;
+//$base0D: #62d6e8;
+//$base0E: #b45bcf;
+//$base0F: #00f769;
+
+// solarized dark (temporary)
+//$base00: #002b36;
+//$base01: #073642;
+//$base02: #586e75;
+//$base03: #657b83;
+//$base04: #839496;
+//$base05: #93a1a1;
+//$base06: #eee8d5;
+//$base07: #fdf6e3;
+//$base08: #dc322f;
+//$base09: #cb4b16;
+//$base0A: #b58900;
+//$base0B: #859900;
+//$base0C: #2aa198;
+//$base0D: #268bd2;
+//$base0E: #6c71c4;
+//$base0F: #d33682;
+
+$background: $base00;
+$foreground: $base05;
+$accent: $base08;
+
+tooltip {
+  color: $foreground;
+  background-color: $background;
+  border-radius: 10px;
+}
+
+.widgets {
+  color: $foreground;
+  background-color: $background;
+  //border: 1px solid $foreground;
+  border-radius: 10px;
+  margin: 4px;
+  font-size: 18px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.workspace_focused {
+  padding: 6px;
+  color: $accent;
+}
+
+.workspace_inactive {
+  color: $base02;
+}
+
+.workspace_hover {
+  color: $base09;
+}
+// the star icon is shifted to the right slightly
+// so we add some padding to centre it
+.workspace_inactive_star {
+  padding-right: 4px;
+  color: $base02;
+}
+.workspace_focused_star {
+  padding: 6px;
+  color: $accent;
+}
+
+.workspace_active {
+  padding: 6px;
+  color: $foreground;
+}
+
+.battery {
+  font-size: 15px;
+  color: $base0D;
+  //border: 5px solid $background;
+  //padding: 5px;
+  background-color: $background;
+}
+
+.brightness {
+  font-size: 15px;
+  color: $base0E;
+  //border: 5px solid $background;
+  //padding: 5px;
+  background-color: $background;
+}
+
+
+.battery_stats {
+  font-size: 40px;
+  //padding: 10px;
+  color: $base0D;
+  border: 5px solid $background;
+  background-color: $background;
+}
+
+.popup {
+    color: $foreground;
+    background-color: $background;
+    border: 1px solid $foreground;
+    border-radius: 10px;
+    padding: 10px;
+}
+.settings_popup {
+    color: $foreground;
+    background-color: $background;
+    border: 1px solid $foreground;
+    border-radius: 10px;
+    padding: 5px;
+}
+.button_enabled {
+    color: $background;
+    background-color: $foreground;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 2px;
+}
+.button_disabled {
+    color: $foreground;
+    background-color: $background;
+    border: 1px solid $foreground;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 2px;
+}
+
+.wifi_button_enabled {
+    color: $background;
+    background-color: $accent;
+    //border: 1px solid $foreground;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 2px;
+}
+.wifi_button_disabled {
+    color: $foreground;
+    background-color: $background;
+    //border: 1px solid $foreground;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 2px;
+}
+.wifi_icon {
+  font-size: 25px;
+  padding-right: 20px;
+}
+.wifi_name_connected {
+  color: $background;
+  font-weight: bold;
+}
+.wifi_undertext_connected {
+  color: $background;
+}
+.wifi_undertext_saved {
+  color: $base0A;
+}
+
+calendar {
+  color: $foreground;
+  padding: 10px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+calendar:selected {
+  color: $accent;
+  background: $base01;
+  border-radius: 10px;
+}
+calendar.header {
+  color: $base0E;
+  //font-weight: bold;
+}
+calendar.button {
+  color: $base0F;
+}
+calendar.highlight {
+  color: $base0E;
+  //font-weight: bold;
+}
+calendar:indeterminate {
+  color: $base04;
+}
+
+.text {
+  padding-right: 5px;
+}
+
+.time_hour {
+  font-family: "Victor Mono";
+  color: $base09;
+  padding-left: 10px;
+}
+
+.time_minute {
+  font-family: "Victor Mono";
+  color: $base0A;
+  padding-right: 10px;
+}
+
+.time_separator {
+  padding: 5px;
+}

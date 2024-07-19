@@ -1,0 +1,136 @@
+; === NOTE ===
+; This entire config is very much a work in progress and is constantly changing
+; There are bugs in it (not bugs in eww itself but just that the config requires tweaking to fix unintended behaviour)
+
+; TODO: consider doing some more styling at the end, like adding more colour and perhaps adding borders
+; Also, split the config into many files
+
+(include "./workspaces.yuck")
+(include "./date.yuck")
+(include "./settings.yuck")
+
+; TODO: add tiling layout?
+
+(defwindow bar
+    :monitor 0
+    :stacking "fg" ; possible values: fg, bg, overlay, bottom
+    :exclusive true ; whether the compositor should reserve space for the window
+    :geometry (geometry
+               :anchor "top center" ; possible values: center or combination of top, center, bottom and left, center, right
+               :width "100%"
+               :height "0%")
+    (box
+      (workspaces)
+      (date)
+      (info)))
+
+; TODO: make workspaces highlighted on over
+; like this https://raw.githubusercontent.com/owenrumney/eww-bar/master/.github/bottombar.gif
+; ALSO TODO: make opening a window run the script
+
+; TODO: get time, volume, network and battery widgets like 'topbar by saimoomedits' (except date should be at centre)
+; window title widget too?
+
+; :O I have an idea for another widget!
+; I could make one where I see a menu with a list of all my scratchpads (incl. images)
+
+; WIDGET IDEAS:
+; DONE
+; - battery circle
+; - date/time
+ ; - onclick calendar (with taskwarrior dates)
+; IN PROGRESS
+; - menu (inspired by MaterialYou menu) -> icon = '...'
+ ; - do not disturb button
+ ; - wifi
+ ; - nightlight (using wlsunset)
+ ; - VPN
+
+; TODO
+; - scratchpad viewer
+; - brightness?
+; - notification history?
+; - menu with useful non-settings stuff
+ ; - colour menu (using color-button or color-chooser + hyprpicker)
+ ; - pomodoro timer
+ ; - sys tray?
+ ; - clipboard manager?
+
+(defwidget info []
+  (box
+    :class "widgets"
+    :halign "end"
+    :spacing 10
+    (battery)))
+    ;(brightness)))
+
+; BUG: For some reason stops updating once it reaches ~17 but then updates again once it reaches ~33 but then stopped again at 51
+; related to putting laptop on sleep? reloading eww seems to fix it
+;(deflisten battery_charge "tail -F /sys/class/power_supply/BAT0/capacity")
+;(deflisten battery_status "tail -F /sys/class/power_supply/BAT0/status")
+
+; initial value is 100
+; updated using eww-brightness script
+;(defvar brightness "100")
+
+; TODO: add a popup that displays
+; - health (energy_full / energy_full_design * 100 -> rounded to 2 s.f.)
+; - estimated time until full charge (when charging) or estimate time until depletion (when discharging)
+(defwidget battery []
+    (circular-progress
+      :class "battery"
+      :value battery_charge
+      ;:tooltip "Battery charge: ${battery_charge}%"
+      :tooltip "Battery charge: ${EWW_BATTERY["BAT0"].capacity}"
+      :thickness 4
+      (button :class "battery" :width 20 "")))
+
+;(defwidget brightness []
+;    (circular-progress
+;      :value brightness
+;      :tooltip "Brightness: ${brightness}%"
+;      :thickness 4
+;      :clockwise false
+;      :class "brightness"
+;      (button :class "brightness" :width 20 "")))
+
+; TODO: make this appear onhover for battery widget
+(defwindow stats
+  :monitor 0
+  :exclusive false
+  :stacking "overlay"
+  :geometry (geometry :anchor "center") ; TODO: change this (once menu is complete)
+  (box
+    :class "popup"
+    (circular-progress
+      :value battery_charge
+      :thickness 5
+      ;:class "battery"
+      (box
+        :class "battery_stats"
+        ;:width 50
+        ; the icon isn't entirely centred by default for some reason.
+        ; setting some spacing and then placing an empty string
+        ; either side of it seems to centre it properly.
+        :spacing 1
+        " "
+        "󰁹" ; TODO: make this icon filled depending on percentage
+        " "))
+        ; "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹" <- different levels of battery
+        ; "󰂄" <- charging
+        ; "󰂃" <- below critical level
+    ; TODO: add fancy font to 'Battery'?
+    ; TODO: add predicted charge time and discharge time
+    ; this can be done by doing some calculations using stuff from /sys/class/power_supply/BAT0/uevent
+    ; see ttps://stackoverflow.com/questions/26888636/how-to-calculate-the-time-remaining-until-the-end-of-the-battery-charge
+    ; (calculations can be done using yuck expressions)
+    (label :class "text" :markup "<b>Battery</b>
+      ${battery_charge}%
+      ${battery_status}")))
+
+; https://github.com/elkowar/eww
+; https://github.com/saimoomedits/eww-widgets/blob/main/eww/bar/eww.yuck
+; https://elkowar.github.io/eww/configuration.html
+; https://github.com/rxyhn/tokyo/blob/main/config/eww/bar/eww.yuck
+; https://github.com/rxyhn/tokyo/blob/main/config/eww/bar/eww.scss
+; https://github.com/rxyhn/tokyo/blob/main/config/eww/bar/scripts/workspace

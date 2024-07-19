@@ -1,0 +1,41 @@
+(defpoll time_hour :interval "1m" "date +'%H'")
+(defpoll time_minute :interval "1m" "date +'%M'")
+(defpoll full_date :interval "1m" "date +'%A %d %B %Y'")
+
+; BUG: if you double-click the date, it will not disappear onhoverlost
+; neither will the calendar
+(defvar reveal_date "")
+(defwidget date []
+  (eventbox
+    :onhover "${EWW_CMD} update reveal_date=true"
+    :onhoverlost "${EWW_CMD} update reveal_date=false"
+    :cursor "pointer" ; indicates to the user that this can be clicked (to open the calendar)
+    (box
+      :class "widgets"
+      :halign "center"
+      :space-evenly false
+      (label
+        :class "time_hour"
+        :text time_hour)
+      (label :class "time_separator" :text ":")
+      (label
+          :class "time_minute"
+          :text time_minute)
+      (revealer
+        :reveal reveal_date
+        :transition "slideleft"
+        :duration "300ms"
+        (button :onclick "${EWW_CMD} open calendar --toggle"
+         full_date)))))
+
+(defwindow calendar
+  :monitor 0
+  :geometry (geometry :anchor "top center")
+  (eventbox
+    :class "popup"
+    :onhoverlost "${EWW_CMD} close calendar"
+    (calendar :onclick "taskdue {0} {1} {2}")))
+
+; TODO
+; consider taking inspiration from gnome
+; i.e. calendar on the right, weather on the left, notification history on the bottom
