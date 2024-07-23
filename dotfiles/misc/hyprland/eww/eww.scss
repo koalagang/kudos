@@ -1,4 +1,8 @@
+// Unset default theming so that we can do our own
 * { all: unset; }
+
+// TODO: organise classes and variables into separate files
+// e.g. @import "theme.scss";
 
 // catppuccin mocha
 $base00: #1e1e2e; // base

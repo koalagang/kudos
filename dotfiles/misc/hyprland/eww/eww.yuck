@@ -37,7 +37,6 @@
 
 ; WIDGET IDEAS:
 ; DONE
-; - battery circle
 ; - date/time
  ; - onclick calendar (with taskwarrior dates)
 ; IN PROGRESS
@@ -46,7 +45,8 @@
  ; - wifi
  ; - nightlight (using wlsunset)
  ; - VPN
-
+; - battery circle
+  ; - needs warning (25%) and critical (15%) level
 ; TODO
 ; - scratchpad viewer
 ; - brightness?

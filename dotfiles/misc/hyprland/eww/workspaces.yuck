@@ -1,3 +1,4 @@
+; === koala's workspace widget v1 ===
 ; variable is updated using eww-workspace script
 ; initial value is set to just have the first workspace focused (because that is the one focused when I login)
 (defvar focused '
@@ -11,6 +12,12 @@
    (button :class "workspace_inactive" :onclick "eww-workspace workspace 7" "󰠱"))')
 (defwidget workspaces [] (literal :content focused))
 
+; === koala's workspace widget v2 (WORK IN PROGRESS) ===
+; GOALS:
+; - icon fade animation when switching workspace
+; - icon highlight when hovering cursor
+; - update icon when a workspace is populated by a shortcut when in a different workspace (window rules)
+; - rely more on yuck and less on bash
 ;(defvar wsp1_toggle "")
 ;(defvar wsp2_toggle "")
 ;(defwidget workspaces []
