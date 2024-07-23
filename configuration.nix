@@ -24,27 +24,15 @@
     timeout = 1;
   };
 
+  # TODO: switch to disko
   # Setup keyfile
   boot.initrd.secrets = {
     "/crypto_keyfile.bin" = null;
   };
+  boot.initrd.luks.devices."luks-6cb12de3-3fc0-4cb0-9cf2-b16342b7aa3e".keyFile = "/crypto_keyfile.bin";
 
   # Delete contents of /tmp on boot
   boot.tmp.cleanOnBoot = true;
-
-  # I'm trying to find a way to use the label instead of the UUID
-  # so that it is easily reproducible on any system.
-  # It might require me to re-install but via the commandline
-  # instead of using the calamares installer.
-  # Will probably use disko.
-  # I'll sort this out at some point but for now I'm gonna focus on other areas of nix.
-  boot.initrd.luks.devices."luks-6cb12de3-3fc0-4cb0-9cf2-b16342b7aa3e".keyFile = "/crypto_keyfile.bin";
-  #boot.initrd.luks.devices = {
-  #  luksroot = {
-  #    device = "/dev/disk/by-label/HOME";
-  #    keyFile = "/crypto_keyfile.bin";
-  #  };
-  #};
 
   # Define your hostname.
   networking.hostName = "Myla";
@@ -182,17 +170,8 @@
     cpu.intel.updateMicrocode = true;     # and make sure to update the Intel microcode
     # cpu.amd.updateMicrocode = true;     # use this option instead if you have an AMD CPU
   };
-
-  # add support for hardware acceleration
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
+  # also, make an exception for obsidian
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "obsidian" ];
 
   # I don't use nano, perl, rsync or strace (the defaults).
   # However, I do need to make sure I've always got an editor around (hence neovim)
@@ -204,6 +183,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    obsidian
 
     # should I add these to a flake or shell.nix? (to use in latex projects)
     #texlive -- figure out later what package you need
@@ -351,6 +331,17 @@
         ]; });
     })
   ];
+
+  # add support for hardware acceleration
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
 
   nix = {
     # Install and...
