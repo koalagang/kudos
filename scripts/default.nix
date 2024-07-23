@@ -18,14 +18,14 @@
     ./emojimenu.nix
     ./killmenu.nix
     ./radiomenu.nix
-    ./transmenu.nix
     ./screenmenu.nix
+    ./transmenu.nix
 
     # misc
-    ./pomo.nix
-    ./pingable.nix
-    ./taskdue.nix
     ./arc.nix
+    ./pingable.nix
+    ./pomo.nix
+    ./taskdue.nix
 
     # More to come...
   ];
