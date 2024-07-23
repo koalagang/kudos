@@ -49,7 +49,10 @@
     enable = true;
     # TODO: configure hyprlock more
     settings = {
-      general.hide_cursor = true;
+      general = {
+        hide_cursor = true;
+        grace = 3;
+      };
 
       # TODO: change?
       background = [ { path = "~/Pictures/wallpapers/catppuccin/unicat.png"; } ];
