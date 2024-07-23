@@ -103,27 +103,29 @@ tooltip {
   color: $foreground;
 }
 
-.battery {
+.pomodoro_work {
   font-size: 15px;
   color: $base0D;
-  //border: 5px solid $background;
-  //padding: 5px;
   background-color: $background;
 }
-
-.brightness {
+.pomodoro_break {
   font-size: 15px;
   color: $base0E;
+  background-color: $background;
+}
+
+.battery {
+  font-size: 15px;
+  color: $base0B;
   //border: 5px solid $background;
   //padding: 5px;
   background-color: $background;
 }
-
 
 .battery_stats {
   font-size: 40px;
-  //padding: 10px;
-  color: $base0D;
+  ;padding: 10px;
+  color: $base0B;
   border: 5px solid $background;
   background-color: $background;
 }
