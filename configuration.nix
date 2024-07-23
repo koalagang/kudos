@@ -471,6 +471,23 @@
 
     # optimise SSD health and performance
     fstrim.enable = true;
+
+    # doesn't seem to work
+    # issue warnings based on battery status and charge
+    #udev.extraRules = ''
+    #  SUBSYSTEM=="power_supply", \
+    #  ATTR{status}=="Discharging", \
+    #  ATTR{capacity}=="[0-50]", \
+    #  ACTION=="change", \
+    #  RUN+="${pkgs.libnotify}/bin/notify-send testing"
+    #'';
+
+    upower = {
+      enable = true;
+      percentageLow = 20;
+      percentageCritical = 10;
+      criticalPowerAction = "HybridSleep";
+    };
   };
 
   # For some reason, git opens an annoying graphical askpass window
