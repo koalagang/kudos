@@ -110,7 +110,7 @@ require("lazy").setup({
          end,
     },
 
-    -- TODO: switch to nvim-neorg/nixpkgs-neorg-overlay? (once I've switched to nixvim)
+    -- W.I.P. migrating from neorg to obsidian (i.e. norg -> markdown)
     { -- "An Organized Future"
         "nvim-neorg/neorg",
         dependencies = {
@@ -129,6 +129,28 @@ require("lazy").setup({
             require(conf .. "neorg")
         end,
     },
+
+    {
+      "epwalsh/obsidian.nvim",
+      version = "*", -- recommended, use latest release instead of latest commit
+      ft = "markdown",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        -- "hrsh7th/nvim-cmp",
+      },
+      config = function()
+          require(conf .. "obsidian")
+      end,
+    },
+
+    -- TODO: configure this (will do so once I've got obsidian and obsidian.nvim configured properly
+    -- {
+    --     "tadmccorkle/markdown.nvim",
+    --     ft = "markdown",
+    --     opts = {},
+    -- },
 
     -- TODO: consider switching to folke/flash.nvim?
     { -- "Neovim motions on speed!"
@@ -303,15 +325,36 @@ require("lazy").setup({
         end,
     },
 
+    -- TODO: figure out how to prevent this from causing terminal swallowing in hyprland
     { -- Bringing images to Neovim
         "3rd/image.nvim",
         ft = { "norg", "markdown" },
         dependencies = "nvim-treesitter/nvim-treesitter",
-        -- EXTERNAL: magick (luarock), imagemagick, curl
+        -- EXTERNAL: magick (luarock), imagemagick, curl, ueberzugpp
         config = function()
             require(conf .. "image")
         end,
         enabled = false,
+    },
+
+    {
+        "folke/zen-mode.nvim",
+        cmd = "ZenMode",
+        opts = {
+            window = {
+                backdrop = 1,
+                width = 60,
+                options = {
+                  signcolumn = "no", -- disable signcolumn
+                  number = false, -- disable number column
+                  relativenumber = false, -- disable relative numbers
+                  cursorline = false, -- disable cursorline
+                  cursorcolumn = false, -- disable cursor column
+                  foldcolumn = "0", -- disable fold column
+                  list = false, -- disable whitespace characters
+                },
+            },
+        },
     },
 
     ---- [[ EASING PLUGINS ]] ---
@@ -367,6 +410,19 @@ require("lazy").setup({
     },
 
     {
+    '2kabhishek/nerdy.nvim',
+        dependencies = {
+            --'stevearc/dressing.nvim',
+            'nvim-telescope/telescope.nvim',
+        },
+        config = function()
+            require('telescope').load_extension('nerdy')
+        end,
+        cmd = 'Telescope nerdy',
+    },
+
+    -- [[ FILETYPE PLUGINS ]]
+    { -- ledger
         "ledger/vim-ledger",
         ft = { "ledger", "journal" },
         config = function()
@@ -377,42 +433,12 @@ require("lazy").setup({
         end,
     },
 
-    -- for configuring eww
-    {
+    { -- yuck (eww's configuration language)
         "elkowar/yuck.vim",
         ft = "yuck",
     },
-    {
+    { -- uses a lisp-like syntax so parinfer is helpful
         "gpanders/nvim-parinfer",
         ft = "yuck",
-    },
-
-    -- TEST
-    {
-      "epwalsh/obsidian.nvim",
-      version = "*",  -- recommended, use latest release instead of latest commit
-      lazy = true,
-      ft = "markdown",
-      -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-      -- event = {
-      --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-      --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
-      --   "BufReadPre path/to/my-vault/**.md",
-      --   "BufNewFile path/to/my-vault/**.md",
-      -- },
-      dependencies = { "nvim-lua/plenary.nvim" },
-
-      config = function()
-        vim.o.conceallevel = 2
-        require("obsidian").setup({
-            workspaces = {
-              {
-                name = "test",
-                path = "~/Documents/vaults/test",
-              },
-            },
-            preferred_link_style = "markdown",
-        })
-      end,
     },
 })
