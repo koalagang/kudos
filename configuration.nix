@@ -182,12 +182,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    obsidian
-
-    # should I add these to a flake or shell.nix? (to use in latex projects)
-    #texlive -- figure out later what package you need
-    #biber
-
     # Base
     # These are some basic commandline tools that come installed with almost all GNU/Linux distributions
     # but I may as well declare them
@@ -210,6 +204,7 @@
     libreoffice-still jre_minimal
     mullvad-browser
     ungoogled-chromium
+    obsidian
 
     # Powerful CLI tools
     imagemagick
@@ -224,10 +219,6 @@
     ytfzf
     devour
     vimv-rs
-
-    # TEST
-    pyprland
-    manix
 
     # Script dependencies
     # Will remove these once I've moved my scripts to nix via `writeShellScriptBin`
