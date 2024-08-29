@@ -10,7 +10,6 @@
     ./gnupg
     ./mcfly
     ./mpv
-    ./neovim
     ./pandoc
     ./ripgrep
     ./starship
@@ -24,5 +23,7 @@
 
     # WIP
     ./ledger
+    ./neovim
+    ./zk
   ];
 }
