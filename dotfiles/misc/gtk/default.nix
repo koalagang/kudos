@@ -15,8 +15,8 @@
       package = pkgs.dracula-icon-theme;
     };
     cursorTheme = {
-      name = "capitaine-cursors";
-      package = pkgs.capitaine-cursors;
+      name = "BreezeX-RosePine-Linux";
+      package = pkgs.rose-pine-cursor;
     };
 
     # Respect the XDG base directory spec for gtk2
