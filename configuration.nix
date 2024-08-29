@@ -100,8 +100,7 @@
     # Don't install xterm
     excludePackages = [ pkgs.xterm ];
   };
-
-  services.displayManager.defaultSession = "none+dwm";
+  services.displayManager.defaultSession = "hyprland";
 
   # Configure console keymap
   console.keyMap = "uk";
