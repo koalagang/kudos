@@ -47,6 +47,12 @@
 
       # Auto-completion with case insensitivity
       zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+      # squeeze slashes, e.g. //h completes to /home
+      zstyle ':completion:*' squeeze-slashes true
+
+      # show directory preview using fzf when completing cd commmand (depends on fzf-tab)
+      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=always $realpath'
     '';
 
     # -- History
@@ -78,8 +84,7 @@
         "timew delete"
       ];
       # do not save commands beginning with a space
-      # (useful for if you want to enter a command that you don't want in your history,
-      # e.g. one containing a password)
+      # (useful for if you want to enter a command that you don't want in your history, e.g. one containing a password)
       ignoreSpace = true;
       # save 10,000 lines
       save = 10000;
@@ -97,14 +102,22 @@
       zmodload zsh/complist
 
       # -- vi and vim
-      # I want to use jeffreytse/zsh-vi-mode but, unfortunately, it is extremely slow on my system
-      # so I'll have to live with the native vi mode (which is still great, mind you)
-      # enter zsh's vi normal mode with escape
+      # enter zsh's vi normal mode (vicmd) with escape
       bindkey '^[' vi-cmd-mode
       export KEYTIMEOUT=1
       bindkey '^?' backward-delete-char # fix backspace bug when switching modes
 
-      # edit line in vim buffer with ctrl+v when in zsh's vi normal mode
+      # change cursor shape for different vi modes
+      zle-keymap-select() {
+        case "$KEYMAP" in
+          vicmd) printf '\e[1 q' ;;   # block
+          viins|main) printf '\e[5 q' # beam
+        esac
+      }
+      zle -N zle-keymap-select
+      printf '\e[5 q' # start with beam (because it starts in viins)
+
+      # edit line in vim buffer with ctrl+v when in vicmd
       autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd '^v' edit-command-line
 
       # open vim with ctrl+v in zsh's vi insert mode
@@ -139,7 +152,6 @@
       # programming: lua, nix, rust and gdscript
       # plain text documents: markdown, neorg, latex and non-markup text file
       # config files: ini, conf, cfg, and toml
-      # (unfortunately there seems to be no way of using suffixes for rc files)
       alias -s {lua,nix,rs,gd,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml}="${config.home.sessionVariables.EDITOR}"
 
       # wysiwig documents and spreadsheets
@@ -149,7 +161,7 @@
       alias -s {flac,mp3,mp4,mkv,webm}="${pkgs.mpv}/bin/mpv"
 
       # image files
-      alias -s {png,jpg,jpeg,webp}="${pkgs.swayimg}/bin/swayimg"
+      alias -s {png,jpg,jpeg,webp}="${pkgs.imv}/bin/imv"
 
       # pdfs
       alias -s pdf="${pkgs.zathura}/bin/zathura"
@@ -159,10 +171,8 @@
                                     # note that this does not apply to arguments in quotes,
                                     # e.g. `echo 'hello    world'` does not change
                                     # file globbing
-      setopt EXTENDED_GLOB          # add a few extra globbing options, e.g. `^foo*` matches all except foo
-                                    # NOTE: you will have to escape the hash in flake rebuild commands, i.e. `--flake .\#`
       setopt NOMATCH                # produce an error if no match is found
-      setopt autopushd pushdsilent  # make cd commmand use pushd and don't print dirs whenever you run it
+      setopt AUTOPUSHD PUSHDSILENT  # make cd commmand use pushd and don't print dirs whenever you run it
                                     # this can be thought of as dynamically creating per-session aliases
                                     # TODO: add completion for cd or pushd commands beginning with tilda~
       # `man zshoptions` for more
