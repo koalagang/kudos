@@ -182,6 +182,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+
     # Base
     # These are some basic commandline tools that come installed with almost all GNU/Linux distributions
     # but I may as well declare them

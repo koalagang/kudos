@@ -27,6 +27,11 @@
     # use the hyprland flake
     # because its package is usually slightly more up-to-date than its nixpkgs counterpart
     hyprland.url = "github:hyprwm/Hyprland";
+
+    # hyprcursor theme
+    # make sure to add `inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default` to your packages
+    # and add `env = HYPRCURSOR_THEME,rose-pine-hyprcursor` to hyprland.conf
+    rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }: {
