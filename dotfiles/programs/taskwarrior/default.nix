@@ -6,6 +6,7 @@
 {
   programs.taskwarrior = {
     enable = true;
+    package = pkgs.taskwarrior3;
 
     # will add my own dracula theme at some point
     # TODO: nix-colors
@@ -46,7 +47,8 @@
       # (by default it increases it by 1.8)
       urgency.uda.priority.L.coefficient = -1.8;
 
-      hooks.location = "$XDG_CONFIG_HOME/task/hooks";
+      hooks.location = "${config.xdg.configHome}/taskwarrior/hooks";
+      data.location = "${config.xdg.dataHome}/taskwarrior";
     };
   };
 
