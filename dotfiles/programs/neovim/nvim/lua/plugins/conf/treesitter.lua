@@ -1,6 +1,5 @@
 require("nvim-treesitter.configs").setup({
     ensure_installed = {
-    "norg",
         "bash",
         "bibtex",
         "latex",
@@ -9,8 +8,10 @@ require("nvim-treesitter.configs").setup({
         "markdown",
         "markdown_inline",
         "nix",
+        "norg",
         "rust",
         "toml",
+        "vimdoc",
     },
     sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
     highlight = {

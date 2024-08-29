@@ -103,7 +103,7 @@ require("lazy").setup({
     { -- Split/join blocks of code
          "Wansmer/treesj",
          keys = { "tsj" },
-         dependencies = { "nvim-treesitter/nvim-treesitter" },
+         dependencies = "nvim-treesitter/nvim-treesitter",
          config = function()
             require("treesj").setup()
             vim.keymap.set("n", "tsj", "<cmd>TSJToggle<cr>")
@@ -131,26 +131,116 @@ require("lazy").setup({
     },
 
     {
-      "epwalsh/obsidian.nvim",
-      version = "*", -- recommended, use latest release instead of latest commit
-      ft = "markdown",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim",
-        "nvim-treesitter/nvim-treesitter",
-        -- "hrsh7th/nvim-cmp",
-      },
-      config = function()
-          require(conf .. "obsidian")
-      end,
+        "epwalsh/obsidian.nvim",
+        version = "*", -- recommended, use latest release instead of latest commit
+        ft = "markdown",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            -- "hrsh7th/nvim-cmp",
+        },
+        config = function()
+            require(conf .. "obsidian")
+        end,
+        -- enabled = false,
     },
 
     -- TODO: configure this (will do so once I've got obsidian and obsidian.nvim configured properly
     -- {
     --     "tadmccorkle/markdown.nvim",
     --     ft = "markdown",
-    --     opts = {},
+    --     -- opts = {},
+    --     config = function()
+    --         vim.keymap.set("i", "<a-cr>", "<cmd>MDListItemBelow<cr>")
+    --         require("markdown").setup()
+    --     end,
+    --     enabled = false,
     -- },
+    --
+    {
+        "bullets-vim/bullets.vim",
+        ft = "markdown",
+        config = function()
+            vim.cmd[[let g:bullets_outline_levels = ['std-'] ]]
+        end,
+    },
+
+    { -- CONSIDER REPLACING WITH MeanderingProgrammer/markdown.nvim ??
+        "lukas-reineke/headlines.nvim",
+        ft = "markdown",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        config = function()
+            require(conf .. "headlines")
+        end,
+        -- enabled = false,
+    },
+
+    { -- TODO: open an issue about disabling certain options
+      -- (I prefer obsidian.nvim's ui stuff in some cases but disabling stuff in markdown.nvim causes that ui element to be hidden, rather than reverting to using obsidian's ui element)
+        "MeanderingProgrammer/markdown.nvim",
+        name = 'render-markdown',
+        ft = "markdown",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        config = function()
+            -- require("markdown").setup({
+            --     heading = {
+            --         enabled = true,
+            --         icons = { "◉", "✿", "✸", "○", "★", "◆" },
+            --     }
+            -- })
+                require('render-markdown').setup({
+                    heading = {
+                        -- Turn on / off heading icon & background rendering
+                        enabled = true,
+                        -- Replaces '#+' of 'atx_h._marker'
+                        -- The number of '#' in the heading determines the 'level'
+                        -- The 'level' is used to index into the array using a cycle
+                        -- The result is left padded with spaces to hide any additional '#'
+                        icons = { "◉ ", "✿ ", "✸ ", "○ ", "★ ", "◆ " },
+                        -- Width of the heading background:
+                        --  block: width of the heading text
+                        --  full: full width of the window
+                        width = 'full',
+                        -- The 'level' is used to index into the array using a clamp
+                        -- Highlight for the heading icon and extends through the entire line
+                        backgrounds = {
+                            'RenderMarkdownH1Bg',
+                            'RenderMarkdownH2Bg',
+                            'RenderMarkdownH3Bg',
+                            'RenderMarkdownH4Bg',
+                            'RenderMarkdownH5Bg',
+                            'RenderMarkdownH6Bg',
+                        },
+                        -- The 'level' is used to index into the array using a clamp
+                        -- Highlight for the heading and sign icons
+                        foregrounds = {
+                            'RenderMarkdownH1',
+                            'RenderMarkdownH2',
+                            'RenderMarkdownH3',
+                            'RenderMarkdownH4',
+                            'RenderMarkdownH5',
+                            'RenderMarkdownH6',
+                        },
+                    },
+                    checkbox = { enabled = false, },
+                    links = { enabled = false, },
+                    bullet = { enabled = false, },
+                    sign = { enabled = false, },
+            })
+        end,
+        enabled = false,
+    },
+
+    { -- Automatically save your changes in Neovim
+      -- Nice to have if you want to see changes immediately appear in Obsidian
+        "Pocco81/auto-save.nvim",
+        ft = "markdown",
+        config = function()
+            require("auto-save").setup()
+        end,
+        enabled = false,
+    },
 
     -- TODO: consider switching to folke/flash.nvim?
     { -- "Neovim motions on speed!"
@@ -167,7 +257,7 @@ require("lazy").setup({
         keys = { "-" },
         cmd = "Oil",
         after = "jvgrootveld/telescope-zoxide",
-        dependencies = { "nvim-tree/nvim-web-devicons" }, -- EXTERNAL: any nerdfont
+        dependencies = "nvim-tree/nvim-web-devicons", -- EXTERNAL: any nerdfont
         -- EXTERNAL: trash-cli (for trash feature)
         config = function()
             require(conf .. "oil")
@@ -223,6 +313,7 @@ require("lazy").setup({
             "<localleader>l",
             "<localleader>f",
         },
+        -- TODO: make focus.nvim not expand undotree splits
         config = function()
             require(conf .. "focus")
         end,
@@ -262,9 +353,7 @@ require("lazy").setup({
     { -- Visualises the undo history and makes it easy to browse and switch between different undo branches
       -- Not to be confused with mbbill/undotree (which does mostly the same thing)
         "jiaoshijie/undotree",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
+        dependencies = "nvim-lua/plenary.nvim",
         keys = { "<leader>u" },
         config = function()
             require("undotree").setup()
@@ -340,10 +429,11 @@ require("lazy").setup({
     {
         "folke/zen-mode.nvim",
         cmd = "ZenMode",
+        ft = "markdown",
         opts = {
             window = {
                 backdrop = 1,
-                width = 60,
+                width = 120,
                 options = {
                   signcolumn = "no", -- disable signcolumn
                   number = false, -- disable number column
@@ -355,6 +445,12 @@ require("lazy").setup({
                 },
             },
         },
+    },
+
+    {
+        'arnamak/stay-centered.nvim',
+        ft = "markdown",
+        opts = {},
     },
 
     ---- [[ EASING PLUGINS ]] ---
