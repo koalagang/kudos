@@ -4,12 +4,10 @@
   services.wlsunset = {
     enable = true;
     temperature = {
-      day = 2500;
+      day = 6500;
       night = 2500;
     };
-    # London
-    latitude = "51.5";
-    longitude = "-0.1";
+    sunrise = "06:00";
+    sunset = "19:00";
   };
 }
-

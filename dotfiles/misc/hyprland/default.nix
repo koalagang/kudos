@@ -42,7 +42,7 @@
   home.file."${config.xdg.configHome}/fuzzel/fuzzel.ini" = {
     source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/fuzzel.ini";
   };
-  programs.fuzzel.enable = true; # TODO: switch to bemenu
+  programs.fuzzel.enable = true;
 
   # make sure to add `security.pam.services.hyprlock = {};` to configuration.nix
   programs.hyprlock = {
@@ -113,10 +113,7 @@
 
   home = {
     packages = with pkgs; [
-      # I also have wlsunset configured with homemanager (see services/wlsunset)
-      # but it doesn't seem to work
-      # maybe because I'm not currently use hyprland's homemanager module?
-      mako waybar eww brightnessctl wlsunset hdrop
+      mako waybar eww brightnessctl wlsunset hdrop bemenu
 
       (writeShellScriptBin "eww-workspace" ''
         # pass input to hyprctl
@@ -152,6 +149,22 @@
         # now we can update the focused variable inside eww
         # this loads the yuck code stored within the widgets array
         ${pkgs.eww}/bin/eww update focused="$(${pkgs.coreutils}/bin/echo ''${widgets[@]} | ${pkgs.coreutils}/bin/tr -d '\n')"
+      '')
+
+      (writeShellScriptBin "eww-layout" ''
+        hyprctl dispatch "$1"
+        fullscreen_status="$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.fullscreen')"
+        [[ "$fullscreen_status" == 'true' ]] && fullscreen_mode="$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.fullscreenMode')"
+        if [[ "$fullscreen_mode" == 1 ]]; then
+            ${pkgs.eww}/bin/eww update layout=2
+        else
+            floating_status="$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.floating')"
+            if [[ "$floating_status" == 'true' ]]; then
+                ${pkgs.eww}/bin/eww update layout=1
+            else
+                ${pkgs.eww}/bin/eww update layout=0
+            fi
+        fi
       '')
       ];
   };
