@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   programs.git = {
@@ -29,6 +29,10 @@
         --abbrev-commit --date=relative'';
     };
 
+    # workaround for a bug
+    # see https://discourse.nixos.org/t/nixos-rebuild-switch-fails-under-flakes-and-doas-with-git-warning-about-dubious-ownership/46069/12
+    # an alternative solution presented by Tmplt which weirdly works is staging an empty file
+    extraConfig.safe.directory = "${config.xdg.userDirs.desktop}/Desktop/git/kudos";
   };
   home.shellAliases = {
     g = "git"; # yes, I am that lazy
