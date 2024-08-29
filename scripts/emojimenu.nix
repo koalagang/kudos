@@ -12,7 +12,8 @@
         # Get user selection via dmenu from emoji file
         # TODO: move emoji file to gross repo via glfs
         emoji="$(${pkgs.coreutils}/bin/cut -d ';' -f1 "${config.xdg.dataHome}/emojis" |
-          ${config.home.sessionVariables.DMENU_CMD} -i -l 30 | ${pkgs.gnused}/bin/sed 's/ .*//')"
+          ${config.home.sessionVariables.DMENU_CMD} ${config.home.sessionVariables.DMENU_EXTRA_FLAGS} -i -l 30 -p ''' |
+          ${pkgs.gnused}/bin/sed 's/ .*//')"
 
         # Exit if none chosen
         [ -z "$emoji" ] && exit

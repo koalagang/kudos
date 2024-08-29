@@ -20,12 +20,12 @@
 
         # Open menu
         case "$(printf 'K-pop\nJ-pop\nClassical\nCurrently playing song\nStop radio' |
-          ${config.home.sessionVariables.DMENU_CMD} -i)" in
+          ${config.home.sessionVariables.DMENU_CMD} ${config.home.sessionVariables.DMENU_EXTRA_FLAGS} -i -l5 -p ''')" in
             'K-pop') change_radio 'https://listen.moe/kpop/stream' ;;
             'J-pop') change_radio 'https://listen.moe/stream' ;;
             'Classical') change_radio 'https://live.musopen.org:8085/streamvbr0?' ;;
             'Currently playing song')
-              ${pkgs.playerctl}/bin/playerctl -ps mpv.instance"$(${pkgs.procps}/bin/pgrep --full mpv-radiomenu)" metadata &&
+              ${pkgs.playerctl}/bin/playerctl -ps mpv.instance"''$(${pkgs.procps}/bin/pgrep --full mpv-radiomenu)" metadata &&
                 uses_pid=1
               if [ -z "$uses_pid" ]; then
                   player='mpv'
@@ -35,6 +35,7 @@
               ${pkgs.coreutils}/bin/echo "$(${pkgs.playerctl}/bin/playerctl -p "$player" metadata artist) - $(${pkgs.playerctl}/bin/playerctl -p "$player" metadata title)" |
                ${config.home.sessionVariables.COPY_CMD}
 
+              # BUG: playerctl can't read metadata -> No players found (issue with mpris?)
               ${pkgs.libnotify}/bin/notify-send -t 10000 'Artist' "$(${pkgs.playerctl}/bin/playerctl -p "$player" metadata artist)"
               ${pkgs.libnotify}/bin/notify-send -t 10000 'Song' "$(${pkgs.playerctl}/bin/playerctl -p "$player" metadata title)"
               ${pkgs.libnotify}/bin/notify-send -t 10000 'Album' "$(${pkgs.playerctl}/bin/playerctl -p "$player" metadata album)" ;;

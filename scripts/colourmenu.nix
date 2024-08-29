@@ -17,7 +17,7 @@
     packages = [
       (pkgs.writeShellScriptBin "colourmenu" ''
       case "$(${pkgs.coreutils}/bin/printf 'custom\nblack\nred\ngreen\nyellow\nblue\nmagenta\ncyan\nwhite' |
-        ${config.home.sessionVariables.DMENU_CMD} -i -p 'Pick a colour')" in
+        ${config.home.sessionVariables.DMENU_CMD} ${config.home.sessionVariables.DMENU_EXTRA_FLAGS} -i -p 'Pick a colour')" in
           'custom') ${config.home.sessionVariables.COLOUR_CMD} &&
             ${pkgs.libnotify}/bin/notify-send 'colourmenu' 'Copied custom hex to clipboard!' ;;
           'black') ${pkgs.coreutils}/bin/printf '#000000' |
