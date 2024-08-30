@@ -51,3 +51,18 @@ require("markview").setup({
     list_items = { enable = false },
     links = { enable = false },
 });
+
+-- I'm aware that there are plugins like goyo, zen-mode and true-zen
+-- but they mess with markview's hybdrid mode,
+-- plus using a whole plugin is a bit overkill when this accomplishes what I want.
+local options = {
+    laststatus = 0,
+    ruler = false,
+    showcmd = false,
+    signcolumn = "yes",
+    number = false,
+    relativenumber = false,
+}
+for k, v in pairs(options) do
+    vim.opt[k] = v
+end

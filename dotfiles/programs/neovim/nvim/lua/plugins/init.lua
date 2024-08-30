@@ -69,10 +69,6 @@ require("lazy").setup({
         -- Zeioth/dooku.nvim
         -- Bekaboo/deadcolumn.nvim
 
-
-    ---- [[ MAJOR PLUGINS ]] ----
-    -- These are the real game-changers
-
     -- [[ LSP ]]
     {
         "neovim/nvim-lspconfig",
@@ -82,7 +78,7 @@ require("lazy").setup({
         end,
     },
 
-    -- [[ Treesitter and extensions ]]
+    -- [[ Treesitter ]]
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate", -- Check for updates to the parsers
@@ -110,26 +106,7 @@ require("lazy").setup({
          end,
     },
 
-    -- W.I.P. migrating from neorg to obsidian (i.e. norg -> markdown)
-    { -- "An Organized Future"
-        "nvim-neorg/neorg",
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-
-            -- EXTERNAL: lua-utils.nvim nvim-nio nui.nvim plenary.nvim pathlib.nvim (all are luarocks)
-            {
-                "nvim-neorg/neorg-telescope",
-                dependencies = { "nvim-telescope/telescope.nvim" },
-            },
-        },
-        cmd = "Neorg",
-        ft = "norg",
-        keys = "<c-t>n", -- for use with neorg-telescope
-        config = function()
-            require(conf .. "neorg")
-        end,
-    },
-
+    -- [[ Markdown ]]
     {
         "epwalsh/obsidian.nvim",
         version = "*", -- recommended, use latest release instead of latest commit
@@ -145,19 +122,17 @@ require("lazy").setup({
         end,
         -- enabled = false,
     },
-
     -- TODO: configure this (will do so once I've got obsidian and obsidian.nvim configured properly
-    -- {
-    --     "tadmccorkle/markdown.nvim",
-    --     ft = "markdown",
-    --     -- opts = {},
-    --     config = function()
-    --         vim.keymap.set("i", "<a-cr>", "<cmd>MDListItemBelow<cr>")
-    --         require("markdown").setup()
-    --     end,
-    --     enabled = false,
-    -- },
-    --
+    {
+        "tadmccorkle/markdown.nvim",
+        ft = "markdown",
+        -- opts = {},
+        config = function()
+            vim.keymap.set("i", "<a-cr>", "<cmd>MDListItemBelow<cr>")
+            require("markdown").setup()
+        end,
+        enabled = true,
+    },
     {
         "bullets-vim/bullets.vim",
         ft = "markdown",
@@ -165,7 +140,6 @@ require("lazy").setup({
             vim.cmd[[let g:bullets_outline_levels = ['std-'] ]]
         end,
     },
-
     { -- An experimental markdown previewer for Neovim
         "OXY2DEV/markview.nvim",
         ft = "markdown",
@@ -177,40 +151,34 @@ require("lazy").setup({
             require(conf .. "markview")
         end,
     },
-
-    { -- Automatically save your changes in Neovim
-      -- Nice to have if you want to see changes immediately appear in Obsidian
-        "Pocco81/auto-save.nvim",
-        ft = "markdown",
+    { -- Makes creating markdown tables not pure suffering
+        "dhruvasagar/vim-table-mode",
+        cmd = "TableModeToggle",
         config = function()
-            require("auto-save").setup()
+            vim.g.table_mode_corner = "|"
+        end,
+    },
+    -- TODO: figure out how to prevent this from causing terminal swallowing in hyprland
+    { -- Bringing images to Neovim
+        "3rd/image.nvim",
+        ft = { "norg", "markdown" },
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        -- EXTERNAL: magick (luarock), imagemagick, curl, ueberzugpp
+        config = function()
+            require(conf .. "image")
         end,
         enabled = false,
     },
-
-    -- TODO: consider switching to folke/flash.nvim?
-    { -- "Neovim motions on speed!"
-        "phaazon/hop.nvim",
-        branch = "v2",
-        keys = { "f", "F", "<localleader>1", "<localleader>2", { "f", mode = "v" }, { "F", mode = "v" } },
-        config = function()
-            require(conf .. "hop")
-        end,
+    {
+        'arnamak/stay-centered.nvim',
+        ft = "markdown",
+        opts = {},
     },
+    -- TODO: work on making folding work how I want it to (ideally it should look just like neorg's folding);
+    -- for now I'm using the method seen in the core/options.lua file
+    -- TODO: zk-nvim
 
-    { -- "Neovim file explorer: edit your filesystem like a buffer"
-        "stevearc/oil.nvim",
-        keys = { "-" },
-        cmd = "Oil",
-        after = "jvgrootveld/telescope-zoxide",
-        dependencies = "nvim-tree/nvim-web-devicons", -- EXTERNAL: any nerdfont
-        -- EXTERNAL: trash-cli (for trash feature)
-        config = function()
-            require(conf .. "oil")
-        end
-    },
-
-    -- [[ Treesitter and extensions ]]
+    -- [[ Navigation ]]
     { -- "Find, Filter, Preview, Pick. All lua, all the time."
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
@@ -237,14 +205,37 @@ require("lazy").setup({
             vim.keymap.set("n", "<c-t>z", require("telescope").extensions.zoxide.list)
         end,
     },
-
-    -- Using a tiling window manager is great and all
-    -- but when you open vim instances in many separate terminals,
-    -- interaction between these buffers is limited.
-    -- The solution is splits, which are essentially vim windows tiling inside a single instance.
-    -- But that just introduces another problem -- splits are an absolute pain to work with in vanilla vim.
-    -- Enter focus and winshift!
-    -- This beautiful duo makes using splits an actual comfortable experience.
+    -- TODO: consider switching to folke/flash.nvim?
+    { -- "Neovim motions on speed!"
+        "phaazon/hop.nvim",
+        branch = "v2",
+        keys = { "f", "F", "<localleader>1", "<localleader>2", { "f", mode = "v" }, { "F", mode = "v" } },
+        config = function()
+            require(conf .. "hop")
+        end,
+    },
+    { -- "Neovim file explorer: edit your filesystem like a buffer"
+        "stevearc/oil.nvim",
+        keys = { "-" },
+        cmd = "Oil",
+        after = "jvgrootveld/telescope-zoxide",
+        dependencies = "nvim-tree/nvim-web-devicons", -- EXTERNAL: any nerdfont
+        -- EXTERNAL: trash-cli (for trash feature)
+        config = function()
+            require(conf .. "oil")
+        end
+    },
+    { -- "A snazzy bufferline for Neovim"
+        "akinsho/bufferline.nvim",
+        version = "*",
+        dependencies = "nvim-tree/nvim-web-devicons",
+        -- Load only after adding another buffer to the buffer list
+        event = "BufAdd",
+        config = function()
+            require(conf .. "bufferline")
+        end,
+    },
+    -- Make using splits actually comfortable
     { -- Auto-focusing and auto-resizing splits/windows
         "nvim-focus/focus.nvim",
         version = "*",
@@ -271,14 +262,8 @@ require("lazy").setup({
             require(conf .. "winshift")
         end,
     },
-    {
-        'akinsho/toggleterm.nvim',
-        version = "*",
-        keys = { "<m-cr>" },
-        config = function()
-            require(conf .. "toggleterm")
-        end,
-    },
+
+    -- [[ Git ]]
     { -- TODO: learn how to use this
       "NeogitOrg/neogit",
       cmd = "Neogit",
@@ -291,10 +276,7 @@ require("lazy").setup({
         require(conf .. "neogit")
       end,
     },
-    -- Once I've also setup gitsigns, neogit and octo, I'll have no excuse to leave neovim.
-    -- focus, winshift, oil and telescope will allow me to navigate files with ease,
-    -- gitsigns, neogit and octo will reduce (or even remove?) the need for using the commandline to interactive with git
-    -- and if I still find myself needing to use the commandline alongside neovim, toggleterm will be right there.
+    -- TODO: gitsigns and octo
 
     { -- Visualises the undo history and makes it easy to browse and switch between different undo branches
       -- Not to be confused with mbbill/undotree (which does mostly the same thing)
@@ -307,29 +289,18 @@ require("lazy").setup({
         end,
     },
 
-    { -- "A snazzy bufferline for Neovim"
-        "akinsho/bufferline.nvim",
-        version = "*",
-        dependencies = "nvim-tree/nvim-web-devicons",
-        -- Load only after adding another buffer to the buffer list
-        event = "BufAdd",
-        config = function()
-            require(conf .. "bufferline")
-        end,
+    ---- [[ Misc ]] ----
+
+    { -- Dracula colourscheme
+       "Mofiqul/dracula.nvim",
+       -- One of the few plugins I don't lazy-load
+       -- High priority to make sure the colourscheme is loaded before everything else
+       priority = 1000,
+       config = function()
+          require(conf .. "dracula")
+       end,
+       enabled = false,
     },
-
-    ---- [[ MINOR PLUGINS ]] ----
-    -- These don't massively change how Neovim behaves but they are really nice to have
-
-    --{ -- Dracula colourscheme
-    --    "Mofiqul/dracula.nvim",
-    --    -- One of the few plugins I don't lazy-load
-    --    -- High priority to make sure the colourscheme is loaded before everything else
-    --    priority = 1000,
-    --    --config = function()
-    --    --    require(conf .. "dracula")
-    --    --end,
-    --},
     {
         "catppuccin/nvim",
         name = "catppuccin",
@@ -341,7 +312,6 @@ require("lazy").setup({
             require(conf .. "catppuccin")
         end,
     },
-
     { -- Preview hex colours
         "norcalli/nvim-colorizer.lua",
         cmd = "ColorizerToggle",
@@ -349,7 +319,6 @@ require("lazy").setup({
             require("colorizer").setup()
         end,
     },
-
     { -- Indentation line-guides
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
@@ -359,46 +328,6 @@ require("lazy").setup({
             require(conf .. "indent-blankline")
         end,
     },
-
-    -- TODO: figure out how to prevent this from causing terminal swallowing in hyprland
-    { -- Bringing images to Neovim
-        "3rd/image.nvim",
-        ft = { "norg", "markdown" },
-        dependencies = "nvim-treesitter/nvim-treesitter",
-        -- EXTERNAL: magick (luarock), imagemagick, curl, ueberzugpp
-        config = function()
-            require(conf .. "image")
-        end,
-        enabled = false,
-    },
-
-    {
-        "folke/zen-mode.nvim",
-        cmd = "ZenMode",
-        ft = "markdown",
-        opts = {
-            window = {
-                backdrop = 1,
-                width = 120,
-                options = {
-                  signcolumn = "no", -- disable signcolumn
-                  number = false, -- disable number column
-                  relativenumber = false, -- disable relative numbers
-                  cursorline = false, -- disable cursorline
-                  cursorcolumn = false, -- disable cursor column
-                  foldcolumn = "0", -- disable fold column
-                  list = false, -- disable whitespace characters
-                },
-            },
-        },
-    },
-
-    {
-        'arnamak/stay-centered.nvim',
-        ft = "markdown",
-        opts = {},
-    },
-
     ---- [[ EASING PLUGINS ]] ---
     -- These are very simple plugins that just make life easier.
     -- I suppose winshift and focus could go here
@@ -409,14 +338,6 @@ require("lazy").setup({
         keys = { "<A-h>", "<A-j>", "<A-k>", "<A-l>", },
         config = function()
             require(conf .. "move")
-        end,
-    },
-
-    { -- Makes creating markdown tables not pure suffering
-        "dhruvasagar/vim-table-mode",
-        cmd = "TableModeToggle",
-        config = function()
-            vim.g.table_mode_corner = "|"
         end,
     },
 
@@ -486,4 +407,33 @@ require("lazy").setup({
         "gpanders/nvim-parinfer",
         ft = "yuck",
     },
+
+    -- W.I.P. migrating from neorg to obsidian (i.e. norg -> markdown)
+    { -- "An Organized Future"
+        "nvim-neorg/neorg",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+
+            -- EXTERNAL: lua-utils.nvim nvim-nio nui.nvim plenary.nvim pathlib.nvim (all are luarocks)
+            {
+                "nvim-neorg/neorg-telescope",
+                dependencies = { "nvim-telescope/telescope.nvim" },
+            },
+        },
+        cmd = "Neorg",
+        ft = "norg",
+        keys = "<c-t>n", -- for use with neorg-telescope
+        config = function()
+            require(conf .. "neorg")
+        end,
+    },
+    {
+        'akinsho/toggleterm.nvim',
+        version = "*",
+        keys = { "<m-cr>" },
+        config = function()
+            require(conf .. "toggleterm")
+        end,
+    },
+
 })
