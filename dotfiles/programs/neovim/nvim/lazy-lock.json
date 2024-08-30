@@ -13,6 +13,7 @@
   "lazy.nvim": { "branch": "main", "commit": "077102c5bfc578693f12377846d427f49bc50076" },
   "lua-utils.nvim": { "branch": "main", "commit": "e565749421f4bbb5d2e85e37c3cef9d56553d8bd" },
   "marks.nvim": { "branch": "master", "commit": "74e8d01b2a2131b6e46354cffc553aa7f81bcf5b" },
+  "markview.nvim": { "branch": "main", "commit": "4695a699ebd87889c815de07e1408331e5c1df61" },
   "move.nvim": { "branch": "main", "commit": "cccbd4ea9049ca5f99f025ffaddb7392359c7d6a" },
   "neogit": { "branch": "master", "commit": "8a60ac4b97c1a7c667506425cb9d5ffca5b8dc8d" },
   "neorg": { "branch": "main", "commit": "85f15f033d8c56366ac1e6ae93c940db8ad067ca" },

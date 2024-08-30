@@ -7,6 +7,7 @@ require("nvim-treesitter.configs").setup({
         "make",
         "markdown",
         "markdown_inline",
+        "html",
         "nix",
         "norg",
         "rust",

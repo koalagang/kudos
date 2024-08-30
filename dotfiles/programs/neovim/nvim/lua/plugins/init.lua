@@ -166,70 +166,16 @@ require("lazy").setup({
         end,
     },
 
-    { -- CONSIDER REPLACING WITH MeanderingProgrammer/markdown.nvim ??
-        "lukas-reineke/headlines.nvim",
+    { -- An experimental markdown previewer for Neovim
+        "OXY2DEV/markview.nvim",
         ft = "markdown",
-        dependencies = "nvim-treesitter/nvim-treesitter",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons"
+        },
         config = function()
-            require(conf .. "headlines")
+            require(conf .. "markview")
         end,
-        -- enabled = false,
-    },
-
-    { -- TODO: open an issue about disabling certain options
-      -- (I prefer obsidian.nvim's ui stuff in some cases but disabling stuff in markdown.nvim causes that ui element to be hidden, rather than reverting to using obsidian's ui element)
-        "MeanderingProgrammer/markdown.nvim",
-        name = 'render-markdown',
-        ft = "markdown",
-        dependencies = "nvim-treesitter/nvim-treesitter",
-        config = function()
-            -- require("markdown").setup({
-            --     heading = {
-            --         enabled = true,
-            --         icons = { "◉", "✿", "✸", "○", "★", "◆" },
-            --     }
-            -- })
-                require('render-markdown').setup({
-                    heading = {
-                        -- Turn on / off heading icon & background rendering
-                        enabled = true,
-                        -- Replaces '#+' of 'atx_h._marker'
-                        -- The number of '#' in the heading determines the 'level'
-                        -- The 'level' is used to index into the array using a cycle
-                        -- The result is left padded with spaces to hide any additional '#'
-                        icons = { "◉ ", "✿ ", "✸ ", "○ ", "★ ", "◆ " },
-                        -- Width of the heading background:
-                        --  block: width of the heading text
-                        --  full: full width of the window
-                        width = 'full',
-                        -- The 'level' is used to index into the array using a clamp
-                        -- Highlight for the heading icon and extends through the entire line
-                        backgrounds = {
-                            'RenderMarkdownH1Bg',
-                            'RenderMarkdownH2Bg',
-                            'RenderMarkdownH3Bg',
-                            'RenderMarkdownH4Bg',
-                            'RenderMarkdownH5Bg',
-                            'RenderMarkdownH6Bg',
-                        },
-                        -- The 'level' is used to index into the array using a clamp
-                        -- Highlight for the heading and sign icons
-                        foregrounds = {
-                            'RenderMarkdownH1',
-                            'RenderMarkdownH2',
-                            'RenderMarkdownH3',
-                            'RenderMarkdownH4',
-                            'RenderMarkdownH5',
-                            'RenderMarkdownH6',
-                        },
-                    },
-                    checkbox = { enabled = false, },
-                    links = { enabled = false, },
-                    bullet = { enabled = false, },
-                    sign = { enabled = false, },
-            })
-        end,
-        enabled = false,
     },
 
     { -- Automatically save your changes in Neovim
@@ -469,6 +415,9 @@ require("lazy").setup({
     { -- Makes creating markdown tables not pure suffering
         "dhruvasagar/vim-table-mode",
         cmd = "TableModeToggle",
+        config = function()
+            vim.g.table_mode_corner = "|"
+        end,
     },
 
     { -- Align text
