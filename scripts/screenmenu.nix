@@ -45,8 +45,7 @@
       record full desktop
       stop recording'
 
-      case "$(${pkgs.coreutils}/bin/printf '%s' "$selections" | ${config.home.sessionVariables.DMENU_CMD}
-      ${config.home.sessionVariables.DMENU_EXTRA_FLAGS} -l 9 -p ''')" in
+      case "$(${pkgs.coreutils}/bin/printf '%s' "$selections" | ${config.home.sessionVariables.DMENU_CMD} ${config.home.sessionVariables.DMENU_EXTRA_FLAGS} -l 9 -p ''')" in
           'copy selected area') screenshot_selected --stdout | ${pkgs.wl-clipboard}/bin/wl-copy ;;
           'save selected area') screenshot_selected ;;
           'edit selected area') screenshot_selected  --stdout | ${pkgs.swappy}/bin/swappy -f - ;;

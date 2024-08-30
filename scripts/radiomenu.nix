@@ -19,8 +19,7 @@
         }
 
         # Open menu
-        case "$(printf 'K-pop\nJ-pop\nClassical\nCurrently playing song\nStop radio' |
-          ${config.home.sessionVariables.DMENU_CMD} ${config.home.sessionVariables.DMENU_EXTRA_FLAGS} -i -l5 -p ''')" in
+        case "$(printf 'K-pop\nJ-pop\nClassical\nCurrently playing song\nStop radio' | ${config.home.sessionVariables.DMENU_CMD} ${config.home.sessionVariables.DMENU_EXTRA_FLAGS} -i -l5 -p 'Radio')" in
             'K-pop') change_radio 'https://listen.moe/kpop/stream' ;;
             'J-pop') change_radio 'https://listen.moe/stream' ;;
             'Classical') change_radio 'https://live.musopen.org:8085/streamvbr0?' ;;
