@@ -104,9 +104,9 @@
   };
 
   # hyprland has support for hot-reloading
-  home.file."${config.xdg.configHome}/hypr/hyprland.conf" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/temp/hyprland.conf";
-  };
+  #home.file."${config.xdg.configHome}/hypr/hyprland.conf" = {
+  #  source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/temp/hyprland.conf";
+  #};
 
   # modified keyboard layout
   home.file."${config.xdg.configHome}/xkb/symbols/uk-no".source = ./uk-no;
