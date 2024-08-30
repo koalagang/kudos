@@ -25,13 +25,12 @@
     ./radiomenu.nix
     ./screenmenu.nix
     ./transmenu.nix
+    ./ytmenu.nix
 
     # misc
     ./arc.nix
     ./pingable.nix
     ./pomo.nix
     ./taskdue.nix
-
-    # More to come...
   ];
 }
