@@ -1,0 +1,68 @@
+; === NOTE ===
+; This entire config is very much a work in progress and is constantly changing
+; There are bugs in it (not bugs in eww itself but just that the config requires tweaking to fix unintended behaviour)
+
+; TODO: consider doing some more styling at the end, like adding more colour and perhaps adding borders
+; Also, after finishing the bar, you can move on to creating a dashboard
+
+(include "./workspaces.yuck")
+(include "./date.yuck")
+(include "./settings.yuck")
+(include "./circles.yuck")
+(include "./layout.yuck")
+
+; (include "./osd.yuck")
+
+(defwindow bar
+    :monitor 0
+    :stacking "fg"
+    :exclusive true
+    :geometry (geometry
+               :anchor "top center"
+               :width "100%"
+               :height "0%")
+    (box
+         (box
+           :halign "start"
+           (workspaces)
+           (layout)) ;;
+         (box
+           :halign "center"
+           (date))
+         (box
+            :halign "end"
+            (settings)
+            (circles))))
+
+; WIDGET IDEAS:
+; DONE
+; - date/time
+  ; - onclick calendar (with taskwarrior dates)
+; - tiling layout
+; IN PROGRESS
+; - workspaces
+; - settings menu (inspired by MaterialYou menu)
+  ; - do not disturb button [COMPLETE]
+  ; - caffeine [COMPLETE]
+  ; - wifi
+  ; - nightlight (using wlsunset)
+  ; - VPN
+  ; - brightness
+  ; - audio
+; - battery circle
+  ; - needs warning (25%) and critical (15%) level
+; TODO
+; - window title widget?
+; - scratchpad viewer?
+; - notification history?
+; - menu with useful non-settings stuff? (probably not)
+ ; - colour menu (using color-button or color-chooser + hyprpicker)
+ ; - sys tray?
+ ; - clipboard manager?
+
+; https://github.com/elkowar/eww
+; https://github.com/saimoomedits/eww-widgets/blob/main/eww/bar/eww.yuck
+; https://elkowar.github.io/eww/configuration.html
+; https://github.com/rxyhn/tokyo/blob/main/config/eww/bar/eww.yuck
+; https://github.com/rxyhn/tokyo/blob/main/config/eww/bar/eww.scss
+; https://github.com/rxyhn/tokyo/blob/main/config/eww/bar/scripts/workspace

@@ -1,0 +1,15 @@
+(defvar layout "")
+(defwidget layout []
+  (box
+    :class "widgets"
+    :halign "start"
+    (stack
+       :transition "crossfade"
+       :same-size true
+       :selected layout
+       (box
+         "\ ")
+       (box
+         "󰻈")
+       (box
+         "󰊓"))))

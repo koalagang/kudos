@@ -3,6 +3,7 @@
     ./bat
     ./btop
     ./direnv
+    ./eww
     ./eza
     ./firefox
     ./foot

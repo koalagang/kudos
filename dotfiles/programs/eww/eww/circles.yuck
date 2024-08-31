@@ -1,0 +1,97 @@
+(defwidget circles []
+  (box
+    :class "widgets"
+    :halign "end"
+    :spacing 10
+    (pomodoro)
+    (battery)))
+
+; BUG: stops updating when I suspend the system. Only way to get it to start updating again is to reload the config.
+;(deflisten battery_charge "tail -F /sys/class/power_supply/BAT0/capacity")
+;(deflisten battery_status "tail -F /sys/class/power_supply/BAT0/status")
+; NOTE: using defpoll for now but I'll open up an issue later to see if I can go back to using deflisten
+; TODO: consider switching to upower for sake of consistency with plans for other variables below
+(defpoll battery_charge
+; consider changing this to:
+; $ upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}'
+  :interval "1m"
+  "cat /sys/class/power_supply/BAT0/capacity")
+(defpoll battery_status
+; consider changing this to:
+; $ upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ {print $2}'
+  :interval "1m"
+  "cat /sys/class/power_supply/BAT0/status")
+; - health
+; $ upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/capacity/ {print $2}'
+; - estimated time until full charge (when charging) or estimate time until depletion (when discharging)
+; $ upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/time to/ {print $4 " " $5}'
+
+(defwidget battery []
+    (circular-progress
+      :class "battery"
+      :value battery_charge
+      :tooltip "Battery charge: ${battery_charge}%"
+      ;:tooltip "Battery charge: ${EWW_BATTERY["BAT0"].capacity}"
+      :thickness 4
+      (button :class "battery" :width 20 "")))
+
+; TODO: make this appear onhover for battery widget
+(defwindow stats
+  :monitor 0
+  :exclusive false
+  :stacking "overlay"
+  :geometry (geometry :anchor "top center") ; TODO: change this (once menu is complete)
+  (box
+    :class "popup"
+    (circular-progress
+      :value battery_charge
+      :thickness 5
+      ;:class "battery"
+      (box
+        :class "battery_stats"
+        ;:width 50
+        ; the icon isn't entirely centred by default for some reason.
+        ; setting some spacing and then placing an empty string
+        ; either side of it seems to centre it properly.
+        :spacing 1
+        " "
+        "󰁹" ; TODO: make this icon filled depending on percentage
+        " "))
+        ; "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹" <- different levels of battery
+        ; "󰂄" <- charging
+        ; "󰂃" <- less than or equal to critical level
+    ; TODO: add fancy font to 'Battery'?
+    ; TODO: add predicted charge time and discharge time
+    ; this can be done by doing some calculations using stuff from /sys/class/power_supply/BAT0/uevent
+    ; see ttps://stackoverflow.com/questions/26888636/how-to-calculate-the-time-remaining-until-the-end-of-the-battery-charge
+    ; (calculations can be done using yuck expressions)
+    (label :class "text" :markup "
+      <b>Battery</b>
+      ${battery_charge}%
+      ${battery_status}
+    ")))
+
+(defvar script_path "/home/dante/.local/scripts") ; will change this once I've migrated the scripts to nix writeShellScriptBin
+(defvar pomodoro_progress 100)
+(defvar pomodoro_mins 45)
+(defvar pomodoro_class "pomodoro_work")
+(defwidget pomodoro []
+    (circular-progress
+      :class pomodoro_class
+      :value pomodoro_progress
+      :tooltip "${pomodoro_mins} minutes remaining"
+      :thickness 4
+      ; place the button inside a box because for some reason it fixes a bug
+      ; where the button does not update its class to a class defined earlier in the scss file, as shown below
+      ; # class starts as pomodoro_work (because of the defvar line above the pomodoro widget)
+      ; $ eww update pomodoro_class='pomodoro_break' # changes class to pomodoro_break
+      ; $ eww update pomodoro_class='pomodoro_work'  # class stays as pomodoro_break
+      ; I'd consider opening an issue about this but since the box fix works idk if I can be bothered
+      (box
+        (button
+          :onclick "${script_path}/eww-tomato toggle"
+          :onmiddleclick "${script_path}/eww-tomato skip"
+          :onrightclick "${script_path}/eww-tomato reset"
+          :class pomodoro_class
+          :width 20
+          ""))))
