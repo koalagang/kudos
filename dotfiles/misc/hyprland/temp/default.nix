@@ -56,7 +56,7 @@
   #};
 
   # modified keyboard layout
-  home.file."${config.xdg.configHome}/xkb/symbols/uk-no".source = ./uk-no;
+  # home.file."${config.xdg.configHome}/xkb/symbols/uk-no".source = ./uk-no;
 
   home = {
     packages = with pkgs; [

@@ -1,4 +1,7 @@
 {
+  # modified keyboard layout (see input part of settings)
+  home.file."${config.xdg.configHome}/xkb/symbols/uk-no".source = ./uk-no;
+
   wayland.windowManager.hyprland.settings = {
     general = {
       # Doc: https://wiki.hyprland.org/Configuring/Variables/#general
@@ -18,10 +21,6 @@
     input = {
       # Doc: https://wiki.hyprland.org/Configuring/Variables/#input
       kb_layout = "uk-no"; # uses an xkb file
-      # kb_variant =
-      # kb_model =
-      # kb_options =
-      # kb_rules =
 
       follow_mouse = 1;
 
