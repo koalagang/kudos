@@ -16,7 +16,7 @@
         "hypridle &"
         "wlsunset -t 2500K -T 6500 -S 06:00 -s 19:00"
 
-        "${pkgs.wbg}/bin/wbg \"$(${pkgs.findutils}/bin/find ${config.xdg.userDirs.pictures}/wallpapers/catppuccin -type f | shuf -n 1)\" &"
+        "${pkgs.wbg}/bin/wbg \"$(${pkgs.findutils}/bin/find ${config.xdg.userDirs.pictures}/wallpapers/catppuccin -type f | ${pkgs.coreutils}/bin/shuf -n 1)\" &"
         "${pkgs.eww}/bin/eww open bar &"
 
         # "taskdue"

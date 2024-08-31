@@ -8,8 +8,8 @@
       # TODO: nix-colors
       # (all hex colours should begin with 0xee instead of a hash,
       # e.g. #f38ba8 -> 0xeef38ba8
-      "col.active_border" = "0xeecba6f7";
-      "col.inactive_border" = "0xee45475a";
+      "col.active_border" = "rgb(cba6f7)";
+      "col.inactive_border" = "rgb(45475a)";
 
       # as God intended it
       layout = "master";
@@ -124,6 +124,7 @@
       # enable terminal window swallowing
       enable_swallow = true;
       swallow_regex = "^(footclient|foot)$";
+      swallow_exception_regex = "^(noswallow)$";
 
       # decreases battery usage according to https://wiki.hyprland.org/0.37.0/configuring/performance/
       vfr = true;
