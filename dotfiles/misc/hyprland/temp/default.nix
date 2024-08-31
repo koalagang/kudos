@@ -99,9 +99,9 @@
 
   # TODO: install hyprpaper
 
-  home.file."${config.xdg.configHome}/mako/config" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/temp/mako/config";
-  };
+  #home.file."${config.xdg.configHome}/mako/config" = {
+  #  source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/temp/mako/config";
+  #};
 
   # hyprland has support for hot-reloading
   #home.file."${config.xdg.configHome}/hypr/hyprland.conf" = {
