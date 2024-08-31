@@ -1,3 +1,5 @@
+{ config, ... }:
+
 {
   # modified keyboard layout (see input part of settings)
   home.file."${config.xdg.configHome}/xkb/symbols/uk-no".source = ./uk-no;
