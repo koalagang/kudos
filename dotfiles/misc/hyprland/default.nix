@@ -25,11 +25,8 @@
   };
 
   imports = [
-    # temporary stuff that I will move
-    ./temp
-
-    ./settings.nix
-    ./rules.nix
     ./bindings.nix
+    ./rules.nix
+    ./settings.nix
   ];
 }
