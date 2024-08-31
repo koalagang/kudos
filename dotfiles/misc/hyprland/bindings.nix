@@ -1,6 +1,22 @@
 { pkgs, config, ... }:
 
 {
+  # I wrote this script to allow me to change the volume
+  # but without ever going above 100% because that distorts the sound.
+  # You can find the keybinds to this script further down.
+  home.packages = with pkgs; [
+    (writeShellScriptBin "hyprland-wpctl" ''
+      if [[ "$1" == 'toggle' ]]; then
+        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+      else
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
+      fi
+
+      # never go above 100%
+      [ "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2 | tr -d '.')" -gt 100 ] && wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
+    '')
+  ];
+
   wayland.windowManager.hyprland = {
     settings = {
       # Modifiers
@@ -18,11 +34,12 @@
       bind = [
         # Basic bindings
         "$mainMod, Return, exec, ${pkgs.foot}/bin/footclient"
-        "$operationMod, Return, exec, ${pkgs.foot}/bin/foot # in case the server crashes"
+        "$operationMod, Return, exec, ${pkgs.foot}/bin/foot" # in case the server crashes
+        "$appLaunchMod, Return, exec, ${pkgs.foot}/bin/foot -a noswallow" # no window swallowing
         "$operationMod, Semicolon, exec, eww-layout killactive"
         "$operationMod, q, exit"
         "$mainMod, f, exec, eww-layout togglefloating"
-        "$operationMod, f, fullscreen,0 # real fullscreen"
+        "$operationMod, f, fullscreen,0" # real fullscreen
         "$mainMod, Tab, exec, eww-layout 'fullscreen 1'"
 
         # graphical apps
@@ -30,8 +47,8 @@
         "$appLaunchMod, k, exec, notify-send 'Launching KeepassXC' && ${pkgs.keepassxc}/bin/keepassxc &"
         "$appLaunchMod, p, exec, notify-send 'Launching Signal' && ${pkgs.signal-desktop}/bin/signal-desktop &"
         "$appLaunchMod, b, exec, notify-send \"Launching ${config.home.sessionVariables.BROWSER}\" && ${config.home.sessionVariables.BROWSER} &"
-        "$appLaunchMod, o, exec, notify-send 'Launching Obsidian' && ${pkgs.obsidian}/bin/obsidian &"
-        "$mainMod, t, exec, ${pkgs.hdrop}/bin/hdrop -f -g 58 --width 98 --height 91 ${pkgs.foot}/bin/foot -a foot_scratchpad"
+        "$appLaunchMod, o, exec, notify-send 'Launching Obsidian' && ${pkgs.obsidian}/bin/obsidian --features=UseOzonePlatform --ozone-platform=wayland &"
+        "$mainMod, t, exec, ${pkgs.hdrop}/bin/hdrop -f -g 58 --width 98 --height 91 foot -a foot_scratchpad"
         # temporary
         "$appLaunchMod, m, exec, notify-send 'Launching Mullvad' && mullvad-browser &"
         "$appLaunchMod, u, exec, notify-send 'Launching Chromium' && chromium &"
@@ -132,10 +149,10 @@
 
       binde =[
         # Resize windows with $operationMod + ctrl + vi keys
-         "$operationMod, h, resizeactive, -50 0"
-         "$operationMod, k, resizeactive, 0 -50"
-         "$operationMod, j, resizeactive, 0 50"
-         "$operationMod, l, resizeactive, 50 0"
+        "$operationMod, h, resizeactive, -50 0"
+        "$operationMod, j, resizeactive, 0 50"
+        "$operationMod, k, resizeactive, 0 -50"
+        "$operationMod, l, resizeactive, 50 0"
       ];
     };
 

@@ -114,16 +114,16 @@
       #   fi
       # '')
 
-      (writeShellScriptBin "hyprland-wpctl" ''
-        if [[ "$1" == 'toggle' ]]; then
-          wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-        else
-          wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
-        fi
-
-        # never go above 100%
-        [ "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2 | tr -d '.')" -gt 100 ] && wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
-      '')
+      # (writeShellScriptBin "hyprland-wpctl" ''
+      #   if [[ "$1" == 'toggle' ]]; then
+      #     wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+      #   else
+      #     wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
+      #   fi
+      #
+      #   # never go above 100%
+      #   [ "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2 | tr -d '.')" -gt 100 ] && wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
+      # '')
       ];
   };
 }
