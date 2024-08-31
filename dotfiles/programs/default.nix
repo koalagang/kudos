@@ -5,6 +5,7 @@
     ./direnv
     ./eza
     ./firefox
+    ./foot
     ./fzf
     ./git
     ./gnupg

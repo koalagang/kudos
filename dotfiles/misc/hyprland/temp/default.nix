@@ -14,16 +14,16 @@
   #  systemdIntegration = true;
   #};
 
-  # temporary
-  # I'll create separate configs later
-  programs.foot = {
-    enable = true;
-    server.enable = true;
-  };
-  home.file."${config.xdg.configHome}/foot/foot.ini" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/temp/foot.ini";
-  };
-
+  # # temporary
+  # # I'll create separate configs later
+  # programs.foot = {
+  #   enable = true;
+  #   server.enable = true;
+  # };
+  # home.file."${config.xdg.configHome}/foot/foot.ini" = {
+  #   source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/misc/hyprland/temp/foot.ini";
+  # };
+  #
   # WORK IN PROGRESS (switching from waybar to eww)
   #programs.waybar = {
   #  enable = true;
