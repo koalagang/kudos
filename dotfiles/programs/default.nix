@@ -8,6 +8,7 @@
     ./fzf
     ./git
     ./gnupg
+    ./hyprlock
     ./mcfly
     ./mpv
     ./pandoc

@@ -44,59 +44,6 @@
   };
   programs.fuzzel.enable = true;
 
-  # make sure to add `security.pam.services.hyprlock = {};` to configuration.nix
-  programs.hyprlock = {
-    enable = true;
-    # TODO: configure hyprlock more
-    settings = {
-      general = {
-        hide_cursor = true;
-        grace = 3;
-      };
-
-      # TODO: change?
-      background = [ { path = "~/Pictures/wallpapers/catppuccin/unicat.png"; } ];
-
-      input-field = [
-        {
-          size = "200, 50";
-          position = "0, -60";
-          monitor = "";
-          dots_center = true;
-          fade_on_empty = false;
-          font_color = "rgb(202, 211, 245)";
-          inner_color = "rgb(91, 96, 120)";
-          outer_color = "rgb(24, 25, 38)";
-          outline_thickness = 5;
-          placeholder_text = "Type in your password";
-          shadow_passes = 2;
-          hide_input = true;
-        }
-      ];
-    };
-  };
-
-  services.hypridle = {
-    enable = true;
-    settings = {
-      listener = [
-        {
-          timeout = 90;
-          on-timeout = "hyprlock";
-        }
-        {
-          timeout = 120;
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
-        }
-        {
-          timeout = 150;
-          on-timeout = "systemctl suspend";
-        }
-      ];
-    };
-  };
-
   # TODO: install hyprpaper
 
   #home.file."${config.xdg.configHome}/mako/config" = {
