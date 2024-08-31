@@ -3,8 +3,7 @@
     enable = true;
 
     settings = {
-      # TODO: nix-colors
-      color_theme = "dracula";
+      color_theme = "custom";
 
       # If the theme set background should be shown.
       # Set to false if you want terminal background transparency.
@@ -238,6 +237,8 @@
       log_level = "WARNING";
     };
   };
+
+  imports = [ ./theme.nix ];
 
   home.shellAliases.bp = "btop";
 }

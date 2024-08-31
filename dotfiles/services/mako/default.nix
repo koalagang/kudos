@@ -1,3 +1,5 @@
+{ config, ... }:
+
 {
   services.mako = {
     enable = true;
@@ -7,21 +9,15 @@
     width = 200;
     defaultTimeout = 5000;
     borderSize = 2;
-    # TODO: nix-colors
-    # base00 (background)
-    backgroundColor= "#1e1e2e";
-    # base05 (foreground)
-    textColor = "#cdd6f4";
-    # base0E (mauve)
-    borderColor = "#cba6f7";
-    # base02 (surface0)
-    progressColor = "source #313244";
+    backgroundColor= "#${config.colorScheme.palette.base00}";
+    textColor = "#${config.colorScheme.palette.base05}";
+    borderColor = "#${config.colorScheme.palette.base0E}";
+    progressColor = "source #${config.colorScheme.palette.base02}";
     extraConfig = ''
       text-alignment=center
       history=1
-      # base09 (peach)
       [urgency=high]
-      border-color=#fab387
+      border-color=#${config.colorScheme.palette.base09}";
       # NOTE: this part must come *after* the colours for some reason
       # do not disturb
       [mode=dnd]

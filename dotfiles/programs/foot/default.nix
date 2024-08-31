@@ -1,3 +1,5 @@
+{ config, ... }:
+
 # TODO: shell integration
 {
   programs.foot = {
@@ -8,32 +10,31 @@
         font = "Victor Mono:size=12";
         selection-target = "both";
       };
-      # TODO: nix-colors
       colors = {
-        foreground = "cdd6f4"; # base05 (foreground)
-        background = "1e1e2e"; # base00 (background)
-        regular0   = "181825"; # base01 (mantle) / black
-        regular1   = "f38ba8"; # base08 (red)
-        regular2   = "a6e3a1"; # base0B (green)
-        regular3   = "f9e2af"; # base0A (yellow)
-        regular4   = "89b4fa"; # base0D (blue)
-        regular5   = "cba6f7"; # base0E (mauve) / (supposed to be magenta)
-        regular6   = "94e2d5"; # base0C (teal) / (supposed to be cyan)
-        regular7   = "f5e0dc"; # base06 (rosewater) / (supposed to be white)
-        bright0    = "585b70"; # base04 (surface2) / bright black
-        bright1    = "f38ba8"; # base0B (red)
-        bright2    = "a6e3a1"; # base0B (green)
-        bright3    = "f9e2af"; # base0A (yellow)
-        bright4    = "89b4fa"; # base0D (blue)
-        bright5    = "cba6f7"; # base0E (mauve) / (supposed to be magenta)
-        bright6    = "94e2d5"; # base0C (teal) / (supposed to be cyan)
-        bright7    = "f5e0dc"; # base06 (rosewater) / (supposed to be bright white)
-        selection-foreground = "cdd6f4"; # base05 (foreground)
-        selection-background = "585b70"; # base04 (surface2)
-        search-box-no-match = "181825 f38ba8"; # base01 (mantle) / black + base08 (red)
-        search-box-match = "cdd6f4 313244"; # base05 (foreground) + base02 (surface0)
-        jump-labels = "181825 fab387"; # base01 (mantle) / black + base09 (peach)
-        urls = "89b4fa"; # base0D (blue)
+        foreground = "${config.colorScheme.palette.base05}";
+        background = "${config.colorScheme.palette.base00}";
+        regular0   = "${config.colorScheme.palette.base01}";
+        regular1   = "${config.colorScheme.palette.base08}";
+        regular2   = "${config.colorScheme.palette.base0B}";
+        regular3   = "${config.colorScheme.palette.base0A}";
+        regular4   = "${config.colorScheme.palette.base0D}";
+        regular5   = "${config.colorScheme.palette.base0E}";
+        regular6   = "${config.colorScheme.palette.base0C}";
+        regular7   = "${config.colorScheme.palette.base06}";
+        bright0    = "${config.colorScheme.palette.base04}";
+        bright1    = "${config.colorScheme.palette.base08}";
+        bright2    = "${config.colorScheme.palette.base0B}";
+        bright3    = "${config.colorScheme.palette.base0A}";
+        bright4    = "${config.colorScheme.palette.base0D}";
+        bright5    = "${config.colorScheme.palette.base0E}";
+        bright6    = "${config.colorScheme.palette.base0C}";
+        bright7    = "${config.colorScheme.palette.base06}";
+        selection-foreground = "${config.colorScheme.palette.base05}";
+        selection-background = "${config.colorScheme.palette.base04}";
+        search-box-no-match = "${config.colorScheme.palette.base01} ${config.colorScheme.palette.base08}";
+        search-box-match = "${config.colorScheme.palette.base05} ${config.colorScheme.palette.base02}";
+        jump-labels = "${config.colorScheme.palette.base01} ${config.colorScheme.palette.base09}";
+        urls = "${config.colorScheme.palette.base0D}";
       };
       key-bindings = {
         scrollback-up-page = "Control+U";

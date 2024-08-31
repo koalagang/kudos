@@ -10,11 +10,8 @@
       gaps_in = 2;
       gaps_out = 4;
       border_size = 2;
-      # TODO: nix-colors
-      # (all hex colours should begin with 0xee instead of a hash,
-      # e.g. #f38ba8 -> 0xeef38ba8
-      "col.active_border" = "rgb(cba6f7)";
-      "col.inactive_border" = "rgb(45475a)";
+      "col.active_border" = "rgb(${config.colorScheme.palette.base0E})";
+      "col.inactive_border" = "rgb(${config.colorScheme.palette.base03})";
 
       # as God intended it
       layout = "master";
