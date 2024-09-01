@@ -1,12 +1,10 @@
 { pkgs, ... }:
 
 {
+  imports = [ ./theme.nix ];
   programs.bat = {
     enable = true;
-
-    # TODO: nix-colors
-    config.theme = "Dracula";
-
+    config.theme = "custom";
     extraPackages = with pkgs.bat-extras; [ batman batgrep ];
   };
 
