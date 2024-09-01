@@ -38,9 +38,9 @@
               <key>activeGuide</key>
               <string>#${config.colorScheme.palette.base03}</string>
               <key>findHighlight</key>
-              <string>#3e5767</string>
+              <string>#${config.colorScheme.palette.base0D}</string>
               <key>gutterForeground</key>
-              <string>#7f849c</string>
+              <string>#${config.colorScheme.palette.base04}</string>
             </dict>
           </dict>
           <dict>
@@ -229,7 +229,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#eba0ac</string>
+              <string>#${config.colorScheme.palette.base08}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -273,7 +273,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#89dceb</string>
+              <string>#${config.colorScheme.palette.base07}</string>
             </dict>
           </dict>
           <dict>
@@ -458,7 +458,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#a6e3a1</string>
+              <string>#${config.colorScheme.palette.base0B}</string>
               <key>fontStyle</key>
               <string/>
             </dict>
@@ -471,7 +471,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#89dceb</string>
+              <string>#${config.colorScheme.palette.base07}</string>
             </dict>
           </dict>
           <dict>
@@ -482,7 +482,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#eba0ac</string>
+              <string>#${config.colorScheme.palette.base08}</string>
             </dict>
           </dict>
           <dict>
@@ -515,7 +515,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#a6e3a1</string>
+              <string>#${config.colorScheme.palette.base0B}</string>
             </dict>
           </dict>
           <dict>
@@ -629,7 +629,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#a6e3a1</string>
+              <string>#${config.colorScheme.palette.base0B}</string>
             </dict>
           </dict>
           <dict>
@@ -695,7 +695,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#eba0ac</string>
+              <string>#${config.colorScheme.palette.base08}</string>
             </dict>
           </dict>
           <dict>
@@ -739,7 +739,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#f2cdcd</string>
+              <string>#${config.colorScheme.palette.base0F}</string>
             </dict>
           </dict>
           <dict>
@@ -761,7 +761,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#f2cdcd</string>
+              <string>#${config.colorScheme.palette.base0F}</string>
             </dict>
           </dict>
           <dict>
@@ -875,7 +875,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#eba0ac</string>
+              <string>#${config.colorScheme.palette.base08}</string>
             </dict>
           </dict>
           <dict>
@@ -897,7 +897,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#eba0ac</string>
+              <string>#${config.colorScheme.palette.base08}</string>
               <key>fontStyle</key>
               <string/>
             </dict>
@@ -1031,7 +1031,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#eba0ac</string>
+              <string>#${config.colorScheme.palette.base08}</string>
             </dict>
           </dict>
           <dict>
@@ -1053,7 +1053,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#89dceb</string>
+              <string>#${config.colorScheme.palette.base07}</string>
             </dict>
           </dict>
           <dict>
@@ -1064,7 +1064,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#f2cdcd</string>
+              <string>#${config.colorScheme.palette.base0F}</string>
             </dict>
           </dict>
           <dict>
@@ -1124,7 +1124,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#a6e3a1</string>
+              <string>#${config.colorScheme.palette.base0B}</string>
             </dict>
           </dict>
           <dict>
@@ -1197,7 +1197,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#b4befe</string>
+              <string>#${config.colorScheme.palette.base07}</string>
             </dict>
           </dict>
           <dict>
@@ -1208,7 +1208,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#a6e3a1</string>
+              <string>#${config.colorScheme.palette.base0B}</string>
             </dict>
           </dict>
           <dict>
@@ -1219,7 +1219,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#89dceb</string>
+              <string>#${config.colorScheme.palette.base07}</string>
             </dict>
           </dict>
           <dict>
@@ -1298,7 +1298,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#b4befe</string>
+              <string>#${config.colorScheme.palette.base07}</string>
               <key>fontStyle</key>
               <string/>
             </dict>
@@ -1335,7 +1335,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#eba0ac</string>
+              <string>#${config.colorScheme.palette.base08}</string>
             </dict>
           </dict>
           <dict>
@@ -1357,7 +1357,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#89dceb</string>
+              <string>#${config.colorScheme.palette.base07}</string>
             </dict>
           </dict>
           <dict>
@@ -1390,7 +1390,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#89dceb</string>
+              <string>#${config.colorScheme.palette.base07}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -1438,7 +1438,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#89dceb</string>
+              <string>#${config.colorScheme.palette.base07}</string>
             </dict>
           </dict>
           <dict>
@@ -1517,7 +1517,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#eba0ac</string>
+              <string>#${config.colorScheme.palette.base08}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -1530,7 +1530,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#a6e3a1</string>
+              <string>#${config.colorScheme.palette.base0B}</string>
               <key>fontStyle</key>
               <string>italic</string>
             </dict>
@@ -1587,7 +1587,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#a6e3a1</string>
+              <string>#${config.colorScheme.palette.base0B}</string>
             </dict>
           </dict>
           <dict>
@@ -1620,7 +1620,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#f5e0dc</string>
+              <string>#${config.colorScheme.palette.base06}</string>
             </dict>
           </dict>
           <dict>
@@ -1854,7 +1854,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#89dceb</string>
+              <string>#${config.colorScheme.palette.base07}</string>
             </dict>
           </dict>
           <dict>
@@ -1876,7 +1876,7 @@
             <key>settings</key>
             <dict>
               <key>foreground</key>
-              <string>#eba0ac</string>
+              <string>#${config.colorScheme.palette.base08}</string>
             </dict>
           </dict>
           <dict>
