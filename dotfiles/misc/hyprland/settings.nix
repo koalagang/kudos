@@ -32,6 +32,12 @@
       repeat_rate = 40;
     };
 
+    # touchpad gestures
+    # gestures = {
+    #   workspace_swipe = true;
+    #   workspace_swipe_forever = true;
+    # };
+
     cursor = {
       # hide cursor after 3 seconds of inactivity
       # equivalent to X's unclutter
@@ -114,10 +120,15 @@
       # I've got the default as left
       # but I also have bindings lower down to change the orientation
       orientation = "left";
+
+      # TEST
+      allow_small_split = true;
     };
 
     misc = {
       # Doc: https://wiki.hyprland.org/Configuring/Variables/#misc
+
+      #disable_autoreload = true;
 
       # enable terminal window swallowing
       enable_swallow = true;

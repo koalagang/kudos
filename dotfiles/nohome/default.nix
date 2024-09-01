@@ -3,6 +3,7 @@
   imports = [
     ./anki
     ./timewarrior
+    ./vivid
     ./wget
   ];
 }

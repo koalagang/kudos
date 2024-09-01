@@ -19,6 +19,7 @@
       cmd_duration.style = "bold #${config.colorScheme.palette.base0A}";
       character = {
         success_symbol = "[❯](bold #${config.colorScheme.palette.base0D})";
+        vimcmd_symbol = "[❮](bold #${config.colorScheme.palette.base0D})";
         error_symbol = "[❯](bold #${config.colorScheme.palette.base09})";
       };
       # TODO: more colours
