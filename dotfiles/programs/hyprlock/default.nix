@@ -31,6 +31,16 @@
         valign = "center";
       }];
 
+      # user avatar
+      image = [{
+        path = "${config.xdg.userDirs.pictures}/wallpapers/face.png";
+        size = 100;
+        border_color = "${config.colorScheme.palette.base0E}";
+        position = "0, 75";
+        halign = "center";
+        valign = "center";
+      }];
+
       label = [
         { # layout
           text = "Layout: $LAYOUT";
