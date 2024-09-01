@@ -5,27 +5,41 @@
 # **only works on Wayland**
 
 {
-  home = {
-    packages = [
-      (pkgs.writeShellScriptBin "screenmenu" ''
-      # TODO: make escape button cancel commands
-      # TODO: fix bugs
-      # TODO: swap from wf-recorder to wl-screenrec (if you can figure out how to get it to work)
-      # TODO: make screenshots get saved as YYYY-MM-DD
-      screenshot_selected(){
-          # ${pkgs.grim}/bin/grim -t png -g "$(${pkgs.slurp}/bin/slurp -c 00000000)"
+  home.packages = [
+    (pkgs.writeShellScriptBin "screenmenu" ''
+      screenshots_dir="${config.xdg.userDirs.pictures}/screenshots"
+      [ -d "$screenshots_dir" ] || mkdir -p "$screenshots_dir"
 
-          ${pkgs.wayshot}/bin/wayshot -s "$(${pkgs.slurp}/bin/slurp -c 00000000)" \
-          -f "${config.xdg.userDirs.pictures}/screenshots/$(${pkgs.coreutils}/bin/date '+%F_%T' | ${pkgs.coreutils}/bin/tr ':' '-').png"
+      # as there are a six different combinations, we stay DRY by programmatically constructing the command when we need to
+      screenshot(){
+        cmd="${pkgs.wayshot}/bin/wayshot"
 
-          ${pkgs.libnotify}/bin/notify-send 'Screenshot' 'Selected area saved!'
-      }
+        [[ "$1" == 'copy' || "$1" == 'edit' ]] && cmd="$cmd --stdout"
 
-      screenshot_full(){
-          ${pkgs.wayshot}/bin/wayshot \
-          -f "${config.xdg.userDirs.pictures}/screenshots/$(${pkgs.coreutils}/bin/date '+%F_%T' | ${pkgs.coreutils}/bin/tr ':' '-').png"
+        if [[ "$2" == 'select' ]]; then
+          cmd="$cmd -s '$(${pkgs.slurp}/bin/slurp -c 00000000)'"
+          notification='Selected area'
+        elif [[ "$2" == 'full' ]]; then
+          notification='Full desktop'
+        fi
 
-          ${pkgs.libnotify}/bin/notify-send 'Screenshot' 'Full desktop saved!'
+        if [[ "$1" == 'copy' ]]; then
+          cmd="$cmd | ${pkgs.wl-clipboard}/bin/wl-copy"
+          notification="$notification copied!"
+        elif [[ "$1" == 'edit' ]]; then
+          cmd="$cmd | ${pkgs.swappy}/bin/swappy -f -"
+        elif [[ "$1" == 'save' ]]; then
+          cmd="$cmd -f "$screenshots_dir/$(${pkgs.coreutils}/bin/date '+%F_%T' | ${pkgs.coreutils}/bin/tr ':' '-').png""
+          notification="$notification saved!"
+        fi
+
+        eval "$cmd" || error=1
+
+        if [ -n "$error" ]; then
+          ${pkgs.libnotify}/bin/notify-send 'Oops!' 'Screenshot failed'
+        elif [ "$1" != 'edit' ]; then
+          ${pkgs.libnotify}/bin/notify-send 'Screenshot' "$notification"
+        fi
       }
 
       record(){
@@ -46,20 +60,19 @@
       stop recording'
 
       case "$(${pkgs.coreutils}/bin/printf '%s' "$selections" | ${config.home.sessionVariables.DMENU_CMD} ${config.home.sessionVariables.DMENU_EXTRA_FLAGS} -l 9 -p ''')" in
-          'copy selected area') screenshot_selected --stdout | ${pkgs.wl-clipboard}/bin/wl-copy ;;
-          'save selected area') screenshot_selected ;;
-          'edit selected area') screenshot_selected  --stdout | ${pkgs.swappy}/bin/swappy -f - ;;
+          'copy selected area') screenshot 'copy' 'select' ;;
+          'save selected area') screenshot 'save' 'select' ;;
+          'edit selected area') screenshot 'edit' 'select' ;;
           'record selected area') record -g "$(${pkgs.slurp}/bin/slurp)" ;;
           # it's necessary to sleep briefly so that the menu isn't captured
-          'copy full desktop') sleep 0.25 && screenshot_full --stdout | ${pkgs.wl-clipboard}/bin/wl-copy ;;
-          'save full desktop') sleep 0.25 && screenshot_full ;;
-          'edit full desktop') sleep 0.25 && screenshot_full  --stdout | ${pkgs.swappy}/bin/swappy -f - ;;
+          'copy full desktop') sleep 0.25 && screenshot 'copy' 'full' ;;
+          'save full desktop') sleep 0.25 && screenshot 'save' 'full' ;;
+          'edit full desktop') sleep 0.25 && screenshot 'edit' 'full' ;;
           'record full desktop') sleep 0.25 && record ;;
           'stop recording') ${pkgs.killall}/bin/killall ${pkgs.wf-recorder}/bin/wf-recorder
           # TODO: make record options not appear if already recording
           # and 'stop recording' option only appear when recording
       esac
-      '')
-    ];
-  };
+    '')
+  ];
 }
