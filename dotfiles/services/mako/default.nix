@@ -17,7 +17,7 @@
       text-alignment=center
       history=1
       [urgency=high]
-      border-color=#${config.colorScheme.palette.base09}";
+      border-color=#${config.colorScheme.palette.base09}
       # NOTE: this part must come *after* the colours for some reason
       # do not disturb
       [mode=dnd]
