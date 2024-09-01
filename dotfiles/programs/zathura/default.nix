@@ -1,10 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.zathura = {
     enable = true;
-
-    # TODO: nix-colors
 
     options = {
       page-padding = 6; # number of pixels between pages
@@ -29,6 +27,45 @@
       # display how many words there are in the current pdf file
       # see my countwords script below for how it is done
       w = "exec \"countwords $FILE\"";
+    };
+
+    options = {
+      # whether or not to enable theme
+      # hit 'i' or run `set recolor false` to disable on the fly
+      recolor = true;
+
+      # TODO: nix-colors
+      default-fg = "#${config.colorScheme.palette.base05}";
+      default-bg = "#${config.colorScheme.palette.base01}";
+      completion-bg = "#${config.colorScheme.palette.base02}";
+      completion-fg = "#${config.colorScheme.palette.base05}";
+      completion-highlight-bg = "#${config.colorScheme.palette.base04}";
+      completion-highlight-fg = "#${config.colorScheme.palette.base05}";
+      completion-group-bg = "#${config.colorScheme.palette.base02}";
+      completion-group-fg = "#${config.colorScheme.palette.base0D}";
+      statusbar-fg = "#${config.colorScheme.palette.base05}";
+      statusbar-bg = "#${config.colorScheme.palette.base02}";
+      notification-bg = "#${config.colorScheme.palette.base02}";
+      notification-fg = "#${config.colorScheme.palette.base05}";
+      notification-error-bg = "#${config.colorScheme.palette.base02}";
+      notification-error-fg = "#${config.colorScheme.palette.base08}";
+      notification-warning-bg = "#${config.colorScheme.palette.base02}";
+      notification-warning-fg = "#${config.colorScheme.palette.base0A}";
+      inputbar-fg = "#${config.colorScheme.palette.base05}";
+      inputbar-bg = "#${config.colorScheme.palette.base02}";
+      recolor-lightcolor = "#${config.colorScheme.palette.base00}";
+      # recolor-darkcolor = text colour
+      # -- strictly following base16, this should be base05 but I use base06 just to make it look slightly more interesting
+      recolor-darkcolor = "#${config.colorScheme.palette.base06}";
+      index-fg = "#${config.colorScheme.palette.base05}";
+      index-bg = "#${config.colorScheme.palette.base00}";
+      index-active-fg = "#${config.colorScheme.palette.base05}";
+      index-active-bg = "#${config.colorScheme.palette.base02}";
+      render-loading-bg = "#${config.colorScheme.palette.base00}";
+      render-loading-fg = "#${config.colorScheme.palette.base05}";
+      highlight-color = "rgba(203, 166, 247, 0.5)";
+      highlight-fg = "rgba(245,194,231,0.5)";
+      highlight-active-color = "rgba(245,194,231,0.5)";
     };
   };
 

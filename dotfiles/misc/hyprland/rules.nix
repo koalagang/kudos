@@ -7,6 +7,7 @@
       "opacity 0.85 override 0.75 override,class:^(foot)$"
       "opacity 0.85 override 0.75 override,class:^(footclient)$"
       "opacity 0.85 override,class:^(foot_scratchpad)$"
+      "opacity 0.95 override 0.85 override,class:^(org.pwmt.zathura)$"
       "workspace 2,noblur,nodim,class:^(firefox)$"
       "workspace 2,noblur,nodim,class:^(mullvadbrowser)$"
       "workspace 4, maximize,class:^(libreoffice-calc)$"
