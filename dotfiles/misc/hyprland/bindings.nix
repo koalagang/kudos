@@ -59,9 +59,9 @@
         "$powerMod, s, exec, systemctl suspend"
         "$powerMod, l, exec, hyprlock"
 
-        # Quoting from the Hyprland Wiki:
-        # using two hashes because this escapes the hash
-        "$mainMod, backslash, exec, ${pkgs.bemenu}/bin/bemenu-run -B 2 -R 10 -l 10 -c --fixed-height -W 0.2 --fn 18 -p '❯' -f --fb '##1e1e2eD9' --ff '##cdd6f4D9' --nb '##1e1e2eD9' --nf '##cdd6f4D9' --tb '##1e1e2eD9' --hb '##1e1e2eD9' --tf '##f38ba8D9' --hf '##f9e2afD9' --af '##cdd6f4D9' --ab '##1e1e2eD9' --bdr '##f38ba8D9'"
+        # Bemenu binding
+        # two hashes are used in order to escape it (i.e. so that it isn't seen as a comment)
+        "$mainMod, backslash, exec, ${pkgs.bemenu}/bin/bemenu-run -B 2 -R 10 -l 10 -c --fixed-height -W 0.2 --fn 18 -p '❯' -f --fb '##${config.colorScheme.palette.base00}D9' --ff '##${config.colorScheme.palette.base05}D9' --nb '##${config.colorScheme.palette.base00}D9' --nf '##${config.colorScheme.palette.base05}D9' --tb '##${config.colorScheme.palette.base00}D9' --hb '##${config.colorScheme.palette.base00}D9' --tf '##${config.colorScheme.palette.base0E}8D9' --hf '##${config.colorScheme.palette.base0A}' --af '##${config.colorScheme.palette.base05}D9' --ab '##${config.colorScheme.palette.base00}D9' --bdr '##${config.colorScheme.palette.base0E}8D9'"
 
         # --- Manipulating the master layout
 
