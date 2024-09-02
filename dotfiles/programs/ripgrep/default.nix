@@ -3,11 +3,14 @@
 {
   programs.ripgrep = {
     enable = true;
-
-    # TODO: nix-colors
-    #arguments = [
-    #  --colors=
-    #];
+    # no custom hex codes unfortunately but these will make use of the terminal colours
+    arguments = [
+      "--color=always"
+      "--colors 'path:fg:red'"
+      "--colors 'line:fg:green'"
+      "--colors 'column:fg:white'"
+      "--colors 'match:fg:magenta'"
+    ];
   };
 
   # ripgrep utilities
