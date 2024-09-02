@@ -27,10 +27,7 @@
       rs= "restore --staged";
       s = "status";
       # Credits to OP for this alias: https://www.reddit.com/r/git/comments/1ajh2ll/my_favorite_alias_for_git_log/
-      # TODO: nix-colors
-      l = ''log --graph
-        --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset'
-        --abbrev-commit --date=relative'';
+      l = "log --graph --pretty=format:'%C(#${config.colorScheme.palette.base0E})%h%Creset -%C(#${config.colorScheme.palette.base0F})%d%Creset %s %C(#${config.colorScheme.palette.base0B})(%cr)%Creset' --abbrev-commit --date=relative";
     };
 
     # workaround for a bug
