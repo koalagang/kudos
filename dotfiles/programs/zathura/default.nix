@@ -34,7 +34,6 @@
       # hit 'i' or run `set recolor false` to disable on the fly
       recolor = true;
 
-      # TODO: nix-colors
       default-fg = "#${config.colorScheme.palette.base05}";
       default-bg = "#${config.colorScheme.palette.base01}";
       completion-bg = "#${config.colorScheme.palette.base02}";

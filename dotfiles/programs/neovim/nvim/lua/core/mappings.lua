@@ -91,3 +91,6 @@ nmap("<leader>sc", "<cmd>w! | <cmd>!shellcheck %<cr>")
 nmap("<leader>z", "<cmd>!zathura --fork %:t:r.pdf<cr><cr>")
 
 nmap("<localleader>Nw", ":Neorg workspace<space>")
+
+-- TEMP
+vim.cmd[[command! Image echo]]

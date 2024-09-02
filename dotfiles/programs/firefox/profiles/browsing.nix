@@ -60,7 +60,6 @@
 
   # TODO: bukubrow
   # keepassxc?
-  # TODO: nix-colors
   programs.firefox.nativeMessagingHosts = with pkgs; [
     tridactyl-native
   ];

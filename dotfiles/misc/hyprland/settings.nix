@@ -112,7 +112,8 @@
       new_status = "slave";
       new_on_top = false;
 
-      mfact = 0.5; # master should use 50% of the screen
+      # master should use 50% of the screen
+      mfact = 0.5;
 
       # don't enable smart gaps (I think this is off by default anyway)
       no_gaps_when_only = 0;
@@ -121,13 +122,14 @@
       # but I also have bindings lower down to change the orientation
       orientation = "left";
 
-      # TEST
       allow_small_split = true;
     };
 
     misc = {
       # Doc: https://wiki.hyprland.org/Configuring/Variables/#misc
 
+      # TODO: set this once you feel that your hyprland config is complete
+      # (disabling auto-reload can save battery power)
       #disable_autoreload = true;
 
       # enable terminal window swallowing
@@ -138,5 +140,7 @@
       # decreases battery usage according to https://wiki.hyprland.org/0.37.0/configuring/performance/
       vfr = true;
     };
+
+    # TODO: try out https://github.com/dawsers/hyprscroller
   };
 }

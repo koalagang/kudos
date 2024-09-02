@@ -207,6 +207,7 @@
     mullvad-browser
     ungoogled-chromium
     obsidian
+    imv
 
     # Powerful CLI tools
     imagemagick

@@ -17,7 +17,6 @@
     ./ripgrep
     ./starship
     ./taskwarrior
-    ./tealdeer
     ./translate-shell
     ./yt-dlp
     ./zathura

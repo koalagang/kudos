@@ -11,7 +11,17 @@
         grace = 3;
       };
 
+      # change the background and avatar if you change theme
       background = [ { path = "${config.xdg.userDirs.pictures}/wallpapers/catppuccin/sitting-cat.png"; } ];
+      # user avatar
+      image = [{
+        path = "${config.xdg.userDirs.pictures}/wallpapers/face.png";
+        size = 100;
+        border_color = "${config.colorScheme.palette.base0E}";
+        position = "0, 75";
+        halign = "center";
+        valign = "center";
+      }];
 
       input-field = [{
         size = "300, 60";
@@ -27,16 +37,6 @@
         fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>";
         capslock_color = "rgb(${config.colorScheme.palette.base0A})";
         position = "0, -47";
-        halign = "center";
-        valign = "center";
-      }];
-
-      # user avatar
-      image = [{
-        path = "${config.xdg.userDirs.pictures}/wallpapers/face.png";
-        size = 100;
-        border_color = "${config.colorScheme.palette.base0E}";
-        position = "0, 75";
         halign = "center";
         valign = "center";
       }];

@@ -160,14 +160,15 @@ require("lazy").setup({
     },
     -- TODO: figure out how to prevent this from causing terminal swallowing in hyprland
     { -- Bringing images to Neovim
+      -- NOTE: will not render images if it's on the first line of the file
         "3rd/image.nvim",
-        ft = { "norg", "markdown" },
+        cmd = "Image",
         dependencies = "nvim-treesitter/nvim-treesitter",
         -- EXTERNAL: magick (luarock), imagemagick, curl, ueberzugpp
         config = function()
             require(conf .. "image")
         end,
-        enabled = false,
+        enabled = true,
     },
     {
         'arnamak/stay-centered.nvim',
