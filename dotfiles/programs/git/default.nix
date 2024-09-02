@@ -8,8 +8,12 @@
     userName = "koalagang";
 
     # A structural diff tool that understands syntax
-    # TODO: nix-colors
-    difftastic.enable = true;
+    difftastic = {
+      enable = true;
+      background = "dark";
+      color = "always";
+      display = "side-by-side";
+    };
 
     aliases = {
       a = "add";
