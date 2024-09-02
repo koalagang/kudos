@@ -1,15 +1,14 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.ripgrep = {
     enable = true;
-    # no custom hex codes unfortunately but these will make use of the terminal colours
     arguments = [
       "--color=always"
-      "--colors 'path:fg:red'"
-      "--colors 'line:fg:green'"
-      "--colors 'column:fg:white'"
-      "--colors 'match:fg:magenta'"
+      "--colors='path:fg:0x${config.colorScheme.palette.base08}'"
+      "--colors='line:fg:0x${config.colorScheme.palette.base0B}'"
+      "--colors='column:fg:0x${config.colorScheme.palette.base05}'"
+      "--colors='match:fg:0x${config.colorScheme.palette.base0E}'"
     ];
   };
 
