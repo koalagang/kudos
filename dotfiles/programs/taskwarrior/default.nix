@@ -8,9 +8,8 @@
     enable = true;
     package = pkgs.taskwarrior3;
 
-    # will add my own dracula theme at some point
-    # TODO: nix-colors
-    colorTheme = "dark-256";
+    # use the terminal's base16 colourscheme
+    colorTheme = "dark-16";
 
     config = {
       # Sunday is on the weekend, mate
