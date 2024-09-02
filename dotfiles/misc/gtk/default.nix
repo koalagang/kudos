@@ -4,16 +4,19 @@
   gtk = {
     enable = true;
 
-    # TODO: nix-colors
     #font = {};
     theme = {
-      name = "Dracula";
-      package = pkgs.dracula-theme;
+      # TODO: file an issue about there being no latte, macchiato or mocha
+      # and with blue being the only accent colour
+      name = "catppuccin-frappe-blue-standard";
+      package = pkgs.catppuccin-gtk;
     };
+    # there's no catppuccin icon theme in nixpkgs so I'll just use rose pine
     iconTheme = {
-      name = "Dracula";
-      package = pkgs.dracula-icon-theme;
+      name = "rose-pine";
+      package = pkgs.rose-pine-icon-theme;
     };
+    # the catppuccin cursors look ugly. the rose pine cursors looks nice.
     cursorTheme = {
       name = "BreezeX-RosePine-Linux";
       package = pkgs.rose-pine-cursor;
