@@ -1,11 +1,10 @@
 { pkgs, config, ... }:
 {
   home = {
-    # TODO: nix-colors
     file."${config.xdg.configHome}/ytfzf/conf.sh".text = ''
       external_menu(){
         # NOTE: do not use the -H (height) or --fn (font size) flags because it messes up formatting
-        bemenu --fb '#1e1e2e' --ff '#cdd6f4' --nb '#1e1e2e' --nf '#cdd6f4' --tb '#1e1e2e' --hb '#1e1e2e' --tf '#f38ba8' --hf '#f9e2af' --af '#cdd6f4' --ab '#1e1e2e' --bdr '#f38ba8' -B 2 -R 10 -f -l30 -i -p 'YouTube'
+        ${pkgs.bemenu}/bin/bemenu --fb '#${config.colorScheme.palette.base00}' --ff '#${config.colorScheme.palette.base05}' --nb '#${config.colorScheme.palette.base00}' --nf '#${config.colorScheme.palette.base05}' --tb '#${config.colorScheme.palette.base00}' --hb '#${config.colorScheme.palette.base00}' --tf '#${config.colorScheme.palette.base0E}' --hf '#${config.colorScheme.palette.base0B}' --af '#${config.colorScheme.palette.base05}' --ab '#${config.colorScheme.palette.base00}' --bdr '#${config.colorScheme.palette.base0E}' -B 2 -R 10 -f -l30 -i -p 'YouTube'
       }
     '';
 
