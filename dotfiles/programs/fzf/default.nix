@@ -11,15 +11,15 @@
     colors = {
       "bg+" = "#${config.colorScheme.palette.base02}";
       bg = "#${config.colorScheme.palette.base00}";
-      spinner = "#${config.colorScheme.palette.base0F}";
+      spinner = "#${config.colorScheme.palette.base0E}";
       hl = "#${config.colorScheme.palette.base08}";
       fg = "#${config.colorScheme.palette.base05}";
       header = "#${config.colorScheme.palette.base08}";
-      info = "#${config.colorScheme.palette.base0E}";
-      pointer = "#${config.colorScheme.palette.base0F}";
+      info = "#${config.colorScheme.palette.base0F}";
+      pointer = "#${config.colorScheme.palette.base0E}";
       marker = "#${config.colorScheme.palette.base07}";
       "fg+" = "#${config.colorScheme.palette.base05}";
-      prompt = "#${config.colorScheme.palette.base0E}";
+      prompt = "#${config.colorScheme.palette.base0F}";
       "hl+" = "#${config.colorScheme.palette.base08}";
       selected-bg = "#${config.colorScheme.palette.base03}";
     };
