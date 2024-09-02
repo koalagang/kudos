@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  imports = [ ./theme.nix ];
+
   programs.zsh = {
     enable = true;
 
@@ -115,7 +117,10 @@
         esac
       }
       zle -N zle-keymap-select
-      printf '\e[5 q' # start with beam (because it starts in viins)
+      _fix_cursor() {
+         printf '\e[5 q'
+      }
+      precmd_functions+=(_fix_cursor)
 
       # edit line in vim buffer with ctrl+v when in vicmd
       autoload -U edit-command-line && zle -N edit-command-line && bindkey -M vicmd '^v' edit-command-line
@@ -149,10 +154,7 @@
       # This is particularly useful with the ctrl+t fzf widget
       # because it allows you to simply search for the file with fzf and then hit enter twice to open it.
 
-      # programming: lua, nix, rust and gdscript
-      # plain text documents: markdown, neorg, latex and non-markup text file
-      # config files: ini, conf, cfg, and toml
-      alias -s {lua,nix,rs,gd,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml}="${config.home.sessionVariables.EDITOR}"
+      alias -s {lua,nix,rs,gd,yuck,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml}="${config.home.sessionVariables.EDITOR}"
 
       # wysiwig documents and spreadsheets
       alias -s {odf,docx,doc,xlsx,csv,tsv}="${pkgs.libreoffice}/bin/libreoffice --nologo"
@@ -227,17 +229,6 @@
     '';
 
     # -- Plugins
-    autosuggestion = {
-      enable = true;
-      # TODO: nix-colors
-      #highlight = {};
-    };
-    syntaxHighlighting = {
-      enable = true;
-      # TODO: nix-colors
-      #styles = {};
-    };
-
     plugins = [
       {
         # allows for using zsh inside the nix ephemeral shell
