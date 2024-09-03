@@ -6,70 +6,99 @@
     (pomodoro)
     (battery)))
 
-; BUG: stops updating when I suspend the system. Only way to get it to start updating again is to reload the config.
-;(deflisten battery_charge "tail -F /sys/class/power_supply/BAT0/capacity")
-;(deflisten battery_status "tail -F /sys/class/power_supply/BAT0/status")
-; NOTE: using defpoll for now but I'll open up an issue later to see if I can go back to using deflisten
-; TODO: consider switching to upower for sake of consistency with plans for other variables below
 (defpoll battery_charge
-; consider changing this to:
-; $ upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}'
   :interval "1m"
-  "cat /sys/class/power_supply/BAT0/capacity")
+  "eww-battery charge")
+(defpoll battery_time
+  :interval "1m"
+  "eww-battery time")
 (defpoll battery_status
-; consider changing this to:
-; $ upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ {print $2}'
   :interval "1m"
-  "cat /sys/class/power_supply/BAT0/status")
-; - health
-; $ upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/capacity/ {print $2}'
-; - estimated time until full charge (when charging) or estimate time until depletion (when discharging)
-; $ upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/time to/ {print $4 " " $5}'
+  "eww-battery status")
+(defpoll battery_icon
+  :interval "1m"
+  "eww-battery icon")
 
 (defwidget battery []
-    (circular-progress
-      :class "battery"
-      :value battery_charge
-      :tooltip "Battery charge: ${battery_charge}%"
-      ;:tooltip "Battery charge: ${EWW_BATTERY["BAT0"].capacity}"
-      :thickness 4
-      (button :class "battery" :width 20 "")))
+  (eventbox
+    :onhover "${EWW_CMD} open stats"
+    :onhoverlost "${EWW_CMD} close stats"
+    (stack
+          :transition "none"
+          :same-size true
+          :selected selected_battery_icon
+        (circular-progress
+          :class "battery_normal"
+          :value battery_charge
+          :thickness 4
+          (button :class "battery_normal" :width 20 ""))
+        (circular-progress
+          :class "battery_warning"
+          :value battery_charge
+          :thickness 4
+          (button :class "battery_normal" :width 20 ""))
+        (circular-progress
+          :class "battery_critical"
+          :value battery_charge
+          :thickness 4
+          (button :class "battery_normal" :width 20 "")))))
 
+(defvar selected_battery_icon 0)
 ; TODO: make this appear onhover for battery widget
 (defwindow stats
   :monitor 0
   :exclusive false
   :stacking "overlay"
-  :geometry (geometry :anchor "top center") ; TODO: change this (once menu is complete)
+  :geometry (geometry
+             ; size of tiling window gaps
+             :x 4
+             :y 4
+             :anchor "top right")
   (box
     :class "popup"
+    :space-evenly false
     (circular-progress
-      :value battery_charge
-      :thickness 5
-      ;:class "battery"
-      (box
-        :class "battery_stats"
-        ;:width 50
-        ; the icon isn't entirely centred by default for some reason.
-        ; setting some spacing and then placing an empty string
-        ; either side of it seems to centre it properly.
-        :spacing 1
-        " "
-        "󰁹" ; TODO: make this icon filled depending on percentage
-        " "))
-        ; "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹" <- different levels of battery
-        ; "󰂄" <- charging
-        ; "󰂃" <- less than or equal to critical level
-    ; TODO: add fancy font to 'Battery'?
-    ; TODO: add predicted charge time and discharge time
-    ; this can be done by doing some calculations using stuff from /sys/class/power_supply/BAT0/uevent
-    ; see ttps://stackoverflow.com/questions/26888636/how-to-calculate-the-time-remaining-until-the-end-of-the-battery-charge
-    ; (calculations can be done using yuck expressions)
-    (label :class "text" :markup "
-      <b>Battery</b>
-      ${battery_charge}%
-      ${battery_status}
+          :value battery_charge
+          :thickness 5
+          (stack
+            :transition "none"
+            :same-size true
+            :selected selected_battery_icon
+            (box
+              :class "battery_stats_normal"
+              ; the icon isn't entirely centred by default for some reason.
+              ; setting some spacing and then placing an empty string
+              ; either side of it seems to centre it properly.
+              :spacing 1
+              " "
+              "${battery_icon}"
+              " ")
+            (box
+              :class "battery_stats_warning"
+              :spacing 1
+              " "
+              "${battery_icon}"
+              " ")
+            (box
+              :class "battery_stats_critical"
+              :spacing 1
+              " "
+              "${battery_icon}"
+              " ")))
+            ; ALSO MAKE IT YELLOW (20%) OR RED (15%)
+        ; TODO: add fancy font to 'Battery'?
+        ; TODO: add predicted charge time and discharge time
+        ; this can be done by doing some calculations using stuff from /sys/class/power_supply/BAT0/uevent
+        ; see ttps://stackoverflow.com/questions/26888636/how-to-calculate-the-time-remaining-until-the-end-of-the-battery-charge
+        ; (calculations can be done using yuck expressions)
+    ; IMPORTANT: do not indent the contents of the markup option as this will mess up the formattng
+    ; TODO: nix-colors
+    (label :wrap true :width 200 :markup "
+<b><span foreground=\"#cba6f7\">Battery</span></b>
+<span foreground=\"#f9e2af\">${battery_charge}% (${battery_status})</span>
+<span foreground=\"#b4befe\">${battery_time}</span>
     ")))
+
 
 (defvar script_path "/home/dante/.local/scripts") ; will change this once I've migrated the scripts to nix writeShellScriptBin
 (defvar pomodoro_progress 100)

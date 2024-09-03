@@ -4,6 +4,7 @@
 // TODO: organise classes and variables into separate files
 // e.g. @import "theme.scss";
 
+// TODO: nix-colors
 // catppuccin mocha
 $base00: #1e1e2e; // base (background)
 $base01: #181825; // mantle
@@ -125,7 +126,7 @@ tooltip {
 .widgets {
   color: $foreground;
   background-color: $background;
-  border: 2px solid rgba($base0E, 0.933); // A border is important if using minimalistic wallpapers
+  border: 2px solid rgba($base0E, 0.933);
   border-radius: 10px;
   margin: 4px;
   font-size: 18px;
@@ -173,18 +174,30 @@ tooltip {
   background-color: $background;
 }
 
-.battery {
+.battery_normal {
   font-size: 15px;
   color: $base0B;
-  //border: 5px solid $background;
-  //padding: 5px;
   background-color: $background;
 }
 
-.battery_stats {
-  font-size: 40px;
-  ;padding: 10px;
+.battery_stats_normal {
+  font-size: 30px;
+  padding: 5px;
   color: $base0B;
+  border: 5px solid $background;
+  background-color: $background;
+}
+.battery_stats_warning {
+  font-size: 30px;
+  padding: 5px;
+  color: $base0A;
+  border: 5px solid $background;
+  background-color: $background;
+}
+.battery_stats_critical {
+  font-size: 30px;
+  padding: 5px;
+  color: $base08;
   border: 5px solid $background;
   background-color: $background;
 }
@@ -192,15 +205,14 @@ tooltip {
 .popup {
     color: $base0F;
     background-color: $background;
-    border: 1px solid $foreground;
+    border: 2px solid $base0E;
     border-radius: 10px;
     padding: 10px;
 }
-// TODO: add a bit more colour
 .settings_popup {
     color: $base0F;
     background-color: $background;
-    border: 1px solid $foreground;
+    border: 2px solid $foreground;
     border-radius: 10px;
     padding: 5px;
 }
@@ -283,10 +295,6 @@ calendar.highlight {
 }
 calendar:indeterminate {
   color: $base04;
-}
-
-.text {
-  padding-right: 5px;
 }
 
 .time_hour {

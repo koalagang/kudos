@@ -8,10 +8,8 @@
 (include "./workspaces.yuck")
 (include "./date.yuck")
 (include "./settings.yuck")
-(include "./circles.yuck")
+(include "./circles.yuck") ; TODO: split this into two separate files
 (include "./layout.yuck")
-
-; (include "./osd.yuck")
 
 (defwindow bar
     :monitor 0

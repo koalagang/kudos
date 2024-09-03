@@ -470,9 +470,9 @@
 
     upower = {
       enable = true;
-      percentageLow = 20;
-      percentageCritical = 10;
-      criticalPowerAction = "HybridSleep";
+      percentageLow = 19;
+      percentageCritical = 9;
+      criticalPowerAction = "HybridSleep"; # TODO: switch to hibernate once youve setup swap
     };
   };
 
