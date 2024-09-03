@@ -351,10 +351,6 @@
       # but it will clear only as much as is necessary to free up 60 GB
       #min-free = "${toString (1024 * 1024 * 1024 * 20 )}"; # 20 GB
       #max-free = "${toString (1024 * 1024 * 1024 * 60 )}"; # 60 GB
-
-      # cachix for hyprland flake
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
     };
 
     # Automatically optimise the store monthly to avoid wasting storage
