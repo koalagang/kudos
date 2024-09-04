@@ -34,27 +34,30 @@
   # Delete contents of /tmp on boot
   boot.tmp.cleanOnBoot = true;
 
-  # Define your hostname.
-  networking.hostName = "Myla";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # use networkd and resolved instead of dhcpcd
   networking = {
+    # define hostname
+    hostName = "Myla";
+
+    # enable wifi support via iwd
+    wireless.iwd = {
+      enable = true;
+      settings = {
+        Settings.AutoConnect = true;
+        # MAC address randomisation
+        General = {
+          AddressRandomization = "network";
+          AddressRandomizationRange = "nic";
+        };
+      };
+    };
+
+    # use networkd instead of dhcpcd
     dhcpcd.enable = false;
     useNetworkd = true;
   };
+  # enable networkd and resolved
   systemd.network.enable = true;
   services.resolved.enable = true;
-
-  # Enables wireless support via iwd
-  # TODO: enable MAC address randomisation on a per-network basis
-  networking.wireless.iwd = {
-    enable = true;
-    settings.Settings.AutoConnect = true;
-  };
 
   # Set your time zone.
   time.timeZone = "Europe/London";
