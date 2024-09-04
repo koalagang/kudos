@@ -41,26 +41,20 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+  # use networkd and resolved instead of dhcpcd
+  networking = {
+    dhcpcd.enable = false;
+    useNetworkd = true;
+  };
+  systemd.network.enable = true;
+  services.resolved.enable = true;
+
   # Enables wireless support via iwd
-  # TODO: enable MAC address randomisation
-  # TODO: figure out how to get built-in dhcp client working
+  # TODO: enable MAC address randomisation on a per-network basis
   networking.wireless.iwd = {
     enable = true;
-  #  settings = {
-  #    general.EnableNetworkConfiguration = true;
-  #    Network = {
-  #      EnableIPv6 = true;
-  #      RoutePriorityOffset = 300;
-  #    };
-  #    Settings = {
-  #      AutoConnect = true;
-  #    };
-  #  };
+    settings.Settings.AutoConnect = true;
   };
-  #networking.dhcpcd = {
-  #  enable = true;
-  #  wait = "ipv6";
-  #};
 
   # Set your time zone.
   time.timeZone = "Europe/London";
