@@ -178,6 +178,9 @@
       bind=,p,exec,colourmenu
       bind=,p,submap,reset
 
+      bind=,d,exec,ddgmenu
+      bind=,d,submap,reset
+
       bind=,e,exec,emojimenu
       bind=,e,submap,reset
 

@@ -19,6 +19,7 @@
   imports = [
     # dmenu scripts
     ./colourmenu.nix
+    ./ddgmenu.nix
     ./emojimenu.nix
     ./killmenu.nix
     ./radiomenu.nix
