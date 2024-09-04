@@ -22,7 +22,7 @@
   ; If you're wondering why I didn't just create a single widget and use arguments,
   ; it's because the stack widget's ":select" option doesn't accept arguments
   (box
-      :class "settings_popup"
+      :class "popup"
       (box :orientation "v"
         ; TODO: interacts with iwd (through iwctl)
        (button
@@ -42,7 +42,10 @@
 ; TODO: make icons separate and with padding instead of using spaces
 
 ; COMPLETE
-(defvar dnd_toggle "")
+; TODO: figure out how to make the selection index persist even when you close the settings menu
+; (because for some reason, it goes back to being a disabled button even if the index is stored in a variable)
+; also TODO: figure out how to make a do not disturb exception for poweralertd
+(defvar dnd_toggle 0)
 (defwidget dnd []
   (stack
      :transition "crossfade"
@@ -58,7 +61,7 @@
       "󰍷\  Do Not Disturb")))
 
 ; TODO: interacts with wireguard (COMING SOON)
-(defvar vpn_toggle "")
+(defvar vpn_toggle 0)
 (defwidget vpn []
   (stack
      :transition "crossfade"
@@ -75,7 +78,7 @@
 
 ; TODO: interacts with wlsunset
 ; for some reason neither wlsunset nor gammastep works on my system (ThinkPad T420)
-(defvar nightlight_toggle "")
+(defvar nightlight_toggle 0)
 (defwidget nightlight []
   (stack
      :transition "crossfade"
@@ -91,7 +94,7 @@
       "\  Nightlight"))) ; TODO: have 'Until 05:00' like on my phone
 
 ; COMPLETE
-(defvar caffeine_toggle "")
+(defvar caffeine_toggle 0)
 (defwidget caffeine []
   (stack
      :transition "crossfade"
