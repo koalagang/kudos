@@ -36,15 +36,14 @@
           :class "battery_warning"
           :value battery_charge
           :thickness 4
-          (button :class "battery_normal" :width 20 ""))
+          (button :class "battery_warning" :width 20 ""))
         (circular-progress
           :class "battery_critical"
           :value battery_charge
           :thickness 4
-          (button :class "battery_normal" :width 20 "")))))
+          (button :class "battery_critical" :width 20 "")))))
 
 (defvar selected_battery_icon 0)
-; TODO: make this appear onhover for battery widget
 (defwindow stats
   :monitor 0
   :exclusive false

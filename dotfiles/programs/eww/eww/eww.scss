@@ -179,6 +179,16 @@ tooltip {
   color: $base0B;
   background-color: $background;
 }
+.battery_warning {
+  font-size: 15px;
+  color: $base0A;
+  background-color: $background;
+}
+.battery_critical {
+  font-size: 15px;
+  color: $base08;
+  background-color: $background;
+}
 
 .battery_stats_normal {
   font-size: 30px;
@@ -206,13 +216,6 @@ tooltip {
     color: $base0F;
     background-color: $background;
     border: 2px solid $base0E;
-    border-radius: 10px;
-    padding: 10px;
-}
-.settings_popup {
-    color: $base0F;
-    background-color: $background;
-    border: 2px solid $foreground;
     border-radius: 10px;
     padding: 5px;
 }

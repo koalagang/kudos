@@ -66,6 +66,8 @@
         # if charging
         elif [[ "$info" =~ 'full' ]]; then
             echo "$time remaining until full charge"
+        else
+            echo 'Calculating time remaining...'
         fi
       elif [ "$1" == 'status' ]; then
         upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ {print $2}'
@@ -73,31 +75,32 @@
         status="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ {print $2}')"
         [ "$status" == 'discharging' ] && charge="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}' | tr -d %)"
         if [ "$status" == 'charging' ]; then
-          echo "󰂄"
+          echo '󰂄'
+          eww update selected_battery_icon=0
         elif [ "$charge" -eq 100 ]; then
           echo '󰁹'
         elif [ "$charge" -ge 90 ]; then
           echo '󰂂'
         elif [ "$charge" -ge 80 ]; then
-          echo "󰂁"
+          echo '󰂁'
         elif [ "$charge" -ge 70 ]; then
-          echo "󰂀"
+          echo '󰂀'
         elif [ "$charge" -ge 60 ]; then
-          echo "󰁿"
+          echo '󰁿'
         elif [ "$charge" -ge 50 ]; then
-          echo "󰁾"
+          echo '󰁾'
         elif [ "$charge" -ge 40 ]; then
-          echo "󰁽"
+          echo '󰁽'
         elif [ "$charge" -ge 30 ]; then
-          echo "󰁼"
+          echo '󰁼'
         elif [ "$charge" -ge 20 ]; then
-          echo "󰁻"
+          echo '󰁻'
           eww update selected_battery_icon=0
         elif [ "$charge" -ge 10 ]; then
-          echo "󰁺"
+          echo '󰁺'
           eww update selected_battery_icon=1
         elif [ "$charge" -lt 10 ]; then
-          echo "󰂃"
+          echo '󰂃'
           eww update selected_battery_icon=2
         fi
       fi
