@@ -34,10 +34,11 @@
   # https://ripose-jp.github.io/Memento/
   home = {
     packages = [ pkgs.memento ];
+    # TODO: figure out how to do this in a pure way
     # Use regular mpv's config for memento's mpv back-end too
-    file."${config.xdg.configHome}/memento" = {
-      source = "${config.xdg.configHome}/mpv";
-      recursive = true;
-    };
+    #file."${config.xdg.configHome}/memento" = {
+    #  source = "${config.xdg.configHome}/mpv";
+    #  recursive = true;
+    #};
   };
 }
