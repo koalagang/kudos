@@ -1,3 +1,10 @@
+-- enable folding
+-- TODO: figure out how to only fold headings (and not codeblocks or lists)
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = ""
+vim.opt.foldlevelstart = 0
+
 require("markview").setup({
     modes = { "n", "i", "no", "c" },
     hybrid_modes = { "i" },
@@ -42,7 +49,7 @@ require("markview").setup({
         enable = true,
         style = "language",
         min_width = 25,
-        language_direction = "left",
+        language_direction = "right",
         sign = false,
     },
 
@@ -51,18 +58,3 @@ require("markview").setup({
     list_items = { enable = false },
     links = { enable = false },
 });
-
--- I'm aware that there are plugins like goyo, zen-mode and true-zen
--- but they mess with markview's hybdrid mode,
--- plus using a whole plugin is a bit overkill when this accomplishes what I want.
-local options = {
-    laststatus = 0,
-    ruler = false,
-    showcmd = false,
-    signcolumn = "yes",
-    number = false,
-    relativenumber = false,
-}
-for k, v in pairs(options) do
-    vim.opt[k] = v
-end

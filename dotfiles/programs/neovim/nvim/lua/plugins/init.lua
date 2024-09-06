@@ -141,6 +141,7 @@ require("lazy").setup({
         end,
     },
     { -- An experimental markdown previewer for Neovim
+      -- TODO: open issue about markview not displaying headings correctly when folding
         "OXY2DEV/markview.nvim",
         ft = "markdown",
         dependencies = {
