@@ -1,28 +1,44 @@
-local bufferline = require('bufferline')
-local api = vim.api
-
-bufferline.setup {
+require('bufferline').setup {
     options = {
-        buffer_close_icon = '', -- disable close button
+        -- disable close button
+        buffer_close_icon = '',
+
+        -- provide LSP diagnostics
         diagnostics = "nvim_lsp",
         diagnostics_indicator = function(count, level)
           local icon = level:match("error") and " " or " "
           return " " .. icon .. count
         end,
-    }
+
+        -- TODO: figure out how to add colour as seen in
+        -- https://github.com/akinsho/bufferline.nvim?tab=readme-ov-file#underline-indicator
+        -- indicator = {
+        --     style = "underline",
+        -- },
+    },
 }
 
--- hide bufferline by default
-vim.go.showtabline = 1
+local api = vim.api
+local o = vim.o
 
--- hide bufferline when only one buffer is open
--- but show it when there are multiple
-local toggleBufferline = api.nvim_create_augroup("toggleBufferline", { clear = true })
-api.nvim_create_autocmd("BufDelete", {
-    command = "if len(getbufinfo({'buflisted':1})) -1 < 2 | set showtabline=1 | endif",
-    group = toggleBufferline,
+function Update_showbufferline()
+    -- get the count of listed buffers
+    local buf_count = #vim.fn.getbufinfo({buflisted = 1})
+    if buf_count > 1 then
+        -- set to 2 when there are multiple buffers
+        o.showtabline = 2
+    else
+        -- set to 1 when there is only one buffer
+        o.showtabline = 1
+    end
+end
+
+-- set up autocommands to trigger on buffer enter and leave events
+api.nvim_create_augroup("BufferlineUpdate", { clear = true })
+api.nvim_create_autocmd({"BufEnter", "BufLeave"}, {
+    group = "BufferlineUpdate",
+    callback = Update_showbufferline,
 })
-api.nvim_create_autocmd("BufAdd", {
-    command = "if len(getbufinfo({'buflisted':1})) > 1 | set showtabline=2 | endif",
-    group = toggleBufferline,
-})
+
+-- initial call to set the correct showtabline value on startup
+Update_showbufferline()
