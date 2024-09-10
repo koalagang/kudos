@@ -38,23 +38,17 @@
       ${pkgs.eww}/bin/eww update focused="$(${pkgs.coreutils}/bin/echo ''${widgets[@]} | ${pkgs.coreutils}/bin/tr -d '\n')"
     '')
 
-    (writeShellScriptBin "eww-layout" ''
-      hyprctl dispatch "$1"
-      fullscreen_status="$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.fullscreen')"
-      [[ "$fullscreen_status" == 1 ]] && fullscreen_mode="$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.fullscreenMode')"
-      if [[ "$fullscreen_mode" == 'null' ]]; then
-          ${pkgs.eww}/bin/eww update layout=2
-      else
-          floating_status="$(hyprctl activewindow -j | ${pkgs.jq}/bin/jq '.floating')"
-          if [[ "$floating_status" == 'true' ]]; then
-              ${pkgs.eww}/bin/eww update layout=1
-          else
-              ${pkgs.eww}/bin/eww update layout=0
-          fi
-      fi
-    '')
-
     (writeShellScriptBin "eww-battery" ''
+        [ "$status" != 'charging' ] && \
+          charge="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}' | tr -d %)"
+        if [ "$charge" -ge 20 ]; then
+          eww update battery_icon_type=0
+        elif [ "$charge" -ge 10 ]; then
+          eww update battery_icon_type=1
+        elif [ "$charge" -lt 10 ]; then
+          eww update battery_icon_type=2
+        fi
+
       if [ "$1" == 'charge' ]; then
         upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}' | tr -d %
       elif [ "$1" == 'time' ]; then
@@ -73,10 +67,10 @@
         upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ {print $2}'
       elif [ "$1" == 'icon' ]; then
         status="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ {print $2}')"
-        [ "$status" == 'discharging' ] && charge="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}' | tr -d %)"
+        [ "$status" != 'charging' ] && charge="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}' | tr -d %)"
         if [ "$status" == 'charging' ]; then
           echo '󰂄'
-          eww update selected_battery_icon=0
+          eww update battery_icon_type=0
         elif [ "$charge" -eq 100 ]; then
           echo '󰁹'
         elif [ "$charge" -ge 90 ]; then
@@ -95,15 +89,28 @@
           echo '󰁼'
         elif [ "$charge" -ge 20 ]; then
           echo '󰁻'
-          eww update selected_battery_icon=0
         elif [ "$charge" -ge 10 ]; then
           echo '󰁺'
-          eww update selected_battery_icon=1
         elif [ "$charge" -lt 10 ]; then
           echo '󰂃'
-          eww update selected_battery_icon=2
         fi
       fi
     '')
+
+    #(writeShellScriptBin "eww-settings" ''
+    #  mkdir -p "$HOME/.cache/eww/settings"
+
+    #  # run the command in the format `eww-settings <0|1> <widget>`
+    #  # for example:
+    #  # $ eww-settings 1 dnd
+    #  echo 'crossfade' > "$HOME/.cache/eww/settings/transition"
+    #  echo $1 > "$HOME/.cache/eww/settings/$2"
+    #  echo 'none' > "$HOME/.cache/eww/settings/transition"
+
+    #  # make sure to use deflisten for the respective files, e.g.
+    #  # (deflisten dnd_transition "tail -f $HOME/.cache/eww/settings/transition")
+    #  # (deflisten dnd_toggle "tail -f $HOME/.cache/eww/settings/dnd")
+    #  # and then use the respective variables for :transition and :selected in the stack
+    #'')
   ];
 }

@@ -36,11 +36,11 @@
         "$mainMod, Return, exec, ${pkgs.foot}/bin/footclient"
         "$operationMod, Return, exec, ${pkgs.foot}/bin/foot" # in case the server crashes
         "$appLaunchMod, Return, exec, ${pkgs.foot}/bin/foot -a noswallow" # no window swallowing
-        "$operationMod, Semicolon, exec, eww-layout killactive"
+        "$operationMod, Semicolon, killactive"
         "$operationMod, q, exit"
-        "$mainMod, f, exec, eww-layout togglefloating"
-        "$operationMod, f, fullscreen,0" # real fullscreen
-        "$mainMod, Tab, exec, eww-layout 'fullscreen 1'"
+        "$mainMod, f, togglefloating"
+        "$operationMod, f, fullscreen, 0" # real fullscreen (shows only that window)
+        "$mainMod, Tab, fullscreen, 1"    # monacle layout (still shows the bar, border and outer gap)
 
         # graphical apps
         "$appLaunchMod, i, exec, ${pkgs.libnotify}/bin/notify-send 'Launching Anki' ; ${pkgs.anki}/bin/anki &"
