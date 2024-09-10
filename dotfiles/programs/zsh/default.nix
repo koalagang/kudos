@@ -246,9 +246,19 @@
         file = "fzf-tab.zsh";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
+      {
+        name = "zsh-pipr";
+        file = "pipr.plugin.zsh";
+        src = pkgs.fetchFromGitHub {
+          owner = "koalagang";
+          repo = "zsh-pipr";
+          rev = "62e4a240d4354ed90071d7007896efc15a2381db";
+          hash = "sha256-zxu/uk/iL5jPHilnvhB647+2f4kC8KpAKDbvJPimy/0=";
+        };
+      }
       # TODO: install https://github.com/momo-lab/zsh-abbrev-alias
     ];
   };
   # plugin dependencies
-  home.packages = with pkgs; [ fzf ];
+  home.packages = with pkgs; [ fzf pipr ];
 }
