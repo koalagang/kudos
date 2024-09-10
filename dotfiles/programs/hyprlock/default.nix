@@ -31,7 +31,7 @@
         font_color = "rgb(${config.colorScheme.palette.base05})";
         fade_on_empty = false;
         placeholder_text = "<span foreground=\"##${config.colorScheme.palette.base0E}\">Please enter your password</span>";
-        hide_input = true;
+        hide_input = false;
         check_color = "rgb(${config.colorScheme.palette.base0E})";
         fail_color = "rgb(${config.colorScheme.palette.base08})";
         fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>";
