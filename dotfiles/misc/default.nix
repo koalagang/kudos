@@ -1,6 +1,5 @@
 {
   imports = [
-    ./fonts
     ./gtk
     ./hyprland
     ./nix

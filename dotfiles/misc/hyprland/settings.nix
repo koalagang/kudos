@@ -30,13 +30,27 @@
       # equivalent to X's xset
       repeat_delay = 250;
       repeat_rate = 40;
+
+      #touchpad = {
+      #  disable_while_typing = true;
+      #  natural_scroll = true;
+      #  middle_button_emulation = true; # ??
+      #  drag_lock = true;
+      #  tap-and-drag = true; # ??
+      #};
+
+      # TEST
+      # focus_on_close = 1; # LATEST GIT (not 0.42)
     };
 
-    # touchpad gestures
-    # gestures = {
-    #   workspace_swipe = true;
-    #   workspace_swipe_forever = true;
-    # };
+    #gestures = {
+    #  workspace_swipe = true;
+    #  workspace_swipe_forever = true;
+    #  workspace_swipe_fingers = 2;
+    #  workspace_swipe_min_fingers = true;
+    #  workspace_swipe_create_new = false;
+    #  workspace_swipe_use_r = true; # ??
+    #};
 
     cursor = {
       # hide cursor after 3 seconds of inactivity
@@ -139,6 +153,27 @@
 
       # decreases battery usage according to https://wiki.hyprland.org/0.37.0/configuring/performance/
       vfr = true;
+
+      # turn on the screen by moving anything
+      mouse_move_enables_dpms = true;
+      key_press_enables_dpms = true;
+
+      # what to do when opening a new window whilst fullscreen is active
+      # 0 - open the new window behind the fullscreen window
+      # 1 - the new window becomes fullscreen (pushing the old fullscreen window behind)
+      # 2 - disable fullscreen (i.e. go back into the master layout)
+      # the default is 0, which I dislike because it's confusing
+      # when you try to open new windows and it looks like nothing is happening
+      new_window_takes_over_fullscreen = 2;
+
+      # avoid accidentally pasting stuff you don't want to paste
+      middle_click_paste = false;
+
+      # TEST
+      # workspace_back_and_forth = true; # LATEST GIT (not 0.42)
+
+      # TEST
+      # workspace_center_on = 1; # LATEST GIT (not 0.42)
     };
 
     # TODO: try out https://github.com/dawsers/hyprscroller

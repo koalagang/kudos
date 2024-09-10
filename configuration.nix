@@ -113,17 +113,19 @@
   # Set default user shell for all users (including root)
   users.defaultUserShell = pkgs.zsh;
 
+  # WORKAROUND:
   # If setting zsh to be the default interactive shell
   # but without the nixos module enabled, you get this warning:
   # programs.zsh.enable is not true. This will cause the zsh
   # shell to lack the basic nix directories in its PATH and might make
   # logging in as that user impossible.
-
   # However, enabling it will create /etc/zshrc, which has a number of default options.
   # Given that I use the home-manager module to configure zsh,
   # all the nixos-generated config does is slow down the startup time.
+  # For example, I enable completion using the home-manager module,
+  # so having it enabled using the NixOS module as well
+  # just results in the completion commands being run twice.
   # The below options are an attempt to minimise this.
-
   programs = {
     zsh = {
       enable = true;
@@ -151,11 +153,16 @@
         groups = [ "wheel" ];
         persist = true;
         # this option is crucial
-        # `doas nixos-rebuild switch` will not work without it
+        # `doas nixos-rebuild` will not work without it
         keepEnv = true;
       }];
     };
   };
+
+  # I'm trying to get run0 to work but it always results in an error
+  # so I'll stick to doas for the time being but I'll revisit this issue later
+  #security.polkit.enable = true;
+  #systemd.services.polkit.path = [ pkgs.git ];
 
   # I generally avoid proprietary software in almost all cases
   # but refusing to update your CPU microcode exposes you to exploits
@@ -174,18 +181,21 @@
   # and git must always be present too in case I want to revert my flake.lock.
   # There's also this issue https://discourse.nixos.org/t/getting-the-head-of-the-git-tree-failed/21837
   # so DO NOT REMOVE GIT
-  environment.defaultPackages = with pkgs; [ neovim git ];
+  environment.defaultPackages = with pkgs; [ neovim git ]; # Did you read the comment?
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
 
+    git
+
     # Base
     # These are some basic commandline tools that come installed with almost all GNU/Linux distributions
     # but I may as well declare them
     coreutils
     findutils
+    diffutils
     util-linux
     curl
     wget
@@ -214,11 +224,11 @@
     xclip
     wl-clipboard
     colorpicker
-    #ddgr
     so
     ytfzf
     devour
     vimv-rs
+    wlsunset
 
     # Script dependencies
     # Will remove these once I've moved my scripts to nix via `writeShellScriptBin`
@@ -342,12 +352,6 @@
 
       # Respect the XDG base directory spec
       use-xdg-base-directories = true;
-
-      # Automatically run garbage collection whenever there is not enough space left
-      # The below options tell nix to collect garbage when the partition with /nix has less than 20 GB free
-      # but it will clear only as much as is necessary to free up 60 GB
-      #min-free = "${toString (1024 * 1024 * 1024 * 20 )}"; # 20 GB
-      #max-free = "${toString (1024 * 1024 * 1024 * 60 )}"; # 60 GB
     };
 
     # Automatically optimise the store monthly to avoid wasting storage
@@ -376,16 +380,26 @@
   # See https://github.com/nix-community/home-manager/issues/3113 for more
   programs.dconf.enable = true;
 
-  fonts.packages = with pkgs; [
-    fira-code
-    freefont_ttf
-    liberation_ttf
-    noto-fonts-emoji
-    source-han-serif
-    source-han-sans
-    victor-mono
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-  ];
+  # all these fonts are free (no unfree fonts here)
+  fonts = {
+    packages = with pkgs; [
+      victor-mono # very nice for programming
+      liberation_ttf # provides free versions of proprietary fonts, like Times New Roman and Arial
+      source-han-sans source-han-serif # Adobe's simplified and traditional Chinese, Japanese and Korean (CJK) fonts
+      freefont_ttf # GNU's font which covers tons of writing systems not covered by most other fonts
+      noto-fonts-emoji # Google's emoji font
+      (nerdfonts.override { fonts = [ "FiraCode" ]; }) # for icons
+    ];
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        serif = [ "Liberation Serif" "Source Han Serif" ];
+        sansSerif = [ "Liberation Sans" "Source Han Sans" ];
+        monospace = [ "Victor Mono" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -455,16 +469,6 @@
     # optimise SSD health and performance
     fstrim.enable = true;
 
-    # doesn't seem to work
-    # issue warnings based on battery status and charge
-    #udev.extraRules = ''
-    #  SUBSYSTEM=="power_supply", \
-    #  ATTR{status}=="Discharging", \
-    #  ATTR{capacity}=="[0-50]", \
-    #  ACTION=="change", \
-    #  RUN+="${pkgs.libnotify}/bin/notify-send testing"
-    #'';
-
     upower = {
       enable = true;
       percentageLow = 19;
@@ -473,6 +477,7 @@
     };
   };
 
+  # WORKAROUND:
   # For some reason, git opens an annoying graphical askpass window
   # instead of asking for the username and password in the terminal.
   # This disables that.
