@@ -1,6 +1,8 @@
 { config, ... }:
 
 # TODO: shell integration
+# see https://codeberg.org/dnkl/foot/wiki#shell-integration
+# will probably contribute enableBashIntegration, enableZshIntegration and enableFishIntegration options to the homemanager module
 {
   programs.foot = {
     enable = true;
@@ -37,6 +39,7 @@
         urls = "${config.colorScheme.palette.base0D}";
       };
       key-bindings = {
+        unicode-input = "none";
         scrollback-up-page = "Control+U";
         scrollback-up-line = "Control+K";
         scrollback-down-page = "Control+D";
@@ -46,12 +49,13 @@
         search-start = "Control+slash";
         font-increase = "Control+equal";
         font-decrease = "Control+minus";
+        # NOTE: requires shell integration
+        prompt-prev = "Control+Shift+z";
+        prompt-next = "Control+Shift+x";
+        # NOTE: opening URLs this way causes terminal swallowing
         show-urls-launch = "Control+O";
         show-urls-copy = "Control+L";
         show-urls-persistent = "Control+P";
-        prompt-prev = "Control+Shift+z";
-        prompt-next = "Control+Shift+x";
-        unicode-input = "none";
       };
       search-bindings = {
         find-prev = "Control+N";
