@@ -30,7 +30,7 @@
       l = "log --graph --pretty=format:'%C(#${config.colorScheme.palette.base0E})%h%Creset -%C(#${config.colorScheme.palette.base0F})%d%Creset %s %C(#${config.colorScheme.palette.base0B})(%cr)%Creset' --abbrev-commit --date=relative";
     };
 
-    # workaround for a bug
+    # WORKAROUND:
     # see https://discourse.nixos.org/t/nixos-rebuild-switch-fails-under-flakes-and-doas-with-git-warning-about-dubious-ownership/46069/12
     # an alternative solution presented by Tmplt which weirdly works is staging an empty file
     extraConfig.safe.directory = "${config.xdg.userDirs.desktop}/git/kudos/.git";
