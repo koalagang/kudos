@@ -1,5 +1,28 @@
+-- disable some LSP diagnostic warnings for this file
+---@diagnostic disable: undefined-doc-name
+---@diagnostic disable: undefined-field
+---@diagnostic disable: unused-local
+
 vim.o.conceallevel = 2
 
+local function nmap(shortcut, command)
+    vim.keymap.set("n", shortcut, command)
+end
+-- I'll mainly rely on ctrl and alt and avoid leader
+-- because I want to have consistent bindings across both obsidian and obsidian.nvim
+nmap("<c-q>", "<cmd>ObsidianQuickSwitch<cr>") -- Open quick switcher
+nmap("<A-b>", "<cmd>ObsidianBacklinks<cr>") -- Open backlinks for the current note
+nmap("<c-n>", "<cmd>ObsidianNew<cr>") -- Create new note
+nmap("<c-f>", "<cmd>ObsidianSearch<cr>") -- Search all files
+nmap("<c-r>", "<cmd>ObsidianRename<cr>") -- Rename current file
+nmap("<A-t>", "<cmd>ObsidianTags<cr>") -- Show tags
+nmap("<A-n>", "<cmd>ObsidianTemplate<cr>") -- Insert template
+nmap("<c-o>", "<cmd>ObsidianWorkspace<cr>") -- Open another workspace (vault)
+-- but I'll use leader for stuff that is not available in obsidian
+nmap("<leader>t", "<cmd>ObsidianTOC<cr>")
+
+-- Obsidian.nvim has pretty good defaults so I haven't made that many changes.
+-- It's mainly a copy+paste config from the github README.
 require("obsidian").setup({
   -- A list of workspace names, paths, and configuration overrides.
   -- If you use the Obsidian app, the 'path' of a workspace should generally be
@@ -9,24 +32,27 @@ require("obsidian").setup({
   -- current markdown file being edited.
   workspaces = {
     {
-      name = "personal",
-      path = "~/Documents/vaults/test/test",
+        name = "cornifer",
+        path = "~/Documents/vaults/cornifer",
+        overrides = {
+            notes_subdir = "Literature",
+        },
     },
-    --   name = "work",
-    --   path = "~/vaults/work",
-    --   -- Optional, override certain settings.
-    --   overrides = {
-    --     notes_subdir = "notes",
-    --   },
-    -- },
+    {
+        name = "sly",
+        path = "~/Documents/vaults/sly",
+        overrides = {
+            notes_subdir = "Notes",
+        },
+    },
+    {
+        name = "test",
+        path = "~/Documents/vaults/test/test",
+    },
   },
 
-  -- Alternatively - and for backwards compatibility - you can set 'dir' to a single path instead of
-  -- 'workspaces'. For example:
-  -- dir = "~/vaults/work",
-
   -- Optional, if you keep notes in a specific subdirectory of your vault.
-  notes_subdir = "notes",
+  -- notes_subdir = "Notes",
 
   -- Optional, set the log level for obsidian.nvim. This is an integer corresponding to one of the log
   -- levels defined by "vim.log.levels.*".
@@ -45,6 +71,7 @@ require("obsidian").setup({
     template = nil
   },
 
+  -- TODO: install nvim-cmp
   -- -- Optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
   -- completion = {
   --   -- Set to false to disable completion.
@@ -56,20 +83,6 @@ require("obsidian").setup({
   -- Optional, configure key mappings. These are the defaults. If you don't want to set any keymappings this
   -- way then set 'mappings = {}'.
   mappings = {
-    -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-    ["gf"] = {
-      action = function()
-        return require("obsidian").util.gf_passthrough()
-      end,
-      opts = { noremap = false, expr = true, buffer = true },
-    },
-    -- Toggle check-boxes.
-    ["<leader>ch"] = {
-      action = function()
-        return require("obsidian").util.toggle_checkbox()
-      end,
-      opts = { buffer = true },
-    },
     -- Smart action depending on context, either follow link or toggle checkbox.
     ["<cr>"] = {
       action = function()
@@ -112,7 +125,7 @@ require("obsidian").setup({
   --   local path = spec.dir / tostring(spec.id)
   --   return path:with_suffix(".md")
   -- end,
-  --
+
   -- Optional, customize how wiki links are formatted. You can set this to one of:
   --  * "use_alias_only", e.g. '[[Foo Bar]]'
   --  * "prepend_note_id", e.g. '[[foo-bar|Foo Bar]]'
@@ -164,21 +177,21 @@ require("obsidian").setup({
   end,
 
   -- Optional, for templates (see below).
-  -- templates = {
-  --   folder = "templates",
-  --   date_format = "%Y-%m-%d",
-  --   time_format = "%H:%M",
-  --   -- A map for custom variables, the key should be the variable and the value a function
-  --   substitutions = {},
-  -- },
-  --
+  templates = {
+    folder = "_Assets/Templates",
+    date_format = "%Y-%m-%d",
+    time_format = "%H:%M",
+    -- A map for custom variables, the key should be the variable and the value a function
+    substitutions = {},
+  },
+
   -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external
   -- URL it will be ignored but you can customize this behavior here.
   ---@param url string
   follow_url_func = function(url)
     -- Open the URL in the default web browser.
-    vim.fn.jobstart({"open", url})  -- Mac OS
-    -- vim.fn.jobstart({"xdg-open", url})  -- linux
+    -- vim.fn.jobstart({"open", url})  -- Mac OS
+    vim.fn.jobstart({"xdg-open", url})  -- linux
     -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
   end,
 
@@ -189,6 +202,8 @@ require("obsidian").setup({
   -- Optional, set to true to force ':ObsidianOpen' to bring the app to the foreground.
   open_app_foreground = false,
 
+  -- NOTE: these mappings do not open telescope. They are applied *after* opening telescope.
+  -- Took me a while to figure that out. I might open an issue to suggest that they document this better.
   picker = {
     -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
     name = "telescope.nvim",
@@ -223,7 +238,7 @@ require("obsidian").setup({
   -- 3. "hsplit" - to open in a horizontal split if there's not already a horizontal split
   open_notes_in = "current",
 
-  -- -- Optional, define your own callbacks to further customize behavior.
+  -- Optional, define your own callbacks to further customize behavior.
   -- callbacks = {
   --   -- Runs at the end of `require("obsidian").setup()`.
   --   ---@param client obsidian.Client
@@ -249,7 +264,7 @@ require("obsidian").setup({
   --   ---@param workspace obsidian.Workspace
   --   post_set_workspace = function(client, workspace) end,
   -- },
-  --
+
   -- Optional, configure additional syntax highlighting / extmarks.
   -- This requires you have `conceallevel` set to 1 or 2. See `:help conceallevel` for more details.
   ui = {
@@ -280,6 +295,7 @@ require("obsidian").setup({
     tags = { hl_group = "ObsidianTag" },
     block_ids = { hl_group = "ObsidianBlockID" },
     hl_groups = {
+      -- TODO: nix-colors??
       -- The options are passed directly to `vim.api.nvim_set_hl()`. See `:help nvim_set_hl`.
       ObsidianTodo = { bold = true, fg = "#f78c6c" },
       ObsidianDone = { bold = true, fg = "#89ddff" },
@@ -295,21 +311,21 @@ require("obsidian").setup({
     },
   },
 
-  -- NOTE:
-  -- -- Specify how to handle attachments.
-  -- attachments = {
-  --   -- The default folder to place images in via `:ObsidianPasteImg`.
-  --   -- If this is a relative path it will be interpreted as relative to the vault root.
-  --   -- You can always override this per image by passing a full path to the command instead of just a filename.
-  --   img_folder = "assets/imgs",  -- This is the default
-  --   -- A function that determines the text to insert in the note when pasting an image.
-  --   -- It takes two arguments, the `obsidian.Client` and an `obsidian.Path` to the image file.
-  --   -- This is the default implementation.
-  --   ---@param client obsidian.Client
-  --   ---@param path obsidian.Path the absolute path to the image file
-  --   ---@return string
-  --   img_text_func = function(client, path)
-  --     path = client:vault_relative_path(path) or path
-  --     return string.format("![%s](%s)", path.name, path)
-  --   end,
+  -- Specify how to handle attachments.
+  attachments = {
+    -- The default folder to place images in via `:ObsidianPasteImg`.
+    -- If this is a relative path it will be interpreted as relative to the vault root.
+    -- You can always override this per image by passing a full path to the command instead of just a filename.
+    img_folder = "_Assets/imgs",
+    -- A function that determines the text to insert in the note when pasting an image.
+    -- It takes two arguments, the `obsidian.Client` and an `obsidian.Path` to the image file.
+    -- This is the default implementation.
+    ---@param client obsidian.Client
+    ---@param path obsidian.Path the absolute path to the image file
+    ---@return string
+    img_text_func = function(client, path)
+      path = client:vault_relative_path(path) or path
+      return string.format("![%s](%s)", path.name, path)
+    end,
+  },
 })
