@@ -31,6 +31,25 @@ telescope.setup({
         --   extension_config_key = value,
         -- }
         -- please take a look at the readme of the extension you want to configure
+        undo = {
+            -- TODO: get it to use difftastic
+            -- use_custom_command = { "bash", "-c", "echo '$DIFF' | difft --color always" },
+            mappings = {
+                i = {
+                  ["<cr>"] = require("telescope-undo.actions").yank_additions,
+                  ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
+                  ["<C-cr>"] = require("telescope-undo.actions").restore,
+                  -- alternative defaults, for users whose terminals do questionable things with modified <cr>
+                  ["<C-y>"] = require("telescope-undo.actions").yank_deletions,
+                  ["<C-r>"] = require("telescope-undo.actions").restore,
+                },
+                n = {
+                  ["y"] = require("telescope-undo.actions").yank_additions,
+                  ["Y"] = require("telescope-undo.actions").yank_deletions,
+                  ["u"] = require("telescope-undo.actions").restore,
+                },
+            },
+        },
     },
 })
 telescope.load_extension("fzf") -- nvim-telescope/telescope-fzf-native.nvim

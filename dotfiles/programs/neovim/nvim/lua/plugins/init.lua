@@ -17,7 +17,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Filetypes for treesitter and LSP to lazy-load
-local languages = { "sh", "bib", "tex", "make", "rust", "toml", "lua", "nix" }
+local languages = { "sh", "bib", "tex", "make", "rust", "toml", "lua", "nix", "yuck" }
 
 -- Set plugin config path in a variable in case I decide to move them
 local conf = "plugins.conf."
@@ -107,33 +107,31 @@ require("lazy").setup({
     },
 
     -- [[ Markdown ]]
-    {
+    { -- Obsidian <3 Neovim
+      -- Vimscript alternative: vimwiki/vimwiki
         "epwalsh/obsidian.nvim",
         version = "*", -- recommended, use latest release instead of latest commit
         ft = "markdown",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
             "nvim-treesitter/nvim-treesitter",
+            -- I have not marked telescope as a dependency because I lazy-load it with bindings
+            -- "nvim-telescope/telescope.nvim",
+            -- TODO: install nvim-cmp
             -- "hrsh7th/nvim-cmp",
         },
         config = function()
             require(conf .. "obsidian")
         end,
-        -- enabled = false,
     },
-    -- TODO: configure this (will do so once I've got obsidian and obsidian.nvim configured properly
-    {
+    { -- Configurable tools for working with markdown in Neovim
         "tadmccorkle/markdown.nvim",
-        ft = "markdown",
-        -- opts = {},
-        config = function()
-            vim.keymap.set("i", "<a-cr>", "<cmd>MDListItemBelow<cr>")
-            require("markdown").setup()
-        end,
-        enabled = true,
+        keys = { "gs", "]c", "]p", "]]", "[[" },
+        cmd = { "MDInsertToc", "MDResetListNumbering" },
+        opts = {},
     },
-    {
+    { -- A Vim/Neovim plugin for automated bullet lists
+      -- Lua alternative: gaoDean/autolist.nvim
         "bullets-vim/bullets.vim",
         ft = "markdown",
         config = function()
@@ -153,15 +151,17 @@ require("lazy").setup({
         end,
     },
     { -- Makes creating markdown tables not pure suffering
+      -- Lua alternative: tadmccorkle/markdown.nvim
         "dhruvasagar/vim-table-mode",
         cmd = "TableModeToggle",
         config = function()
             vim.g.table_mode_corner = "|"
         end,
     },
-    -- TODO: figure out how to prevent this from causing terminal swallowing in hyprland
     { -- Bringing images to Neovim
-      -- NOTE: will not render images if it's on the first line of the file
+      -- NOTE 1: will not render images if it's on the first line of the file
+      -- NOTE 2: if you use hyprland window swallowing,
+      -- you'll want to change your terminal's title when using image.nvim
         "3rd/image.nvim",
         cmd = "Image",
         dependencies = "nvim-treesitter/nvim-treesitter",
@@ -169,23 +169,32 @@ require("lazy").setup({
         config = function()
             require(conf .. "image")
         end,
-        enabled = true,
     },
     {
-        'arnamak/stay-centered.nvim',
+        "arnamak/stay-centered.nvim",
         ft = "markdown",
         opts = {},
+        enabled = false,
     },
     -- TODO: work on making folding work how I want it to (ideally it should look just like neorg's folding);
-    -- for now I'm using the method seen in the core/options.lua file
     -- TODO: zk-nvim
 
     -- [[ Navigation ]]
     { -- "Find, Filter, Preview, Pick. All lua, all the time."
+      -- Vimscript alternative: junegunn/fzf.vim
         "nvim-telescope/telescope.nvim",
         branch = "0.1.x",
         cmd = "Telescope",
-        keys = { "<c-t>", "<c-g>" },
+        keys = {
+            "<c-t>", -- find files
+            "<c-g>", -- live grep
+            -- obsidian.nvim bindings
+            "<c-q>",
+            "<A-b>",
+            "<A-t>",
+            "<c-o>",
+            "<leader>t",
+        },
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons", -- EXTERNAL: any nerdfont
@@ -209,6 +218,7 @@ require("lazy").setup({
     },
     -- TODO: consider switching to folke/flash.nvim?
     { -- "Neovim motions on speed!"
+      -- Vimscript alternative: easymotion/vim-easymotion
         "phaazon/hop.nvim",
         branch = "v2",
         keys = { "f", "F", "<localleader>1", "<localleader>2", { "f", mode = "v" }, { "F", mode = "v" } },
@@ -217,6 +227,7 @@ require("lazy").setup({
         end,
     },
     { -- "Neovim file explorer: edit your filesystem like a buffer"
+      -- Vimscript alternative: tpope/vim-vinegar
         "stevearc/oil.nvim",
         keys = { "-" },
         cmd = "Oil",
@@ -252,7 +263,6 @@ require("lazy").setup({
             "<localleader>l",
             "<localleader>f",
         },
-        -- TODO: make focus.nvim not expand undotree splits
         config = function()
             require(conf .. "focus")
         end,
@@ -266,7 +276,9 @@ require("lazy").setup({
     },
 
     -- [[ Git ]]
-    { -- TODO: learn how to use this
+    { -- An interactive and powerful Git interface for Neovim, inspired by Magit
+      -- Vimscript alternative: tpope/vim-fugitive
+      -- TODO: learn how to use this
       "NeogitOrg/neogit",
       cmd = "Neogit",
       dependencies = {
@@ -280,14 +292,13 @@ require("lazy").setup({
     },
     -- TODO: gitsigns and octo
 
-    { -- Visualises the undo history and makes it easy to browse and switch between different undo branches
-      -- Not to be confused with mbbill/undotree (which does mostly the same thing)
-        "jiaoshijie/undotree",
-        dependencies = "nvim-lua/plenary.nvim",
-        keys = { "<leader>u" },
+    { -- The undo history visualizer for Vim
+      -- Lua alternative: jiaoshijie/undotree
+        "mbbill/undotree",
+        keys = { "<localleader>u" },
         config = function()
-            require("undotree").setup()
-            vim.keymap.set("n", "<leader>u", require("undotree").toggle, { noremap = true, silent = true })
+            vim.w.focus_disable = true -- disable focus.nvim for undotree
+            vim.keymap.set("n", "<localleader>u", "<cmd>UndotreeToggle<cr><cmd>UndotreeFocus<cr>", { noremap = true, silent = true })
         end,
     },
 
@@ -315,6 +326,7 @@ require("lazy").setup({
         end,
     },
     { -- Preview hex colours
+      -- Vimscript alternative: ap/vim-css-color
         "norcalli/nvim-colorizer.lua",
         cmd = "ColorizerToggle",
         config = function()
@@ -322,6 +334,7 @@ require("lazy").setup({
         end,
     },
     { -- Indentation line-guides
+      -- Vimscript alternative: Yggdroot/indentLine
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
         dependencies = { "nvim-treesitter/nvim-treesitter", "HiPhish/rainbow-delimiters.nvim" },
@@ -346,6 +359,7 @@ require("lazy").setup({
     { -- Align text
       -- by selecting it in visual block mode
       -- and hitting <leader>a followed by your character to align to
+      -- Vimscript alternative: junegunn/vim-easy-align (TODO: swap to mini.align)
         "Vonr/align.nvim",
         branch = "v2",
         keys = {{ "<leader>a", mode = "v" }},
@@ -363,30 +377,14 @@ require("lazy").setup({
         end,
     },
 
-    -- TODO: consider switching to harpoon
-    { -- "A better user experience for viewing and interacting with Vim marks"
-        "chentoast/marks.nvim",
-        keys = { "m", "dm", "m,", "m;", "dmx", "dm-", "dm<space>", "m]", "m[", "m:", "m}", "m{", "dm=" },
+    { -- A telescope extension to view and search your undo tree
+        "debugloop/telescope-undo.nvim",
+        dependencies = "nvim-telescope/telescope.nvim",
+        keys = "<leader>u",
         config = function()
-            require("marks").setup()
+            require("telescope").load_extension("undo")
+            vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
         end,
-        -- TIP: if like me, you're having issues where marks persist
-        -- even when you delete them, run :delmarks A-Z0-9 and then :wshada! to permanently clear them.
-        -- See https://github.com/neovim/neovim/issues/7198#issuecomment-323649157
-        -- I'm not sure if is relevant to marks.nvim but
-        -- I hadn't noticed this before because I didn't use marks prior to this plugin
-    },
-
-    {
-    '2kabhishek/nerdy.nvim',
-        dependencies = {
-            --'stevearc/dressing.nvim',
-            'nvim-telescope/telescope.nvim',
-        },
-        config = function()
-            require('telescope').load_extension('nerdy')
-        end,
-        cmd = 'Telescope nerdy',
     },
 
     -- [[ FILETYPE PLUGINS ]]
@@ -400,13 +398,12 @@ require("lazy").setup({
             vim.opt.shiftwidth = 2
         end,
     },
-
-    { -- yuck (eww's configuration language)
-        "elkowar/yuck.vim",
-        ft = "yuck",
-    },
-    { -- uses a lisp-like syntax so parinfer is helpful
+    { -- yuck is a lisp-like syntax so parinfer is helpful
         "gpanders/nvim-parinfer",
+        config = function()
+            -- lisps use semicolons for commenting
+            vim.opt.commentstring = "; %s"
+        end,
         ft = "yuck",
     },
 
@@ -429,13 +426,13 @@ require("lazy").setup({
             require(conf .. "neorg")
         end,
     },
-    {
-        'akinsho/toggleterm.nvim',
+    { -- A Neovim lua plugin to help easily manage multiple terminal windows
+      -- Vimscript alternative: voldikss/vim-floaterm
+        "akinsho/toggleterm.nvim",
         version = "*",
         keys = { "<m-cr>" },
         config = function()
             require(conf .. "toggleterm")
         end,
     },
-
 })

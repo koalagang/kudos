@@ -1,9 +1,10 @@
 -- enable folding
 -- TODO: figure out how to only fold headings (and not codeblocks or lists)
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldtext = ""
-vim.opt.foldlevelstart = 0
+-- TODO: open an issue in markview's repo about headings not being rendered when using folds
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldtext = ""
+-- vim.opt.foldlevelstart = 0
 
 require("markview").setup({
     modes = { "n", "i", "no", "c" },

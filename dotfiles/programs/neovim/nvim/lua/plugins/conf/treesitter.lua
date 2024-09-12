@@ -13,6 +13,7 @@ require("nvim-treesitter.configs").setup({
         "rust",
         "toml",
         "vimdoc",
+        "yuck",
     },
     sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
     highlight = {
@@ -28,7 +29,7 @@ require("nvim-treesitter.configs").setup({
     -- so disable the built-in smart indentation if you want to use this option
     indent = { enable = false },
 
-    -- requires "HiPhish/nvim-ts-rainbow2
+    -- requires HiPhish/rainbow-delimiters.nvim
     rainbow = { enable = true },
 
     -- requires "nvim-treesitter/nvim-treesitter-textobjects"

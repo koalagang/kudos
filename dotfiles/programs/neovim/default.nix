@@ -28,6 +28,8 @@
       git
 
       # nvim-treesitter/nvim-treesitter
+      tree-sitter
+      nodejs
       curl # and for 3rd/image.nvim
       gnutar
       gcc # and for telescope-fzf-native.nvim
