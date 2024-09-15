@@ -10,11 +10,12 @@
       "opacity 0.95 override 0.85 override,class:^(org.pwmt.zathura)$"
       "workspace 2,noblur,nodim,class:^(firefox)$"
       "workspace 2,noblur,nodim,class:^(mullvadbrowser)$"
-      "workspace 4, maximize,class:^(libreoffice-calc)$"
-      "workspace 4, maximize,class:^(libreoffice-writer)$"
-      "workspace 4, maximize,class:^(obsidian)$"
-      "workspace 5, maximize,class:^(anki)$"
-      "workspace 6, maximize,class:^(Signal)$"
+      "workspace 4, class:^(libreoffice-calc)$"
+      "workspace 4, class:^(libreoffice-writer)$"
+      "workspace 4, class:^(obsidian)$"
+      "workspace 5, class:^(anki)$"
+      "maximize, class:^(anki)$"
+      "workspace 6, class:^(Signal)$"
       "idleinhibit focus, class:^(mpv)$"
       # TODO: figure out how to idleinhibit whilst a command is running (e.g. nixos-rebuild)
     ];

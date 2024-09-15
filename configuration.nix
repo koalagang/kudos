@@ -346,6 +346,13 @@
     ];
   };
 
+  # make software run natively on wayland
+  # doesn't seem to make a difference but I'll leave these here anyway
+  environment.variables = {
+    NIXOS_OZONE_WL = 1; # electron (Signal ignores this and still runs through xwayland, womp womp)
+    QT_QPA_PLATFORM = "wayland"; # qt
+  };
+
   nix = {
     # Install and...
     package = pkgs.nixFlakes;
