@@ -1,0 +1,26 @@
+(defvar script_path "/home/dante/.local/scripts") ; will change this once I've migrated the scripts to nix writeShellScriptBin
+(defvar pomodoro_progress 100)
+(defvar pomodoro_mins 45)
+(defvar pomodoro_class "pomodoro_work")
+
+(defwidget pomodoro []
+    (circular-progress
+      :class pomodoro_class
+      :value pomodoro_progress
+      :tooltip "${pomodoro_mins} minutes remaining"
+      :thickness 4
+      ; WORKAROUND:
+      ; place the button inside a box because for some reason it fixes a bug
+      ; where the button does not update its class to a class defined earlier in the scss file, as shown below
+      ; # class starts as pomodoro_work (because of the defvar line above the pomodoro widget)
+      ; $ eww update pomodoro_class='pomodoro_break' # changes class to pomodoro_break
+      ; $ eww update pomodoro_class='pomodoro_work'  # class stays as pomodoro_break
+      ; I'd consider opening an issue about this but since the box fix works idk if I can be bothered
+      (box
+        (button
+          :onclick "${script_path}/eww-tomato toggle"
+          :onmiddleclick "${script_path}/eww-tomato skip"
+          :onrightclick "${script_path}/eww-tomato reset"
+          :class pomodoro_class
+          :width 20
+          ""))))

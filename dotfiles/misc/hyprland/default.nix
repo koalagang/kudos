@@ -22,7 +22,10 @@
 
         # Provides power notifcations, such as when the battery is at warning level or critical level
         # (defined using upower), as well as notifying you when you've plugged in or unplugged your charger
-        "${pkgs.poweralertd}/bin/poweralertd"
+        "${pkgs.poweralertd}/bin/poweralertd &"
+
+        # run on startup to update eww variables
+        "eww-update-sliders"
 
         # "taskdue"
       ];

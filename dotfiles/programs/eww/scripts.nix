@@ -40,77 +40,118 @@
 
     (writeShellScriptBin "eww-battery" ''
         [ "$status" != 'charging' ] && \
-          charge="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}' | tr -d %)"
+          charge="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %)"
         if [ "$charge" -ge 20 ]; then
-          eww update battery_icon_type=0
+          ${pkgs.eww}/bin/eww update battery_icon_type=0
         elif [ "$charge" -ge 10 ]; then
-          eww update battery_icon_type=1
+          ${pkgs.eww}/bin/eww update battery_icon_type=1
         elif [ "$charge" -lt 10 ]; then
-          eww update battery_icon_type=2
+          ${pkgs.eww}/bin/eww update battery_icon_type=2
         fi
 
       if [ "$1" == 'charge' ]; then
-        upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}' | tr -d %
+        ${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %
       elif [ "$1" == 'time' ]; then
-        info="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/time to/ {print $3 $4 " " $5}')"
-        time="$(echo $info | cut -d':' -f2)"
+        info="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/time to/ {print $3 $4 " " $5}')"
+        time="$(${pkgs.coreutils}/bin/echo $info | ${pkgs.coreutils}/bin/cut -d':' -f2)"
         # if discharging
         if [[ "$info" =~ 'empty' ]]; then
-            echo "$time remaining"
+            ${pkgs.coreutils}/bin/echo "$time remaining"
         # if charging
         elif [[ "$info" =~ 'full' ]]; then
-            echo "$time remaining until full charge"
+            ${pkgs.coreutils}/bin/echo "$time remaining until full charge"
         else
-            echo 'Calculating time remaining...'
+            ${pkgs.coreutils}/bin/echo 'Calculating time remaining...'
         fi
       elif [ "$1" == 'status' ]; then
-        upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ {print $2}'
+        ${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/state/ {print $2}'
       elif [ "$1" == 'icon' ]; then
-        status="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/state/ {print $2}')"
-        [ "$status" != 'charging' ] && charge="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}' | tr -d %)"
+        status="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/state/ {print $2}')"
+        [ "$status" != 'charging' ] && charge="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %)"
         if [ "$status" == 'charging' ]; then
-          echo '󰂄'
-          eww update battery_icon_type=0
+          ${pkgs.coreutils}/bin/echo '󰂄'
+          ${pkgs.eww}/bin/eww update battery_icon_type=0
         elif [ "$charge" -eq 100 ]; then
-          echo '󰁹'
+          ${pkgs.coreutils}/bin/echo '󰁹'
         elif [ "$charge" -ge 90 ]; then
-          echo '󰂂'
+          ${pkgs.coreutils}/bin/echo '󰂂'
         elif [ "$charge" -ge 80 ]; then
-          echo '󰂁'
+          ${pkgs.coreutils}/bin/echo '󰂁'
         elif [ "$charge" -ge 70 ]; then
-          echo '󰂀'
+          ${pkgs.coreutils}/bin/echo '󰂀'
         elif [ "$charge" -ge 60 ]; then
-          echo '󰁿'
+          ${pkgs.coreutils}/bin/echo '󰁿'
         elif [ "$charge" -ge 50 ]; then
-          echo '󰁾'
+          ${pkgs.coreutils}/bin/echo '󰁾'
         elif [ "$charge" -ge 40 ]; then
-          echo '󰁽'
+          ${pkgs.coreutils}/bin/echo '󰁽'
         elif [ "$charge" -ge 30 ]; then
-          echo '󰁼'
+          ${pkgs.coreutils}/bin/echo '󰁼'
         elif [ "$charge" -ge 20 ]; then
-          echo '󰁻'
+          ${pkgs.coreutils}/bin/echo '󰁻'
         elif [ "$charge" -ge 10 ]; then
-          echo '󰁺'
+          ${pkgs.coreutils}/bin/echo '󰁺'
         elif [ "$charge" -lt 10 ]; then
-          echo '󰂃'
+          ${pkgs.coreutils}/bin/echo '󰂃'
         fi
       fi
     '')
 
-    #(writeShellScriptBin "eww-settings" ''
-    #  mkdir -p "$HOME/.cache/eww/settings"
+    # BUG: label can go above 100% if using volume keys
+    # BUG: on first boot, there is no value
+    (writeShellScriptBin "eww-volume" ''
+      volume="$(${pkgs.wireplumber}/bin/wpctl get-volume @DEFAULT_AUDIO_SINK@ | ${pkgs.gawk}/bin/awk '{print $2 * 100}')"
 
-    #  # run the command in the format `eww-settings <0|1> <widget>`
-    #  # for example:
-    #  # $ eww-settings 1 dnd
-    #  echo 'crossfade' > "$HOME/.cache/eww/settings/transition"
-    #  echo $1 > "$HOME/.cache/eww/settings/$2"
-    #  echo 'none' > "$HOME/.cache/eww/settings/transition"
+      if [[ "$1" == 'toggle' ]]; then
+          ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+      elif [[ "$1" == 'update-slider' ]]; then
+          ${pkgs.eww}/bin/eww update volume_value_slider="$volume"
+      else
+          [ -n "$1" ] && ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
+      fi
 
-    #  # make sure to use deflisten for the respective files, e.g.
-    #  # (deflisten dnd_transition "tail -f $HOME/.cache/eww/settings/transition")
-    #  # (deflisten dnd_toggle "tail -f $HOME/.cache/eww/settings/dnd")
-    #  # and then use the respective variables for :transition and :selected in the stack
-    #'')
+      # never go above 100%
+      [ "$volume" -gt 100 ] && ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
+
+      [[ "$2" == 'update-slider' ]] && ${pkgs.eww}/bin/eww update volume_value_slider="$volume"
+
+      ${pkgs.eww}/bin/eww update volume_value_label="$volume"
+
+      [ "$(${pkgs.wireplumber}/bin/wpctl get-volume @DEFAULT_AUDIO_SINK@ | ${pkgs.coreutils}/bin/cut -d' ' -f3)" == '[MUTED]' ] && muted=1
+
+      if [ -n "$muted" ]; then
+          ${pkgs.eww}/bin/eww update volume_icon=''
+      elif [ "$volume" -ge 60 ]; then
+          ${pkgs.eww}/bin/eww update volume_icon=''
+      elif [ "$volume" -ge 30 ]; then
+          ${pkgs.eww}/bin/eww update volume_icon=''
+      elif [ "$volume" -lt 30 ]; then
+          ${pkgs.eww}/bin/eww update volume_icon=''
+      fi
+    '')
+
+    (writeShellScriptBin "eww-brightness" ''
+      if [[ "$1" == 'update-slider' ]]; then
+          brightness="$(light -G)"
+          brightness="''${brightness%%.*}"
+          ${pkgs.eww}/bin/eww update brightness_value_slider="$brightness"
+      else
+          # NOTE: installing light with programs.light.enable option is necessary for this to work
+          # because it applies udev rules granting access to members of the video group
+          ${pkgs.light}/bin/light -S "$1"
+          brightness="$1"
+          brightness="''${brightness%%.*}"
+      fi
+
+      ${pkgs.eww}/bin/eww update brightness_value_label="$brightness"
+
+      if [ "$brightness" -ge 60 ]; then
+          ${pkgs.eww}/bin/eww update brightness_icon='󰃠'
+      elif [ "$brightness" -ge 33 ]; then
+          ${pkgs.eww}/bin/eww update brightness_icon='󰃟'
+      elif [ "$brightness" -lt 33 ]; then
+          ${pkgs.eww}/bin/eww update brightness_icon='󰃞'
+      fi
+    '')
   ];
 }

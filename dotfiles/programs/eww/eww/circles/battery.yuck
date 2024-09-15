@@ -1,11 +1,3 @@
-(defwidget circles []
-  (box
-    :class "widgets"
-    :halign "end"
-    :spacing 10
-    (pomodoro)
-    (battery)))
-
 (defpoll battery_charge
   :interval "1m"
   "eww-battery charge")
@@ -18,6 +10,7 @@
 (defpoll battery_icon
   :interval "1m"
   "eww-battery icon")
+(defvar battery_icon_type 0)
 
 (defwidget battery []
   (eventbox
@@ -26,7 +19,7 @@
     (stack
           :transition "none"
           :same-size true
-          :selected selected_battery_icon
+          :selected battery_icon_type
         (circular-progress
           :class "battery_normal"
           :value battery_charge
@@ -43,7 +36,6 @@
           :thickness 4
           (button :class "battery_critical" :width 20 "")))))
 
-(defvar selected_battery_icon 0)
 (defwindow stats
   :monitor 0
   :exclusive false
@@ -62,7 +54,7 @@
           (stack
             :transition "none"
             :same-size true
-            :selected selected_battery_icon
+            :selected battery_icon_type
             (box
               :class "battery_stats_normal"
               ; the icon isn't entirely centred by default for some reason.
@@ -84,12 +76,6 @@
               " "
               "${battery_icon}"
               " ")))
-            ; ALSO MAKE IT YELLOW (20%) OR RED (15%)
-        ; TODO: add fancy font to 'Battery'?
-        ; TODO: add predicted charge time and discharge time
-        ; this can be done by doing some calculations using stuff from /sys/class/power_supply/BAT0/uevent
-        ; see ttps://stackoverflow.com/questions/26888636/how-to-calculate-the-time-remaining-until-the-end-of-the-battery-charge
-        ; (calculations can be done using yuck expressions)
     ; IMPORTANT: do not indent the contents of the markup option as this will mess up the formattng
     ; TODO: nix-colors
     (label :wrap true :width 200 :markup "
@@ -97,29 +83,3 @@
 <span foreground=\"#f9e2af\">${battery_charge}% (${battery_status})</span>
 <span foreground=\"#b4befe\">${battery_time}</span>
     ")))
-
-
-(defvar script_path "/home/dante/.local/scripts") ; will change this once I've migrated the scripts to nix writeShellScriptBin
-(defvar pomodoro_progress 100)
-(defvar pomodoro_mins 45)
-(defvar pomodoro_class "pomodoro_work")
-(defwidget pomodoro []
-    (circular-progress
-      :class pomodoro_class
-      :value pomodoro_progress
-      :tooltip "${pomodoro_mins} minutes remaining"
-      :thickness 4
-      ; place the button inside a box because for some reason it fixes a bug
-      ; where the button does not update its class to a class defined earlier in the scss file, as shown below
-      ; # class starts as pomodoro_work (because of the defvar line above the pomodoro widget)
-      ; $ eww update pomodoro_class='pomodoro_break' # changes class to pomodoro_break
-      ; $ eww update pomodoro_class='pomodoro_work'  # class stays as pomodoro_break
-      ; I'd consider opening an issue about this but since the box fix works idk if I can be bothered
-      (box
-        (button
-          :onclick "${script_path}/eww-tomato toggle"
-          :onmiddleclick "${script_path}/eww-tomato skip"
-          :onrightclick "${script_path}/eww-tomato reset"
-          :class pomodoro_class
-          :width 20
-          ""))))

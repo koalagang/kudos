@@ -7,7 +7,7 @@
   (eventbox
     :onhover "${EWW_CMD} update reveal_date=true"
     :onhoverlost "${EWW_CMD} update reveal_date=false"
-    :cursor "pointer" ; indicates to the user that this can be clicked (to open the calendar)
+    :cursor "pointer"
     (box
       :class "widgets"
       :halign "center"
@@ -23,9 +23,10 @@
         :reveal reveal_date
         :transition "slideleft"
         :duration "300ms"
-        :class "full_date"
-        (button :onclick "${EWW_CMD} open calendar --toggle"
-         full_date)))))
+        (button
+          :class "full_date"
+          :onclick "${EWW_CMD} open calendar --toggle"
+          full_date)))))
 
 (defwindow calendar
   :monitor 0

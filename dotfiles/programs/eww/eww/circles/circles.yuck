@@ -1,0 +1,12 @@
+; has to be relative to the root of the config directory
+; TODO: open an issue to ask about changing it to be relative to the file
+(include "./circles/pomodoro.yuck")
+(include "./circles/battery.yuck")
+
+(defwidget circles []
+  (box
+    :class "widgets"
+    :halign "end"
+    :spacing 10
+    (pomodoro)
+    (battery)))

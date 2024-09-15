@@ -106,7 +106,10 @@
   users.users.dante = {
     isNormalUser = true;
     description = "dante";
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "wheel" # admin
+      "video" # for `light` command
+    ];
     initialPassword = "zoteboat"; # Don't forget to change the password with 'passwd'
   };
 
@@ -379,6 +382,9 @@
   # Dconf is necessary for gtk theming if you're not using a DE.
   # See https://github.com/nix-community/home-manager/issues/3113 for more
   programs.dconf.enable = true;
+
+  # provides command and enables udev permissions to allow members of the `video` group to modify backlight brightness
+  programs.light.enable = true;
 
   # all these fonts are free (no unfree fonts here)
   fonts = {

@@ -1,13 +1,20 @@
 ; Android-like 'quick settings' menu
 (defwidget settings []
-  (box
-    :class "widgets"
-    :halign "end"
-    ;:cursor "pointer"
-    (button
-      :onclick "${EWW_CMD} open settings_menu --toggle"
-      :class "settings_button"
-      "󰇘")))
+  (eventbox
+    ; WORKAROUND
+    ; There is a bug in eww 0.6.0 that makes it necessary to open windows before updating relevant variables.
+    ; This has been unexpectedly fixed in a pr but downstream must wait for a version bump before getting this fix.
+    ; See here if you're interested in reading more: https://github.com/elkowar/eww/issues/1192
+    :onclick "${EWW_CMD} open settings_menu --toggle && eww-volume update-slider && eww-brightness update-slider"
+    :cursor "pointer"
+    ; WORKAROUND
+    ; for some reason, putting the 󰇘 icon directly inside an eventbox causes it to be cut off
+    ; but placing it inside a box inside a box inside an eventbox does not cause this issue
+    (box
+      :class "widgets"
+      :halign "end"
+      (box
+        "󰇘"))))
 
 (defwindow settings_menu
   :monitor 0
@@ -18,125 +25,131 @@
              :x 4
              :y 4
              :anchor "top right")
-
-  ; If you're wondering why I didn't just create a single widget and use arguments,
-  ; it's because the stack widget's ":select" option doesn't accept arguments
-  (box
+  (eventbox
+    ; :onhoverlost "${EWW_CMD} close settings_menu && ${EWW_CMD} update volume_value_slider=${volume_value_label}"
+    :onhoverlost "${EWW_CMD} close settings_menu"
+    :timeout 500
+    (box
       :class "popup"
-      (box :orientation "v"
-        ; TODO: interacts with iwd (through iwctl)
-       (button
-         :class "button_enabled"
-         "󰤨\  WiFi") ; TODO: change icon depending on strength (like with battery)
-       ; 󰤭 󰤯 󰤟 󰤥 󰤨 󰈀
-       ; TODO: create a separate wifi menu that opens up when you click on wifi (like with the Android wifi menu)
-       ; left-click should scan and open up the menu, right-click should simply toggle wifi
-       ; TODO: interacts with mako (through makoctl)
-       (dnd)
-       (button :class "button_enabled" "\  Power menu")) ; power menu: shutdown, reboot, suspend, lock
-      (box :orientation "v"
-       (vpn)
-       (nightlight)
-       (caffeine))))
+      :orientation "v"
+      :space-evenly false
+      (box :orientation "h"
+        (box :orientation "v"
+          (sync)
+          (dnd)
+          (button :class "button_disabled" "something else")) ; blueooth?
+        (box :orientation "v"
+         (vpn)
+         (nightlight)
+         (caffeine)))
+      (controls))))
 
-; TODO: make icons separate and with padding instead of using spaces
+; WIP
+; This was originally copied from https://github.com/PoSayDone/.dotfiles_new/blob/main/files/eww/actions/actions.yuck#L153
+; https://www.reddit.com/r/unixporn/comments/ygn0s5/bspwm_updated_my_rice_with_new_eww_bar_and/
+; but I am modifying it so heavily that it's not quite the same widget as PoSayDone's.
+
+; We store the value of the slider in a separate variable
+; and then simply update this to be equal to the label value when we close the settings menu.
+; This is because, if the slider is constantly setting its own value by updating a variable,
+; this can lead to a delay that causes the slider to bounce up and down.
+(defvar volume_value_label 100)
+(defvar volume_value_slider 100)
+(defvar volume_icon "")
+(defvar brightness_value_label 100)
+(defvar brightness_value_slider 100)
+(defvar brightness_icon "󰃠")
+(defwidget controls []
+  (box
+       :orientation "v"
+       :space-evenly false
+    (box
+         :space-evenly false
+         :class "slider active"
+      (label
+        :class "volume"
+        :text volume_icon)
+      (scale :value volume_value_slider
+             :hexpand true
+             :onchange "eww-volume {}%"
+             :timeout 400
+             :min 0
+             :max 101)
+      (label
+        :class "scale-label"
+        :text "${volume_value_label}%"))
+    (box
+         :space-evenly false
+         :class "slider active"
+      (label :class "brightness"
+            :text brightness_icon)
+      (scale
+             :value brightness_value_slider
+             :hexpand true
+             :onchange "eww-brightness {}"
+             :min 0
+             :max 101)
+      (label :class "scale-label"
+           :text "${brightness_value_label}%"))))
+
+; TODO: syncthing
+(defvar sync_toggle false)
+(defwidget sync []
+  (eventbox
+    :cursor "pointer"
+    (button
+          :class {sync_toggle ? "button_enabled" : "button_disabled"}
+          :onclick "${EWW_CMD} update sync_toggle=${!sync_toggle} && notify-send 'Sync' 'COMING SOON'"
+          "\  Device syncing")))
 
 ; COMPLETE
-; TODO: figure out how to make the selection index persist even when you close the settings menu
-; (because for some reason, it goes back to being a disabled button even if the index is stored in a variable)
-; also TODO: figure out how to make a do not disturb exception for poweralertd
-(defvar dnd_toggle 0)
+(defvar dnd_toggle false)
 (defwidget dnd []
-  (stack
-     :transition "crossfade"
-     :same-size true
-     :selected dnd_toggle
-     (button
-       :class "button_disabled"
-       :onclick "${EWW_CMD} update dnd_toggle=1 && makoctl mode -a dnd"
-      "󰍷\  Do Not Disturb")
-     (button
-       :class "button_enabled"
-       :onclick "${EWW_CMD} update dnd_toggle=0 && makoctl mode -r dnd"
+  (eventbox
+    :cursor "pointer"
+    (button
+      :class {dnd_toggle ? "button_enabled" : "button_disabled"}
+      :onclick "${EWW_CMD} update dnd_toggle=${!dnd_toggle} && makoctl mode -t dnd"
       "󰍷\  Do Not Disturb")))
 
-; TODO: interacts with wireguard (COMING SOON)
-(defvar vpn_toggle 0)
-(defwidget vpn []
-  (stack
-     :transition "crossfade"
-     :same-size true
-     :selected vpn_toggle
-     (button
-       :class "button_disabled"
-       :onclick "${EWW_CMD} update vpn_toggle=1"
-      " \  VPN (TODO)") ; dragon icon because it looks a bit like the wireguard logo
-     (button
-       :class "button_enabled"
-       :onclick "${EWW_CMD} update vpn_toggle=0"
-      " \  VPN (TODO)"))) ; dragon icon because it looks a bit like the wireguard logo
-
-; TODO: interacts with wlsunset
-; for some reason neither wlsunset nor gammastep works on my system (ThinkPad T420)
-(defvar nightlight_toggle 0)
-(defwidget nightlight []
-  (stack
-     :transition "crossfade"
-     :same-size true
-     :selected nightlight_toggle
-     (button
-       :class "button_disabled"
-       :onclick "${EWW_CMD} update nightlight_toggle=1"
-      "\  Nightlight") ; TODO: have 'Until 05:00' like on my phone
-     (button
-       :class "button_enabled"
-       :onclick "${EWW_CMD} update nightlight_toggle=0"
-      "\  Nightlight"))) ; TODO: have 'Until 05:00' like on my phone
-
 ; COMPLETE
-(defvar caffeine_toggle 0)
+(defvar caffeine_toggle false)
 (defwidget caffeine []
-  (stack
-     :transition "crossfade"
-     :same-size true
-     :selected caffeine_toggle
-     (button
-       :class "button_disabled"
-       :onclick "killall hypridle && ${EWW_CMD} update caffeine_toggle=1"
-       "󰛊\  Caffeine")
-     (button
-       :class "button_enabled"
-       :onclick "hypridle & ${EWW_CMD} update caffeine_toggle=0"
-      "󰛊\  Caffeine")))
+  (eventbox
+      :cursor "pointer"
+      (button
+        :class {caffeine_toggle ? "button_enabled" : "button_disabled"}
+        :onclick "${EWW_CMD} update caffeine_toggle=${!caffeine_toggle} && killall hypridle || hypridle &"
+        "󰛊\  Caffeine")))
 
+; WIP
+(defvar nightlight_toggle true)
+(defwidget nightlight []
+  (eventbox
+      :cursor "pointer"
+      (button
+        :class {nightlight_toggle ? "button_enabled" : "button_disabled"}
+        :onclick "${EWW_CMD} update nightlight_toggle=${!nightlight_toggle} && killall wlsunset || wlsunset -t 2500K -T 6500 -S 06:00 -s 19:00 &"
+        :tooltip "19:00-06:00"
+        "\  Nightlight")))
+
+; TODO: wireguard
+(defvar vpn_toggle true)
+(defwidget vpn []
+  (eventbox
+      :cursor "pointer"
+      (button
+        :class {vpn_toggle ? "button_enabled" : "button_disabled"}
+        :onclick "${EWW_CMD} update vpn_toggle=${!vpn_toggle} && notify-send 'VPN' 'COMING SOON'"
+        " \  VPN")))
+
+; TODO: open issue about
+; (defwidget settings_button [button_toggle button_command button_text]
+;   (button
+;     :class {button_toggle ? "button_disabled" : "button_enabled"}
+;     :onclick "${button_command} && ${EWW_CMD} update button_toggle=${!button_toggle}"
+;     "${button_text}"))
+
+;
 ; TODO: add brightness and volume sliders at the bottom of settings menu?
 ; to get volume: `wpctl get-volume @DEFAULT_AUDIO_SINK@`
-
-; 󰤭 󰤯 󰤟 󰤥 󰤨 󰈀
-(defwindow wifi
-  :monitor 0
-  :exclusive false
-  :stacking "overlay"
-  :geometry (geometry :anchor "center") ; TODO: change this (once menu is complete)
-  (box :orientation "v"
-    :class "popup"
-    (button
-      :class "wifi_button_enabled"
-      (box :space-evenly false
-        (label :class "wifi_icon" :text "󰤥")
-        (box :orientation "v"
-          (label :class "wifi_name_connected" :text "Ragnarok_2.4G")
-          (label :class "wifi_undertext_connected" :text "Connected")))) ; TODO: different colour
-    (button
-      :class "wifi_button_disabled"
-      (box :space-evenly false
-        (label :class "wifi_icon" :text "󰤥")
-        (box :orientation "v"
-          (label :text "Ragnarok_5G")
-          (label :class "wifi_undertext_saved" :text "Saved")))) ; TODO: different colour
-    (button
-      :class "wifi_button_disabled"
-      (box :space-evenly false
-        (label :class "wifi_icon" :text "󰤟")
-        (box :orientation "v"
-          (label :text "EE Wifi"))))))

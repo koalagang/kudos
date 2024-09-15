@@ -75,16 +75,12 @@
       # Drop shadows are barely noticeable to me but they are taxing on the battery according to
       # https://wiki.hyprland.org/FAQ/#how-do-i-make-hyprland-draw-as-little-power-as-possible-on-my-laptop
       drop_shadow = false;
-      #shadow_range = 4
-      #shadow_render_power = 3
-      #col.shadow = rgba(1a1a1aee)
 
       # Blur is also apparently taxing on the battery but I enjoy it too much to disable
       blur = {
         enabled = true;
         size = 6;
         passes = 1;
-        #xray = true # transparent floating windows expose the wallpaper (rather than showing windows behind)
         ignore_opacity = true; # creates an interesting effect
       };
 
@@ -105,7 +101,7 @@
       animation = [
         # I find that most of hyprland's default animations, with a delay level of 7, feel too sluggish.
         # However, delay level 1 feels so fast you may as well disable them at that point.
-        # Delay level 2 is that sweet spot where it doesn't feel slow but you can enjoy it.
+        # Delay level 2 is that sweet spot where it doesn't feel slow but you can actually experience it.
         "windows, 1, 2, default, popin"
         "windowsOut, 1, 2, default, popin"
         "workspaces, 1, 2, default, slide"
@@ -132,8 +128,6 @@
       # don't enable smart gaps (I think this is off by default anyway)
       no_gaps_when_only = 0;
 
-      # I've got the default as left
-      # but I also have bindings lower down to change the orientation
       orientation = "left";
 
       allow_small_split = true;
@@ -142,9 +136,9 @@
     misc = {
       # Doc: https://wiki.hyprland.org/Configuring/Variables/#misc
 
-      # TODO: set this once you feel that your hyprland config is complete
-      # (disabling auto-reload can save battery power)
-      #disable_autoreload = true;
+      # disabling auto-reload can save battery power
+      # use `hyprctl reload` to reload instead
+      disable_autoreload = true;
 
       # enable terminal window swallowing
       enable_swallow = true;
@@ -168,6 +162,10 @@
 
       # avoid accidentally pasting stuff you don't want to paste
       middle_click_paste = false;
+
+      # disable cringe stuff
+      disable_hyprland_logo = false;
+      disable_splash_rendering = false;
 
       # TEST
       # workspace_back_and_forth = true; # LATEST GIT (not 0.42)

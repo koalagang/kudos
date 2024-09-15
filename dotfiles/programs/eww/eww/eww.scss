@@ -170,7 +170,7 @@ tooltip {
 }
 .pomodoro_break {
   font-size: 15px;
-  color: $base0E;
+  color: $base0A;
   background-color: $background;
 }
 
@@ -222,11 +222,13 @@ tooltip {
 .button_enabled {
     color: $background;
     background-color: $base0F;
+    border: 1px solid $foreground;
     border-radius: 10px;
     padding: 10px;
     padding-left: 15px;
     padding-right: 15px;
     margin: 2px;
+    transition: color 0.5s ease, background-color 0.5s ease;
 }
 .button_disabled {
     color: $base0F;
@@ -237,6 +239,7 @@ tooltip {
     padding-left: 15px;
     padding-right: 15px;
     margin: 2px;
+    transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .wifi_button_enabled {
@@ -321,4 +324,49 @@ calendar:indeterminate {
 .time_separator {
   padding: 5px;
   color: $foreground;
+}
+
+
+.slider {
+  margin-top: 5px;
+
+  .volume{
+    font-family: "Victor Mono";
+    color: $foreground;
+    font-size: 18px;
+    padding-right: 20px;
+  }
+  .brightness{
+    font-family: "Victor Mono";
+    color: $foreground;
+    font-size: 23px;
+    padding-right: 17px;
+  }
+  .scale-label{
+    min-width: 40px;
+    color: $foreground;
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 10px;
+  }
+  trough {
+    background-color: $background;
+    min-height: 6px;
+    border-radius: 100px;
+
+    highlight {
+      background-color: $base0E;
+      border-radius: 100px;
+    }
+  }
+}
+
+.active {
+  trough {
+    slider {
+      background: $base0E;
+      border-radius: 100%;
+      margin: -8px; // remove this if you want to remove the circle
+    }
+  }
 }

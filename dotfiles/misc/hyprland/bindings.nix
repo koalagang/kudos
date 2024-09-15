@@ -1,22 +1,6 @@
 { pkgs, config, ... }:
 
 {
-  # I wrote this script to allow me to change the volume
-  # but without ever going above 100% because that distorts the sound.
-  # You can find the keybinds to this script further down.
-  home.packages = with pkgs; [
-    (writeShellScriptBin "hyprland-wpctl" ''
-      if [[ "$1" == 'toggle' ]]; then
-        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-      else
-        wpctl set-volume @DEFAULT_AUDIO_SINK@ "$1"
-      fi
-
-      # never go above 100%
-      [ "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2 | tr -d '.')" -gt 100 ] && wpctl set-volume @DEFAULT_AUDIO_SINK@ 100%
-    '')
-  ];
-
   wayland.windowManager.hyprland = {
     settings = {
       # Modifiers
@@ -158,9 +142,13 @@
 
     extraConfig = ''
       # Volume controls
-      binde =, XF86AudioRaiseVolume, exec, hyprland-wpctl 5+
-      binde =, XF86AudioLowerVolume, exec, hyprland-wpctl 5%-
-      bind  =, XF86AudioMute, exec, hyprland-wpctl toggle
+      binde =, XF86AudioRaiseVolume, exec, eww-volume 5%+ update-slider
+      binde =, XF86AudioLowerVolume, exec, eww-volume 5%- update-slider
+      bind  =, XF86AudioMute, exec, eww-volume toggle
+
+      # Brightness controls
+      binde =, XF86MonBrightnessUp, exec, eww-brightness update-slider
+      binde =, XF86MonBrightnessDown, exec, eww-brightness update-slider
 
       # ======= DMENU SUBAMP ========
       # dmenu scripts
