@@ -39,7 +39,7 @@
         urls = "${config.colorScheme.palette.base0D}";
       };
       key-bindings = {
-        quit = "Control+q";
+        quit = "Control+Q";
         unicode-input = "none";
         scrollback-up-page = "Control+U";
         scrollback-up-line = "Control+K";
