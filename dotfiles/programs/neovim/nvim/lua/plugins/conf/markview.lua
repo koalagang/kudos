@@ -21,7 +21,7 @@ require("markview").setup({
         },
         heading_2 = {
             style = "icon",
-            icon = "✿ ",
+            icon = "✿  ",
             sign = "",
             hl = "CursorLine",
         },
@@ -37,7 +37,7 @@ require("markview").setup({
         },
         heading_5 = {
             style = "icon",
-            icon = "★ ",
+            icon = "★  ",
             hl = "CursorLine",
         },
         heading_6 = {
