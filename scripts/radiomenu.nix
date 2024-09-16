@@ -1,5 +1,7 @@
 { pkgs, config, ... }:
 
+# TODO: playerctl doesn't seem to work. Fix it.
+
 # Listen to the radio using dmenu and mpv. No need for an API or some bloated application like a web browser. ;)
 # To find the URL you need for your chosen radio, inspect element on the play button on the website and then press it.
 # This should point you to the URL (at least that's how it works for Chromium-based browsers). Easy as pie.
