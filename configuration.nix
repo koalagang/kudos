@@ -82,7 +82,7 @@
     enable = true;
     settings = {
       default_session = {
- 	      # silence hyprland output to avoid polluting the tty with pointless text
+        # silence hyprland output to avoid polluting the tty with pointless text
         command = "${pkgs.greetd.greetd}/bin/agreety -c ${pkgs.hyprland}/bin/hyprland >/dev/null 2>&1";
         user = "greeter";
       };
@@ -177,63 +177,6 @@
   # There's also this issue https://discourse.nixos.org/t/getting-the-head-of-the-git-tree-failed/21837
   # so DO NOT REMOVE GIT
   environment.defaultPackages = with pkgs; [ neovim git ]; # Did you read the comment?
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
-
-    git
-
-    # Base
-    # These are some basic commandline tools that come installed with almost all GNU/Linux distributions
-    # but I may as well declare them
-    coreutils
-    findutils
-    diffutils
-    util-linux
-    curl
-    wget
-    file
-    gawk
-    gnugrep
-    gnused
-    gnutar
-    killall
-    poppler_utils
-
-    # GUI
-    signal-desktop
-    keepassxc
-    libreoffice-still jre_minimal
-    mullvad-browser
-    ungoogled-chromium
-    obsidian
-    imv
-
-    # Powerful CLI tools
-    imagemagick
-    ffmpeg
-
-    # Simple but useful CLI tools
-    wl-clipboard
-    so
-    ytfzf
-    vimv-rs
-    wlsunset
-
-    # Script dependencies
-    # Will remove these once I've moved my scripts to nix via `writeShellScriptBin`
-    recode
-    maim
-    playerctl
-    pamixer
-    bc
-
-    # Misc
-    testdisk
-    nix-tree
-  ];
 
   # add support for hardware acceleration
   hardware.graphics = {
