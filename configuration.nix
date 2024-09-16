@@ -145,27 +145,17 @@
     command-not-found.enable = false;
   };
 
-  # Swap out sudo for doas
-  # If for whatever reason doas does not work,
-  # resort to entering root via `su` as your backup plan
+  # Disable sudo, as run0 (systemd's privilige escalation tool) is more secure.
+  # If, for whatever reason, run0 does not work,
+  # resort to entering root via `su` as your backup plan.
   security = {
     sudo.enable = false;
-    doas = {
-      enable = true;
-      extraRules = [{
-        groups = [ "wheel" ];
-        persist = true;
-        # this option is crucial
-        # `doas nixos-rebuild` will not work without it
-        keepEnv = true;
-      }];
-    };
+    polkit.enable = true; # polkit is required for run0 to work
   };
-
-  # I'm trying to get run0 to work but it always results in an error
-  # so I'll stick to doas for the time being but I'll revisit this issue later
-  #security.polkit.enable = true;
-  #systemd.services.polkit.path = [ pkgs.git ];
+  # run0 does not have access to all environmental variables by default
+  # but PATH and LOCALE_ARCHIVE are needed for nixos-rebuild so we pass those into the command.
+  # Simply use this `run` alias for rebuilds, e.g. `run nixos-rebuild switch`.
+  environment.shellAliases."run" = "run0 --setenv=PATH --setenv=LOCALE_ARCHIVE";
 
   # I generally avoid proprietary software in almost all cases
   # but refusing to update your CPU microcode exposes you to exploits
@@ -367,11 +357,11 @@
     #optimise.automatic = true;
   };
 
-  # will enable once there's doas support
-  # see https://github.com/viperML/nh/pull/92
+  # will enable once the next version of nh is released (so I can use run0)
+  # see https://github.com/viperML/nh/pull/92#issuecomment-2330891767
   #programs.nh = {
   #  enable = true;
-  #  flake = "/home/dante/Desktop/git/kudos"; # TODO: move to a variable?
+  #  flake = "/home/dante/Desktop/git/kudos";
   #  #clean = {
   #  #  enable = true;
   #  #  extraArgs = "";
