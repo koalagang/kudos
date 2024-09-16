@@ -15,7 +15,7 @@
       "workspace 4, class:^(obsidian)$"
       "workspace 5, class:^(anki)$"
       "maximize, class:^(anki)$"
-      "workspace 6, class:^(Signal)$"
+      "workspace 6, class:^(signal)$"
       "idleinhibit focus, class:^(mpv)$"
       # TODO: figure out how to idleinhibit whilst a command is running (e.g. nixos-rebuild)
     ];

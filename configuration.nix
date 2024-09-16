@@ -346,10 +346,9 @@
     ];
   };
 
-  # make software run natively on wayland
-  # doesn't seem to make a difference but I'll leave these here anyway
+  # force apps to run natively on wayland (rather than using xwayland)
   environment.variables = {
-    NIXOS_OZONE_WL = 1; # electron (Signal ignores this and still runs through xwayland, womp womp)
+    NIXOS_OZONE_WL = 1; # electron
     QT_QPA_PLATFORM = "wayland"; # qt
   };
 
