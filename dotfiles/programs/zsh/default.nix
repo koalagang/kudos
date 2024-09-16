@@ -154,7 +154,7 @@
       # This is particularly useful with the ctrl+t fzf widget
       # because it allows you to simply search for the file with fzf and then hit enter twice to open it.
 
-      alias -s {lua,nix,rs,gd,yuck,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml}="${config.home.sessionVariables.EDITOR}"
+      alias -s {lua,nix,rs,gd,yuck,md,markdown,mdown,norg,tex,txt,ini,conf,cfg,toml,scss}="${config.home.sessionVariables.EDITOR}"
 
       # wysiwig documents and spreadsheets
       alias -s {odf,docx,doc,xlsx,csv,tsv}="${pkgs.libreoffice}/bin/libreoffice --nologo"
