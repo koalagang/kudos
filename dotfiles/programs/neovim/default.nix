@@ -20,7 +20,7 @@
     extraPackages = with pkgs; [
       # System clipboard support (i.e. the plus+ register)
       wl-clipboard # Wayland
-      xclip # X11
+      #xclip # X11
       #xsel # X11
 
       # PLUGIN DEPENDENCIES

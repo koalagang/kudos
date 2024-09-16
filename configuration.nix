@@ -77,27 +77,29 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  # Configure X11
-  services.xserver = {
+  # greeter aka login manager aka display manager
+  services.greetd = {
     enable = true;
-
-    xkb = {
-      layout = "gb";
-      variant = "";
-    };
-
-    displayManager = {
-      lightdm = {
-        enable = true;
-        # Respect the XDG base directory spec
-        extraConfig = "user-authority-in-system-dir=true";
+    settings = {
+      default_session = {
+ 	      # silence hyprland output to avoid polluting the tty with pointless text
+        command = "${pkgs.greetd.greetd}/bin/agreety -c ${pkgs.hyprland}/bin/hyprland >/dev/null 2>&1";
+        user = "greeter";
+      };
+      # enable auto-login
+      initial_session = {
+        command = "${pkgs.hyprland}/bin/hyprland >/dev/null 2>&1";
+        user = "dante";
       };
     };
-
-    # Don't install xterm
-    excludePackages = [ pkgs.xterm ];
   };
-  services.displayManager.defaultSession = "hyprland";
+  # silence greetd logs and errors
+  # use `journalctl -u greetd` to take a look at logs
+  systemd.services.greetd.serviceConfig = {
+    StandardInput = "null";
+    StandardOutput = "null";
+    StandardError = "journal";
+  };
 
   # Configure console keymap
   console.keyMap = "uk";
@@ -214,18 +216,14 @@
     ffmpeg
 
     # Simple but useful CLI tools
-    xclip
     wl-clipboard
-    colorpicker
     so
     ytfzf
-    devour
     vimv-rs
     wlsunset
 
     # Script dependencies
     # Will remove these once I've moved my scripts to nix via `writeShellScriptBin`
-    xdotool
     recode
     maim
     playerctl
@@ -235,94 +233,6 @@
     # Misc
     testdisk
     nix-tree
-
-    # Autostart tools
-    # Will remove these once I've migrated to wayland
-    xorg.xkbcomp
-    xwallpaper
-    dunst libnotify
-    sxhkd
-    xcompmgr
-
-    # suckless
-    # Will remove these once I've migrated to wayland
-    dmenu
-    dwm
-    dwmblocks
-    slock
-    st
-    sxiv
-  ];
-
-  programs.slock.enable = true;
-  services.xserver.windowManager.dwm.enable = true;
-  nixpkgs.overlays = [
-    (final: prev: {
-        dmenu = prev.dmenu.overrideAttrs (old: {
-        src = builtins.fetchTarball "https://github.com/suckless-koala/dmenu/tarball/master";
-        sha256 = "0mdqa9w1p6cmli6976v4wi0sw9r4p5prkj7lzfd1877wk11c9c73";
-        buildInputs = with pkgs; [
-            xorg.libX11
-            xorg.libXft
-            freetype
-        ]; });
-    })
-    (final: prev: {
-        dwm = prev.dwm.overrideAttrs (old: {
-        src = builtins.fetchTarball "https://github.com/suckless-koala/dwm/tarball/master";
-        buildInputs = with pkgs; [
-            xorg.libX11
-            xorg.libXft
-            fontconfig
-            freetype
-        ]; });
-    })
-    (final: prev: {
-        dwmblocks = prev.dwmblocks.overrideAttrs (old: {
-        src = builtins.fetchTarball "https://github.com/suckless-koala/dwmblocks/tarball/laptop";
-        sha256 = "0mdqa9w1p6cmli6976v4wi0sw9r4p5prkj7lzfd1877wk11c9c73";
-        buildInputs = with pkgs; [
-            xorg.libX11
-        ]; });
-    })
-    (final: prev: {
-        slock = prev.slock.overrideAttrs (old: {
-        src = builtins.fetchTarball "https://github.com/suckless-koala/slock/tarball/master";
-        sha256 = "0mdqa9w1p6cmli6976v4wi0sw9r4p5prkj7lzfd1877wk11c9c73";
-        buildInputs = with pkgs; [
-            xorg.libX11
-            xorg.libXext
-            xorg.libXrandr
-            libxcrypt
-        ]; });
-    })
-    (final: prev: {
-        st = prev.st.overrideAttrs (old: {
-        src = builtins.fetchTarball "https://github.com/suckless-koala/st/tarball/master";
-        sha256 = "0mdqa9w1p6cmli6976v4wi0sw9r4p5prkj7lzfd1877wk11c9c73";
-        buildInputs = with pkgs; [
-            xorg.libX11
-            xorg.libXft
-            xorg.libXrender
-            fontconfig
-            freetype
-            harfbuzz
-        ]; });
-    })
-    (final: prev: {
-        sxiv = prev.sxiv.overrideAttrs (old: {
-        src = builtins.fetchTarball "https://github.com/suckless-koala/sxiv/tarball/master";
-        sha256 = "0mdqa9w1p6cmli6976v4wi0sw9r4p5prkj7lzfd1877wk11c9c73";
-        buildInputs = with pkgs; [
-            xorg.libX11
-            xorg.libXft
-            fontconfig
-            freetype
-            imlib2
-            giflib
-            libexif
-        ]; });
-    })
   ];
 
   # add support for hardware acceleration
@@ -412,25 +322,7 @@
   # };
 
   # List services that you want to enable:
-
-  # location is necessary for redshift
-  # even though I always keep the same screen temperature regardless of the time of day
-  location = {
-    provider = "manual";
-    # London
-    latitude = 51.50722;
-    longitude = -0.1275;
-  };
   services = {
-    # blue light filter
-    redshift = {
-        enable = true;
-        temperature = {
-            day = 2500;
-            night = 2500;
-        };
-    };
-
     # audio server
     pipewire = {
         enable = true;
@@ -440,12 +332,6 @@
         };
         pulse.enable = true;
         wireplumber.enable = true;
-    };
-
-    # hide cursor after three seconds of inactivity
-    unclutter-xfixes = {
-        enable = true;
-        timeout = 3;
     };
 
     # optimise battery life and health

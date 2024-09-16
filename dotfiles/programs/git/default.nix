@@ -41,7 +41,7 @@
     # Search the git log and copy the commit to the clipboard
     glf = ''
       ${pkgs.git}/bin/git log --graph --decorate --pretty=oneline --abbrev-commit | ${pkgs.fzf}/bin/fzf | \
-      ${pkgs.coreutils}/bin/cut -d' ' -f2 | ${pkgs.xclip}/bin/xclip -select clipboard
+      ${pkgs.coreutils}/bin/cut -d' ' -f2 | ${pkgs.wl-clipboard}/bin/wl-copy
     '';
   };
 }
