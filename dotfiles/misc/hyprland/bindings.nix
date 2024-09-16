@@ -31,7 +31,7 @@
         "$appLaunchMod, k, exec, ${pkgs.libnotify}/bin/notify-send 'Launching KeepassXC' ; ${pkgs.keepassxc}/bin/keepassxc &"
         "$appLaunchMod, p, exec, ${pkgs.libnotify}/bin/notify-send 'Launching Signal' ; ${pkgs.signal-desktop}/bin/signal-desktop &"
         "$appLaunchMod, b, exec, ${pkgs.libnotify}/bin/notify-send \"Launching ${config.home.sessionVariables.BROWSER}\" ; ${config.home.sessionVariables.BROWSER} &"
-        "$appLaunchMod, o, exec, ${pkgs.libnotify}/bin/notify-send 'Launching Obsidian' ; ${pkgs.obsidian}/bin/obsidian --features=UseOzonePlatform --ozone-platform=wayland &"
+        "$appLaunchMod, o, exec, ${pkgs.libnotify}/bin/notify-send 'Launching Obsidian' ; ${pkgs.obsidian}/bin/obsidian &"
         "$mainMod, t, exec, ${pkgs.hdrop}/bin/hdrop -f -g 58 --width 98 --height 91 foot -a foot_scratchpad"
         # temporary
         "$appLaunchMod, m, exec, ${pkgs.libnotify}/bin/notify-send 'Launching Mullvad' ; mullvad-browser &"
