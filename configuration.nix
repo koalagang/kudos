@@ -178,6 +178,10 @@
   # so DO NOT REMOVE GIT
   environment.defaultPackages = with pkgs; [ neovim git ]; # Did you read the comment?
 
+  # package from rose-pine-hyprcursor flake input
+  # I'm not sure how to import this into homemanager so I'm installing it here
+  environment.systemPackages = [ inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default ];
+
   # add support for hardware acceleration
   hardware.graphics = {
     enable = true;

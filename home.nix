@@ -59,7 +59,6 @@
     # Misc
     testdisk
     nix-tree
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default # package from rose-pine-hyprcursor flake input
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
