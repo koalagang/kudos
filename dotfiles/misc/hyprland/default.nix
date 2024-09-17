@@ -16,10 +16,6 @@
         "${pkgs.wbg}/bin/wbg \"$(${pkgs.findutils}/bin/find ${config.xdg.userDirs.pictures}/wallpapers/catppuccin -type f | ${pkgs.coreutils}/bin/shuf -n 1)\" &"
         "${pkgs.eww}/bin/eww open bar &"
 
-        # TODO: make wlsunset, hypridle and foot server run on startup via systemd
-        "wlsunset -t 2500K -T 6500 -S 06:00 -s 19:00 &"
-        "hypridle &"
-
         # Provides power notifcations, such as when the battery is at warning level or critical level
         # (defined using upower), as well as notifying you when you've plugged in or unplugged your charger
         "${pkgs.poweralertd}/bin/poweralertd &"

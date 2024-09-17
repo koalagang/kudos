@@ -119,7 +119,7 @@
       :cursor "pointer"
       (button
         :class {caffeine_toggle ? "button_enabled" : "button_disabled"}
-        :onclick "${EWW_CMD} update caffeine_toggle=${!caffeine_toggle} && killall hypridle || hypridle &"
+        :onclick "${EWW_CMD} update caffeine_toggle=${!caffeine_toggle} && eww-service hypridle"
         "󰛊\  Caffeine")))
 
 ; WIP
@@ -129,7 +129,7 @@
       :cursor "pointer"
       (button
         :class {nightlight_toggle ? "button_enabled" : "button_disabled"}
-        :onclick "${EWW_CMD} update nightlight_toggle=${!nightlight_toggle} && killall wlsunset || wlsunset -t 2500K -T 6500 -S 06:00 -s 19:00 &"
+        :onclick "${EWW_CMD} update nightlight_toggle=${!nightlight_toggle} && eww-service wlsunset"
         :tooltip "19:00-06:00"
         "\  Nightlight")))
 

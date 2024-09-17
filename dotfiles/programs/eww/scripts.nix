@@ -153,5 +153,14 @@
           ${pkgs.eww}/bin/eww update brightness_icon='󰃞'
       fi
     '')
+
+    (writeShellScriptBin "eww-service" ''
+      activity="$(systemctl --user is-active $1.service)"
+      if [[ "$activity" == 'active' ]]; then
+        systemctl --user stop $1.service
+      elif [[ "$activity" == 'inactive' ]]; then
+        systemctl --user start $1.service
+      fi
+    '')
   ];
 }
