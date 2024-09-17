@@ -37,6 +37,7 @@
         search-box-match = "${config.colorScheme.palette.base05} ${config.colorScheme.palette.base02}";
         jump-labels = "${config.colorScheme.palette.base01} ${config.colorScheme.palette.base09}";
         urls = "${config.colorScheme.palette.base0D}";
+        scrollback-indicator = "${config.colorScheme.palette.base0E} ${config.colorScheme.palette.base0E}";
       };
       key-bindings = {
         quit = "Control+Q";
