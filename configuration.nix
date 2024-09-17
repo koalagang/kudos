@@ -225,12 +225,12 @@
   #  #}
   #};
 
-  programs = {
-    hyprland.enable = true;
-    hyprlock.enable = true;
-  };
+  # other stuff in the hyprland ecosystem are declared in their respective home-manager modules
+  # these two lines are the only ones that must be included in configuration.nix
+  programs.hyprland.enable = true;
+  # set up pam integration with hyprlock
+  # without this, you will not be able to unlock your system after running hyprlock
   security.pam.services.hyprlock = {};
-  services.hypridle.enable = true;
 
   # Dconf is necessary for gtk theming if you're not using a DE.
   # See https://github.com/nix-community/home-manager/issues/3113 for more
