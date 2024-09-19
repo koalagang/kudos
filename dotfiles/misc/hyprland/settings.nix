@@ -39,8 +39,7 @@
       #  tap-and-drag = true; # ??
       #};
 
-      # TEST
-      # focus_on_close = 1; # LATEST GIT (not 0.42)
+      focus_on_close = 1;
     };
 
     #gestures = {
@@ -60,6 +59,7 @@
       hide_on_key_press = true;
       hide_on_touch = true;
 
+      # TODO: open an issue to ask for warp_on_new_window
       no_warps = false;
       persistent_warps = true;
       warp_on_change_workspace = true;
@@ -167,12 +167,9 @@
       disable_hyprland_logo = true;
       disable_splash_rendering = true;
 
-      # TEST
-      # workspace_back_and_forth = true; # LATEST GIT (not 0.42)
-
-      # TEST
-      # workspace_center_on = 1; # LATEST GIT (not 0.42)
     };
+
+    binds.workspace_back_and_forth = true;
 
     # TODO: try out https://github.com/dawsers/hyprscroller
   };
