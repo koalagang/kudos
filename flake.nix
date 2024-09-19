@@ -45,8 +45,6 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.dante = import ./home.nix;
-              # pass inputs to home.nix so we can use firefox-addons
-              # for programs.firefox.<profile>.extensions
               extraSpecialArgs = { inherit inputs; };
             };
           }
