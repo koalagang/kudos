@@ -4,7 +4,7 @@
       main = {
         type = "disk";
 	      # the device can be /dev/nvme0n1 (if it's an nvme SSD), /dev/vda (if it's in a VM) or /dev/sda (all other devices)
-        device = "/dev/vda";
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
