@@ -242,6 +242,8 @@
         wireplumber.enable = true;
     };
 
+    fwupd.enable = true;
+
     # optimise SSD health and performance
     fstrim.enable = true;
 

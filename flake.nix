@@ -14,6 +14,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -76,14 +78,13 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./configuration.nix
+          inputs.nixos-hardware.nixosModules.framework-13-7040-amd # addresses some hardware quirks
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
               users.dante = import ./home.nix;
-              # pass inputs to home.nix so we can use firefox-addons
-              # for programs.firefox.<profile>.extensions
               extraSpecialArgs = { inherit inputs; };
             };
           }
