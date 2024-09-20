@@ -80,19 +80,21 @@
   # Configure console keymap
   console.keyMap = "uk";
 
-  # Define a user account
-  users.users.dante = {
-    isNormalUser = true;
-    description = "dante";
-    extraGroups = [
-      "wheel" # admin
-      "video" # for `light` command
-    ];
-    initialPassword = "zoteboat"; # Don't forget to change the password with 'passwd'
+  users = {
+    mutableUsers = false;
+    defaultUserShell = pkgs.zsh;
+    root.hashedPasswordFile = "/persist/hashed-password";
+    # Define a user account
+    dante = {
+      isNormalUser = true;
+      description = "dante";
+      extraGroups = [
+        "wheel" # admin
+        "video" # for `light` command
+      ];
+      hashedPasswordFile = "/persist/hashed-password";
+    };
   };
-
-  # Set default user shell for all users (including root)
-  users.defaultUserShell = pkgs.zsh;
 
   # WORKAROUND:
   # If setting zsh to be the default interactive shell
