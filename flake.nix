@@ -43,9 +43,12 @@
     # install script
     # this enables us to deploy the configuration onto a new system using
     # nix run github:koalagang/kudos --no-write-lock-file
-    packages.x86_64-linux.my-script = with nixpkgs.legacyPackages.x86_64-linux; stdenv.mkDerivation {
+    packages.x86_64-linux.install = with nixpkgs.legacyPackages.x86_64-linux; stdenv.mkDerivation {
       pname = "install";
       version = "1.0";
+      dontConfigure = true;
+      dontInstall = true;
+      dontFixup = true;
       src = ./.;
       buildInputs = [
         git
@@ -63,7 +66,7 @@
     defaultPackage.x86_64-linux = self.packages.x86_64-linux.install;
     apps.x86_64-linux.default = {
       type = "app";
-      program = "${self.packages.x86_64-linux.my-script}/bin/install";
+      program = "${self.packages.x86_64-linux.install}/bin/install";
     };
 
     # the actual configuration that is used when running nixos-install or nixos-rebuild
