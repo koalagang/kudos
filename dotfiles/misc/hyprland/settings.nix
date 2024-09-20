@@ -31,25 +31,24 @@
       repeat_delay = 250;
       repeat_rate = 40;
 
-      #touchpad = {
-      #  disable_while_typing = true;
-      #  natural_scroll = true;
-      #  middle_button_emulation = true; # ??
-      #  drag_lock = true;
-      #  tap-and-drag = true; # ??
-      #};
+      touchpad = {
+        disable_while_typing = true;
+        natural_scroll = true;
+        drag_lock = true;
+        tap-and-drag = true;
+      };
 
       focus_on_close = 1;
     };
 
-    #gestures = {
-    #  workspace_swipe = true;
-    #  workspace_swipe_forever = true;
-    #  workspace_swipe_fingers = 2;
-    #  workspace_swipe_min_fingers = true;
-    #  workspace_swipe_create_new = false;
-    #  workspace_swipe_use_r = true; # ??
-    #};
+    gestures = {
+      workspace_swipe = true;
+      workspace_swipe_forever = true;
+      workspace_swipe_fingers = 3;
+      workspace_swipe_min_fingers = true;
+      workspace_swipe_min_speed_to_force = 15;
+      workspace_swipe_create_new = false;
+    };
 
     cursor = {
       # hide cursor after 3 seconds of inactivity
