@@ -61,11 +61,63 @@
     nix-tree
   ];
 
-  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
-
   imports = [
     ./dotfiles
     ./scripts
     inputs.nix-colors.homeManagerModules.default
+    inputs.impermanence.nixosModules.home-manager.impermanence
   ];
+
+  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
+
+  # TODO: move options to related config files
+  home.persistence = {
+    "/persist/home/dante" = {
+      directories = [
+        # personal files
+        "Desktop"
+        "Documents"
+        "Music"
+        "Pictures"
+        "Videos"
+
+        # imperative configs
+        ".config/keepassxc"
+
+        # misc
+        ".local/share/Trash" # xdg trash directory
+        ".local/share/direnv" # remember which directories to allow direnv
+        ".local/share/zsh" # zsh history
+        ".local/state/nvim/backup" # neovim file backups
+        ".config/gnupg" # gpg keys are stored here
+      ];
+      # allow other users to access these files (needed for root operations)
+      allowOther = true;
+    };
+    # use the nocow directory for databases and other stuff that is written to very often
+    # this is to reduce SSD wear when using btrfs
+    # make sure to run chattr +C on /persist/nocow on new installations before first boot
+    "/persist/nocow/home/dante" = {
+      directories = [
+        # databases
+        ".local/share/mcfly"
+        ".local/share/taskwarrior"
+        ".local/share/zoxide"
+        ".local/share/Anki2"
+        ".config/Signal"
+        ".config/chromium"
+        ".mullvad"
+        ".mozilla"
+
+        ".config/libreoffice" # in addition to its config, libreoffice stores the most recently opened files here
+        ".local/state/nvim/undo" # neovim undo files
+        ".local/state/nvim/swap" # neovim swap files
+        ".local/share/nvim/lazy" # neovim plugins are installed to here (won't be necessary once I switch to managing neovim plugins with nix)
+        ".cache/keepassxc" # cache to remember last opened keepass database
+        ".cache/nvim" # some neovim plugins use caching to improve performance
+        ".config/zsh" # zcompdump (completion cache) files get placed in here
+      ];
+      allowOther = true;
+    };
+  };
 }

@@ -5,34 +5,10 @@
 { config, inputs, pkgs, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-    ];
-
-  # Bootloader
-  boot.loader = {
-    grub = {
-      enable = true;
-      device = "/dev/sda";
-      # Enable encryption support
-      enableCryptodisk = true;
-      # Limit the number of generations accessible with grub to save space in /boot
-      configurationLimit = 30;
-    };
-    # Set wait time to 1 (boot in faster)
-    timeout = 1;
-  };
-
-  # TODO: switch to disko
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
-  boot.initrd.luks.devices."luks-6cb12de3-3fc0-4cb0-9cf2-b16342b7aa3e".keyFile = "/crypto_keyfile.bin";
-
-  # Delete contents of /tmp on boot
-  boot.tmp.cleanOnBoot = true;
+  imports = [
+    ./hardware-configuration.nix
+    ./boot.nix
+  ];
 
   networking = {
     # define hostname
@@ -159,16 +135,9 @@
   # Simply use this `run` alias for rebuilds, e.g. `run nixos-rebuild switch`.
   environment.shellAliases."run" = "run0 --setenv=PATH --setenv=LOCALE_ARCHIVE";
 
-  # I generally avoid proprietary software in almost all cases
-  # but refusing to update your CPU microcode exposes you to exploits
-  # because then you do not get security updates for your CPU firmware
-  nixpkgs.config.allowUnfree = false;     # reject most nonfree software...
-  hardware = {
-    enableRedistributableFirmware = true; # ...but make exceptions for redistributable firmware
-    cpu.intel.updateMicrocode = true;     # and make sure to update the Intel microcode
-    # cpu.amd.updateMicrocode = true;     # use this option instead if you have an AMD CPU
-  };
-  # also, make an exception for obsidian
+  # don't allow unfree software...
+  nixpkgs.config.allowUnfree = false;
+  # ... with the exception of Obsidian
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "obsidian" ];
 
   # I don't use nano, perl, rsync or strace (the defaults).
@@ -181,17 +150,6 @@
   # package from rose-pine-hyprcursor flake input
   # I'm not sure how to import this into homemanager so I'm installing it here
   environment.systemPackages = [ inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default ];
-
-  # add support for hardware acceleration
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
 
   # force apps to run natively on wayland (rather than using xwayland)
   environment.variables = {
@@ -280,26 +238,6 @@
         pulse.enable = true;
         wireplumber.enable = true;
     };
-
-    # optimise battery life and health
-    tlp = {
-        enable = true;
-        settings = {
-            # start charging when the battery power is <=25%
-            START_CHARGE_THRESH_BAT0=30;
-            # stop  charging when the battery power is >=80%
-            STOP_CHARGE_THRESH_BAT0=80;
-            # this is better for battery health
-            # because lithium-ion batteries are most efficient at 20-80%
-
-            # self-explanatory
-            CPU_SCALING_GOVERNOR_ON_AC = "performance";
-            CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-        };
-    };
-
-    # reduce overheating of Intel CPUs
-    thermald.enable = true;
 
     # optimise SSD health and performance
     fstrim.enable = true;

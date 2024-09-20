@@ -14,6 +14,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    impermanence.url = "github:nix-community/impermanence";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,6 +52,8 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.dante = import ./home.nix;
+              # pass inputs to home.nix so we can use firefox-addons
+              # for programs.firefox.<profile>.extensions
               extraSpecialArgs = { inherit inputs; };
             };
           }
