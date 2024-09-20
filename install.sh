@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # I will probably expand this script to give the user more options when/if I setup NixOS on more devices
 # but for now we'll just setup Myla
 
@@ -28,7 +26,7 @@ while [[ "$(diff pass.txt pass2.txt -q)" == 'Files pass.txt and pass2.txt differ
 	mkpasswd --salt=$salt -m yescrypt > pass.txt
 	printf 'Re-type New '
 	mkpasswd --salt=$salt -m yescrypt > pass2.txt
-	
+
 	# remember that we have completed this loop at least once
 	pass_already=1
 done
