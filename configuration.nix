@@ -244,6 +244,8 @@
 
     fwupd.enable = true;
 
+    usbguard.enable = true;
+
     # optimise SSD health and performance
     fstrim.enable = true;
 
