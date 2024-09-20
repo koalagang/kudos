@@ -41,7 +41,7 @@
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ self, nixos-hardware, nixpkgs, home-manager, ... }: {
     # install script
     # this enables us to deploy the configuration onto a new system using
     # nix run github:koalagang/kudos --no-write-lock-file
@@ -78,7 +78,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./configuration.nix
-          inputs.nixos-hardware.nixosModules.framework-13-7040-amd # addresses some hardware quirks
+          nixos-hardware.nixosModules.framework-13-7040-amd # addresses some hardware quirks
           home-manager.nixosModules.home-manager
           {
             home-manager = {
