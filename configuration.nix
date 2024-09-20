@@ -83,16 +83,17 @@
   users = {
     mutableUsers = false;
     defaultUserShell = pkgs.zsh;
-    root.hashedPasswordFile = "/persist/hashed-password";
-    # Define a user account
-    dante = {
-      isNormalUser = true;
-      description = "dante";
-      extraGroups = [
-        "wheel" # admin
-        "video" # for `light` command
-      ];
-      hashedPasswordFile = "/persist/hashed-password";
+    users = {
+      root.hashedPasswordFile = "/persist/hashed-password";
+      dante = {
+        isNormalUser = true;
+        description = "dante";
+        extraGroups = [
+          "wheel" # admin
+          "video" # for `light` command
+        ];
+        hashedPasswordFile = "/persist/hashed-password";
+      };
     };
   };
 
