@@ -40,7 +40,7 @@
 
     (writeShellScriptBin "eww-battery" ''
         [ "$status" != 'charging' ] && \
-          charge="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %)"
+          charge="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT1 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %)"
         if [ "$charge" -ge 20 ]; then
           ${pkgs.eww}/bin/eww update battery_icon_type=0
         elif [ "$charge" -ge 10 ]; then
@@ -50,9 +50,9 @@
         fi
 
       if [ "$1" == 'charge' ]; then
-        ${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %
+        ${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT1 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %
       elif [ "$1" == 'time' ]; then
-        info="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/time to/ {print $3 $4 " " $5}')"
+        info="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT1 | ${pkgs.gawk}/bin/awk '/time to/ {print $3 $4 " " $5}')"
         time="$(${pkgs.coreutils}/bin/echo $info | ${pkgs.coreutils}/bin/cut -d':' -f2)"
         # if discharging
         if [[ "$info" =~ 'empty' ]]; then
@@ -64,10 +64,10 @@
             ${pkgs.coreutils}/bin/echo 'Calculating time remaining...'
         fi
       elif [ "$1" == 'status' ]; then
-        ${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/state/ {print $2}'
+        ${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT1 | ${pkgs.gawk}/bin/awk '/state/ {print $2}'
       elif [ "$1" == 'icon' ]; then
-        status="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/state/ {print $2}')"
-        [ "$status" != 'charging' ] && charge="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT0 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %)"
+        status="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT1 | ${pkgs.gawk}/bin/awk '/state/ {print $2}')"
+        [ "$status" != 'charging' ] && charge="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT1 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %)"
         if [ "$status" == 'charging' ]; then
           ${pkgs.coreutils}/bin/echo '󰂄'
           ${pkgs.eww}/bin/eww update battery_icon_type=0
