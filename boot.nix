@@ -62,8 +62,6 @@
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         # wipe the system clean (except for /boot, /nix and /persist)
-        # TODO: rename /btrfs_tmp to /mnt
-        # TODO: rename old_roots to old-roots
         script = ''
           # create a temporary directory and mount the btrfs filesystem onto it
           mkdir /btrfs_tmp
@@ -74,9 +72,9 @@
           	# create a directory for the old roots if it does not already exist...
           	mkdir -p /btrfs_tmp/old_roots
           	# ...and move the current root into this directory with the timezone and timestamp as the name
-          	# e.g. BST_2024-08-25_15-24-21 (24 minutes and 21 seconds past 3pm on the 25th August 2024 British Summer Time)
+          	# e.g. BST-2024-08-25T15-24-21 (24 minutes and 21 seconds past 3pm on the 25th August 2024 British Summer Time)
           	# this allows us to backup our old roots in case anything goes wrong (such as a system crash)
-          	mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Z_%Y-%m-%-d_%H-%M-%S")"
+          	mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Z-%Y-%m-%-dT%H-%M-%S")"
           fi
 
           # recursively delete subvolumes older than 30 days
