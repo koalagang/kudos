@@ -11,18 +11,29 @@
 
     # import impermanence to mount persistent files to their respective locations
     inputs.impermanence.nixosModules.impermanence
+
+    # import lanzaboote to enable secure boot
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   boot = {
     loader = {
       systemd-boot = {
-        enable = true;
+        # lanzaboote currently replaces the systemd-boot module
+        # so we force the regular NixOS module to false
+        enable = lib.mkForce false;
         editor = false; # recommended for security
         # limit the number of generations accessible with systemd-boot to save space in the ESP (/boot)
         configurationLimit = 30;
       };
       # set wait time to 1 second (boot in faster)
       timeout = 1;
+    };
+
+    # enable secure boot
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/etc/secureboot";
     };
 
     # add a nice boot/shutdown animation
@@ -118,6 +129,9 @@
         # VERY IMPORTANT TO PERSIST
         # see https://github.com/nix-community/impermanence/issues/178
         "/var/lib/nixos"
+
+        # ALSO VERY IMPORTANT TO PERSIST IF YOU USE LANZABOOTE
+        "/etc/secureboot"
 
         "/var/lib/iwd" # remember wifi networks
       ];
