@@ -110,8 +110,9 @@
         ".mozilla"
 
         ".config/libreoffice" # in addition to its config, libreoffice stores the most recently opened files here
-        ".local/state/nvim/undo" # neovim undo files
-        ".local/state/nvim/swap" # neovim swap files
+        ".local/state/nvim/undo"
+        ".local/state/nvim/swap"
+        ".local/state/nvim/shada"
         ".local/share/nvim/lazy" # neovim plugins are installed to here (won't be necessary once I switch to managing neovim plugins with nix)
         ".cache/keepassxc" # cache to remember last opened keepass database
         ".cache/nvim" # some neovim plugins use caching to improve performance
