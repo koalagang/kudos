@@ -12,8 +12,7 @@
       # Execute your favorite apps at launch
       # Doc: https://wiki.hyprland.org/Configuring/Keywords/
       exec-once = [
-        # should hopefully not be necessary to put here after I port these configs (cuz of systemd integration)
-        "${pkgs.wbg}/bin/wbg \"$(${pkgs.findutils}/bin/find ${config.xdg.userDirs.pictures}/wallpapers/catppuccin -type f | ${pkgs.coreutils}/bin/shuf -n 1)\" &"
+        "${pkgs.swaybg}/bin/swaybg --mode fill --image \"$(${pkgs.findutils}/bin/find ${config.xdg.userDirs.pictures}/wallpapers/catppuccin -type f | ${pkgs.coreutils}/bin/shuf -n 1)\" &"
         "${pkgs.eww}/bin/eww open bar &"
 
         # Provides power notifcations, such as when the battery is at warning level or critical level
