@@ -138,6 +138,8 @@
   # Simply use this `run` alias for rebuilds, e.g. `run nixos-rebuild switch`.
   environment.shellAliases."run" = "run0 --setenv=PATH --setenv=LOCALE_ARCHIVE";
 
+  systemd.sleep.extraConfig = "HibernateDelaySec=1m";
+
   # don't allow unfree software...
   nixpkgs.config.allowUnfree = false;
   # ... with the exception of Obsidian
@@ -253,7 +255,8 @@
       enable = true;
       percentageLow = 19;
       percentageCritical = 9;
-      criticalPowerAction = "HybridSleep"; # TODO: switch to hibernate once youve setup swap
+      percentageAction = 9;
+      criticalPowerAction = "Hibernate";
     };
   };
 

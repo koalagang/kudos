@@ -13,9 +13,10 @@
           on-resume = "hyprctl dispatch dpms on";
         }
         {
-          # TODO: switch this to suspend-then-hibernate once you've setup swap
           timeout = 150;
-          on-timeout = "systemctl suspend";
+          # I've set the timer to be 1 minute via systemd-sleep (see the NixOS module).
+          # This means that my system will first suspend and then hibernate 1 minute after it suspends
+          on-timeout = "systemctl suspend-then-hibernate";
         }
       ];
     };

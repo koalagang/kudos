@@ -41,6 +41,7 @@
         "$powerMod, p, exec, shutdown now"
         "$powerMod, r, exec, reboot"
         "$powerMod, s, exec, systemctl suspend"
+        "$powerMod, h, exec, systemctl hibernate"
         "$powerMod, l, exec, hyprlock"
 
         # Bemenu binding
