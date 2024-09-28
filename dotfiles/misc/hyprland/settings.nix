@@ -79,7 +79,7 @@
       blur = {
         enabled = true;
         size = 6;
-        passes = 1;
+        passes = 2;
         ignore_opacity = true; # creates an interesting effect
       };
 
