@@ -12,10 +12,10 @@
       };
 
       # change the background and avatar if you change theme
-      background = [ { path = "${config.xdg.userDirs.pictures}/wallpapers/catppuccin/sitting-cat.png"; } ];
+      background = [ { path = "${config.xdg.userDirs.pictures}/backgrounds/other/catppuccin/sitting-cat.png"; } ];
       # user avatar
       image = [{
-        path = "${config.xdg.userDirs.pictures}/wallpapers/face.png";
+        path = "${config.xdg.userDirs.pictures}/backgrounds/other/face.png";
         size = 100;
         border_color = "${config.colorScheme.palette.base0E}";
         position = "0, 75";
