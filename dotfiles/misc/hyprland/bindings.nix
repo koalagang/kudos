@@ -83,6 +83,7 @@
         # but I use the letters zxcvbnm because they're the letters along the bottom of the QWERTY layout,
         # making them very easy to access.
 
+        # TODO: make eww-workspace script run when using touchpad gesture
         # Switch workspaces
         "$mainMod, z, exec, eww-workspace workspace 1"
         "$mainMod, x, exec, eww-workspace workspace 2"
