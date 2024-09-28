@@ -422,6 +422,7 @@ require("lazy").setup({
         cmd = "Neorg",
         ft = "norg",
         keys = "<c-t>n", -- for use with neorg-telescope
+        version = "*",
         config = function()
             require(conf .. "neorg")
         end,
