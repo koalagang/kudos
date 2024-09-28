@@ -31,6 +31,7 @@ while [[ "$(diff pass.txt pass2.txt -q)" == 'Files pass.txt and pass2.txt differ
 	pass_already=1
 done
 sudo mv pass.txt /mnt/persist/hashed-password
+sudo chown root /mnt/persist/hashed-password
 rm pass2.txt
 echo "Password successfully set!"
 
