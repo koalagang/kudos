@@ -129,11 +129,9 @@
         # VERY IMPORTANT TO PERSIST
         # see https://github.com/nix-community/impermanence/issues/178
         "/var/lib/nixos"
-
-        # ALSO VERY IMPORTANT TO PERSIST IF YOU USE LANZABOOTE
-        "/etc/secureboot"
-
+        "/etc/secureboot" # ALSO VERY IMPORTANT TO PERSIST IF YOU USE LANZABOOTE
         "/var/lib/iwd" # remember wifi networks
+        "/var/lib/power-profiles-daemon" # remember power profile (set using powerprofilesctl set <profile>)
       ];
     };
     # use the nocow directory for virtual machines and other stuff that is written to very often
