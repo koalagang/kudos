@@ -149,8 +149,8 @@
       bind  =, XF86AudioMute, exec, eww-volume toggle
 
       # Brightness controls
-      binde =, XF86MonBrightnessUp, exec, eww-brightness update-slider
-      binde =, XF86MonBrightnessDown, exec, eww-brightness update-slider
+      binde =, XF86MonBrightnessUp, exec, eww-brightness plus
+      binde =, XF86MonBrightnessDown, exec, eww-brightness minus
 
       # ======= DMENU SUBAMP ========
       # dmenu scripts

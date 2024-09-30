@@ -131,17 +131,23 @@
     '')
 
     (writeShellScriptBin "eww-brightness" ''
-      if [[ "$1" == 'update-slider' ]]; then
-          brightness="$(light -G)"
-          brightness="''${brightness%%.*}"
-          ${pkgs.eww}/bin/eww update brightness_value_slider="$brightness"
-      else
-          # NOTE: installing light with programs.light.enable option is necessary for this to work
-          # because it applies udev rules granting access to members of the video group
+      # NOTE: installing light with programs.light.enable option is necessary for this to work
+      # because it applies udev rules granting access to members of the video group
+
+      # if given a number
+      if [ -n "$1" ] && [ "$1" -eq "$1" ]; then
           ${pkgs.light}/bin/light -S "$1"
           brightness="$1"
-          brightness="''${brightness%%.*}"
+          # brightness="''${brightness%%.*}"
+      elif [[ "$1" == 'plus' ]]; then
+          ${pkgs.light}/bin/light -A 10
+      elif [[ "$1" == 'minus' ]]; then
+          ${pkgs.light}/bin/light -U 10
       fi
+
+      brightness="$(light -G)" &&
+        brightness="''${brightness%%.*}" &&
+        ${pkgs.eww}/bin/eww update brightness_value_slider="$brightness"
 
       ${pkgs.eww}/bin/eww update brightness_value_label="$brightness"
 
