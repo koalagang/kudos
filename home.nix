@@ -55,10 +55,14 @@
     so
     ytfzf
     vimv-rs
+    skate
 
     # Misc
     testdisk
     nix-tree
+    remind
+    wyrd
+    khal # -- to use for ical calendar; I will consider trying out ical2rem later
   ];
 
   imports = [
@@ -113,10 +117,14 @@
         ".local/state/nvim/undo"
         ".local/state/nvim/swap"
         ".local/state/nvim/shada"
-        ".local/share/nvim/lazy" # neovim plugins are installed to here (won't be necessary once I switch to managing neovim plugins with nix)
+        # neovim plugins are installed to here (won't be necessary once I switch to managing neovim plugins with nix)
+        ".local/share/nvim/lazy"
         ".cache/keepassxc" # cache to remember last opened keepass database
         ".cache/nvim" # some neovim plugins use caching to improve performance
         ".config/zsh" # zcompdump (completion cache) files get placed in here
+        # charmbraclet (https://github.com/charmbracelet) apps store data here, incl. skate's databases
+        ".local/share/charm"
+        ".local/share/khal" # calendar database
       ];
       allowOther = true;
     };
