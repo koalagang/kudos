@@ -110,9 +110,12 @@
         ".local/share/Anki2"
         ".config/Signal"
         ".config/chromium"
+        ".config/obsidian"
         ".mullvad"
         ".mozilla"
+        ".cache/ripgrep-all"
 
+        # misc
         ".config/libreoffice" # in addition to its config, libreoffice stores the most recently opened files here
         ".local/state/nvim/undo"
         ".local/state/nvim/swap"
