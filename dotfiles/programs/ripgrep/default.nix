@@ -14,7 +14,7 @@
 
   # ripgrep utilities
   home.packages = with pkgs; [
-    #ripgrep-all # must be compiled (my puny ThinkPad gets hot and loud when doing this)
+    ripgrep-all
     repgrep
     vgrep
   ];

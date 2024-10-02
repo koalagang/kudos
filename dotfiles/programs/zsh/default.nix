@@ -131,7 +131,6 @@
       # -- misc bindings
       # Fixes issue where I can't use fzf's cd widget (left alt + c doesn't give any input).
       # This weird letter is basically just right-alt (sometimes called AltGr) + c.
-      # I use the British keyboard layout on a classic ThinkPad keyboard fwiw
       bindkey '¢' fzf-cd-widget
 
       # search zoxide database using fzf and enter the selected path with ctrl+f
