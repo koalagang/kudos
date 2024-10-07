@@ -168,5 +168,14 @@
         systemctl --user start $1.service
       fi
     '')
+
+    (writeShellScriptBin "eww-mullvad" ''
+      status="$(${pkgs.mullvad}/bin/mullvad status | head -1)"
+      if [[ "$status" == 'Disconnected' ]]; then
+        ${pkgs.mullvad}/bin/mullvad connect && ${pkgs.libnotify}/bin/notify-send 'VPN' 'Connected'
+      elif [[ "$status" =~ 'Connected' ]]; then
+        ${pkgs.mullvad}/bin/mullvad disconnect && ${pkgs.libnotify}/bin/notify-send 'VPN' 'Disconnected'
+      fi
+    '')
   ];
 }

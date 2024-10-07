@@ -140,7 +140,7 @@
       :cursor "pointer"
       (button
         :class {vpn_toggle ? "button_enabled" : "button_disabled"}
-        :onclick "${EWW_CMD} update vpn_toggle=${!vpn_toggle} && notify-send 'VPN' 'COMING SOON'"
+        :onclick "${EWW_CMD} update vpn_toggle=${!vpn_toggle} && eww-mullvad"
         " \  VPN")))
 
 ; TODO: open issue about
