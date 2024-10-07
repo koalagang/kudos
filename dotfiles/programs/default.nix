@@ -3,7 +3,6 @@
     ./bat
     ./btop
     ./direnv
-    ./eww
     ./eza
     ./firefox
     ./foot
@@ -24,6 +23,7 @@
     ./zsh
 
     # WIP
+    ./eww
     ./ledger
     ./neovim
     ./sioyek
