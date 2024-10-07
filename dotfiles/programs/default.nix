@@ -26,6 +26,7 @@
     # WIP
     ./ledger
     ./neovim
+    ./sioyek
     ./zk
   ];
 }

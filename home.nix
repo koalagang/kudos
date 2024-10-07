@@ -114,6 +114,7 @@
         ".mullvad"
         ".mozilla"
         ".cache/ripgrep-all"
+        ".local/share/sioyek"
 
         # misc
         ".config/libreoffice" # in addition to its config, libreoffice stores the most recently opened files here
