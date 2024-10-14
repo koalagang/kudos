@@ -6,6 +6,7 @@
   imports = [
     ./profiles/browsing.nix
     ./profiles/signin.nix
+    ./profiles/netflix.nix
     ./settings.nix
   ];
 }
