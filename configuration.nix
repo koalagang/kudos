@@ -263,6 +263,85 @@
       percentageAction = 9;
       criticalPowerAction = "Hibernate";
     };
+
+    # there is a home-manager module for syncthing but it has very few options
+    # so it is unsatisfactory, which is why I'm using the NixOS module instead
+    # services.syncthing.databaseDir??? something put in nocow?
+    syncthing = {
+      enable = true;
+      dataDir = "/home/dante/.local/share";
+      openDefaultPorts = true;
+      configDir = "/home/dante/.config/syncthing";
+      user = "dante";
+      group = "users";
+      guiAddress = "127.0.0.1:8384";
+      overrideDevices = true;
+      overrideFolders = true;
+      settings = {
+        user = "dante";
+        # unfortunately, there is no hashed password file option
+        # so making the hash public will have to suffice for now
+        # see https://github.com/NixOS/nixpkgs/issues/85336
+        password = "$2b$05$7DM/vfXN3bsMxSgx/w3P7ee7JUvVOJuhCM507B3fkZRQzmb8jRBfq";
+        options.urAccepted = -1; # reject analytics
+        devices = {
+          "android" = { id = "6UAWGX4-R3K7KJN-QEZI4EN-6XRJ432-H6QTG5K-LPEE5FJ-2B63Y7G-LP6BZA4"; };
+        };
+        folders = {
+          # path on Android device to sync from (excludes the /storage/emulated/0/ prefix)
+          "DCIM/Camera" = {
+            path = "/home/dante/Pictures/android/camera"; # path on local NixOS device to sync to
+            devices = [ "android" ];
+            versioning = {
+              type = "simple";
+              params = {
+                keep = "10";
+              };
+            };
+          };
+          "Pictures" = {
+            path = "/home/dante/Pictures/android/pictures";
+            devices = [ "android" ];
+            versioning = {
+              type = "simple";
+              params = {
+                keep = "10";
+              };
+            };
+          };
+          "Download" = {
+            path = "/home/dante/Pictures/android/download";
+            devices = [ "android" ];
+            versioning = {
+              type = "simple";
+              params = {
+                keep = "10";
+              };
+            };
+          };
+          "KeePass" = {
+            path = "/home/dante/Desktop/keepass";
+            devices = [ "android" ];
+            versioning = {
+              type = "simple";
+              params = {
+                keep = "10";
+              };
+            };
+          };
+          "Documents" = {
+            path = "/home/dante/Documents";
+            devices = [ "android" ];
+            versioning = {
+              type = "simple";
+              params = {
+                keep = "10";
+              };
+            };
+          };
+        };
+      };
+    };
   };
 
   # WORKAROUND:
