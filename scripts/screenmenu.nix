@@ -4,6 +4,12 @@
 # plus recording selected areas or the full desktop
 # **only works on Wayland**
 
+# TODO:
+# Make notification say that screenshot failed if you hit escape (i.e. cancel slurp).
+# I've already programmed in error-handling but it doesn't seem to work.
+# TODO:
+# Figure out why the quality of my screenshots is so poor.
+
 {
   home.packages = [
     (pkgs.writeShellScriptBin "screenmenu" ''

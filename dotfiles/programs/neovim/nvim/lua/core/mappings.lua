@@ -19,6 +19,8 @@ vim.g.mapleader = " "
 -- It serves a similar purpose but is used less often.
 vim.g.localleader = '\\' -- Double-backslash used to escape it
 
+-- TODO: add insert mode bindings to provide shortcuts available in normal text editors, e.g. ctrl+backspace to delete entire word, etc.
+
 -- [[ Basics ]]
 -- Basic bindings
 nmap("<c-s>", "<cmd>w<cr>")
