@@ -106,6 +106,7 @@
         # databases
         ".local/share/mcfly"
         ".local/share/taskwarrior"
+        ".local/share/timewarrior"
         ".local/share/zoxide"
         ".local/share/Anki2"
         ".config/Signal"
