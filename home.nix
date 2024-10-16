@@ -116,6 +116,7 @@
         ".mozilla"
         ".cache/ripgrep-all"
         ".local/share/sioyek"
+        ".config/syncthing"
 
         # misc
         ".config/libreoffice" # in addition to its config, libreoffice stores the most recently opened files here

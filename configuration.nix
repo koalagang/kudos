@@ -278,20 +278,24 @@
       overrideDevices = true;
       overrideFolders = true;
       settings = {
-        user = "dante";
-        # unfortunately, there is no hashed password file option
-        # so making the hash public will have to suffice for now
-        # see https://github.com/NixOS/nixpkgs/issues/85336
-        password = "$2b$05$7DM/vfXN3bsMxSgx/w3P7ee7JUvVOJuhCM507B3fkZRQzmb8jRBfq";
-        options.urAccepted = -1; # reject analytics
+          gui = {
+          user = "dante";
+          # unfortunately, there is no hashed password file option
+          # so making the hash public will have to suffice for now
+          # see https://github.com/NixOS/nixpkgs/issues/85336
+          password = "$2b$05$7DM/vfXN3bsMxSgx/w3P7ee7JUvVOJuhCM507B3fkZRQzmb8jRBfq";
+        };
+        options.urAccepted = -1; # refuse analytics
         devices = {
           "android" = { id = "6UAWGX4-R3K7KJN-QEZI4EN-6XRJ432-H6QTG5K-LPEE5FJ-2B63Y7G-LP6BZA4"; };
+          "laptop" = { id = "RSRP2KL-YDQT3H4-YM66YM6-7B4OV32-YQMILAB-UCMSKMK-2UP7BWH-TSLLWQD"; };
         };
         folders = {
           # path on Android device to sync from (excludes the /storage/emulated/0/ prefix)
           "DCIM/Camera" = {
             path = "/home/dante/Pictures/android/camera"; # path on local NixOS device to sync to
             devices = [ "android" ];
+            ignorePerms = true;
             versioning = {
               type = "simple";
               params = {
@@ -302,6 +306,7 @@
           "Pictures" = {
             path = "/home/dante/Pictures/android/pictures";
             devices = [ "android" ];
+            ignorePerms = true;
             versioning = {
               type = "simple";
               params = {
@@ -312,6 +317,7 @@
           "Download" = {
             path = "/home/dante/Pictures/android/download";
             devices = [ "android" ];
+            ignorePerms = true;
             versioning = {
               type = "simple";
               params = {
@@ -322,6 +328,7 @@
           "KeePass" = {
             path = "/home/dante/Desktop/keepass";
             devices = [ "android" ];
+            ignorePerms = true;
             versioning = {
               type = "simple";
               params = {
@@ -332,6 +339,7 @@
           "Documents" = {
             path = "/home/dante/Documents";
             devices = [ "android" ];
+            ignorePerms = true;
             versioning = {
               type = "simple";
               params = {
