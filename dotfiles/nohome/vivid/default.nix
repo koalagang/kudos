@@ -4,7 +4,7 @@
   home = {
     sessionVariables.LS_COLORS = "$(${pkgs.vivid}/bin/vivid generate theme)";
     file."${config.xdg.configHome}/vivid/themes/theme.yml".text = ''
-      # vivid has to have this section even though we don't use it
+      # vivid has to have this 'colors' section even though we don't use it
       colors:
         black: '000000'
 

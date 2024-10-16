@@ -39,7 +39,10 @@ powerprofilesctl set power-saver
         - [FSRS4Anki](https://ankiweb.net/shared/info/759844606) (759844606)
         - [Review Heatmap](https://ankiweb.net/shared/info/1771074083) (1771074083)
     - Signal Desktop
-    - LibreOffice (set the user interface to tabbed and make docx the default format)
+    - LibreOffice
+        - set the user interface to tabbed
+        - set docx as the default filetype for writer
+        - set xlsx as the default filetype for calc
 7. (Optional) Setup secure boot:
 > [!WARNING]
 > Do not simply run the following commands blindly.
@@ -56,7 +59,7 @@ nix-shell -p sbctl
 run sbctl enroll-keys --microsoft
 shutdown now
 # boot into the BIOS again and enable secure boot
-# you should probably also set a BIOS password
+# you should also set a BIOS password (not strictly required but strongly recommended)
 # then boot back into your NixOS system and run the final command
 bootctl status # check that secure boot has successfully been enabled
 ```

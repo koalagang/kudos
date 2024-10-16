@@ -42,17 +42,16 @@ require("lazy").setup({
         -- pwntester/octo.nvim
         -- L3MON4D3/LuaSnip
             -- write your own snippets in lua
-        -- ekickx/clipboard-image.nvim
-            -- configure it to support norg syntax
         -- mfussenegger/nvim-dap
         -- null-ls replacement
             -- stevearc/conform.nvim and mfussenegger/nvim-lint
             -- or nvimtools/none-ls.nvim? (probably this)
         -- jghauser/papis.nvim
         -- direnv/direnv.vim
+        -- mrcjkb/rustaceanvim
     -- + related extensions (for nvim-cmp, telescope, neorg)
     -- MAYBE
-        -- mrcjkb/rustaceanvim
+        -- KabbAmine/zeavim.vim
         -- kylechui/nvim-surround
         -- nvim-neotest/neotest
         -- kevinhwang91/nvim-ufo
@@ -60,11 +59,6 @@ require("lazy").setup({
         -- folke/todo-comments.nvim
         -- folke/trouble.nvim
         -- iamcco/markdown-preview.nvim
-        -- junegunn/goyo.vim
-            -- or pocco81/true-zen.nvim
-            -- or folke/zen-mode.nvim
-        --  junegunn/limelight.vim
-            -- or folke/twilight.nvim
         -- Zeioth/compiler.nvim
         -- Zeioth/dooku.nvim
         -- Bekaboo/deadcolumn.nvim
