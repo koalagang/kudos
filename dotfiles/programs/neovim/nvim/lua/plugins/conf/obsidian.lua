@@ -38,13 +38,6 @@ require("obsidian").setup({
             notes_subdir = "Literature",
         },
     },
-    {
-        name = "sly",
-        path = "~/Documents/vaults/sly",
-        overrides = {
-            notes_subdir = "Notes",
-        },
-    },
   },
 
   -- Optional, if you keep notes in a specific subdirectory of your vault.
