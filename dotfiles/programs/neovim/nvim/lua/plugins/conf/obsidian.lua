@@ -45,10 +45,6 @@ require("obsidian").setup({
             notes_subdir = "Notes",
         },
     },
-    {
-        name = "test",
-        path = "~/Documents/vaults/test/test",
-    },
   },
 
   -- Optional, if you keep notes in a specific subdirectory of your vault.
