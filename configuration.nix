@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ./boot.nix
+    ./btrfs.nix
   ];
 
   networking = {
@@ -64,12 +65,12 @@
     settings = {
       default_session = {
         # silence hyprland output to avoid polluting the tty with pointless text
-        command = "${pkgs.greetd.greetd}/bin/agreety -c ${pkgs.hyprland}/bin/hyprland >/dev/null 2>&1";
+        command = "${pkgs.greetd.greetd}/bin/agreety -c ${pkgs.hyprland}/bin/Hyprland >/dev/null 2>&1";
         user = "greeter";
       };
       # enable auto-login
       initial_session = {
-        command = "${pkgs.hyprland}/bin/hyprland >/dev/null 2>&1";
+        command = "${pkgs.hyprland}/bin/Hyprland >/dev/null 2>&1";
         user = "dante";
       };
     };
@@ -169,7 +170,7 @@
 
   nix = {
     # Install and...
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.latest;
     settings = {
       # enable flakes
       experimental-features = "nix-command flakes";
@@ -215,7 +216,7 @@
       source-han-sans source-han-serif # Adobe's simplified and traditional Chinese, Japanese and Korean (CJK) fonts
       freefont_ttf # GNU's font which covers tons of writing systems not covered by most other fonts
       noto-fonts-emoji # Google's emoji font
-      (nerdfonts.override { fonts = [ "FiraCode" ]; }) # for icons
+      nerd-fonts.fira-code # for icons (TODO: change to victor-mono?)
     ];
     fontconfig = {
       enable = true;
@@ -266,19 +267,20 @@
 
     # there is a home-manager module for syncthing but it has very few options
     # so it is unsatisfactory, which is why I'm using the NixOS module instead
-    # services.syncthing.databaseDir??? something put in nocow?
+    # TODO: fix issue where syncthing creates a new config on every boot
     syncthing = {
       enable = true;
-      dataDir = "/home/dante/.local/share";
-      openDefaultPorts = true;
       configDir = "/home/dante/.config/syncthing";
+      dataDir = "/home/dante/.local/share/syncthing";
+      databaseDir = "/home/dante/.local/share/syncthing/databases";
+      openDefaultPorts = true;
       user = "dante";
       group = "users";
       guiAddress = "127.0.0.1:8384";
       overrideDevices = true;
       overrideFolders = true;
       settings = {
-          gui = {
+        gui = {
           user = "dante";
           # unfortunately, there is no hashed password file option
           # so making the hash public will have to suffice for now
@@ -288,7 +290,6 @@
         options.urAccepted = -1; # refuse analytics
         devices = {
           "android" = { id = "6UAWGX4-R3K7KJN-QEZI4EN-6XRJ432-H6QTG5K-LPEE5FJ-2B63Y7G-LP6BZA4"; };
-          "laptop" = { id = "RSRP2KL-YDQT3H4-YM66YM6-7B4OV32-YQMILAB-UCMSKMK-2UP7BWH-TSLLWQD"; };
         };
         folders = {
           # path on Android device to sync from (excludes the /storage/emulated/0/ prefix)
@@ -351,6 +352,8 @@
       };
     };
   };
+  # don't create default ~/Sync folder
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 
   # WORKAROUND:
   # For some reason, git opens an annoying graphical askpass window

@@ -1,4 +1,4 @@
-(defvar script_path "/home/dante/.local/scripts") ; will change this once I've migrated the scripts to nix writeShellScriptBin
+(defvar script_path "/home/dante/Desktop/scripts") ; will change this once I've migrated the scripts to nix writeShellScriptBin
 (defvar pomodoro_progress 100)
 (defvar pomodoro_mins 45)
 (defvar pomodoro_class "pomodoro_work")

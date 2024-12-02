@@ -381,6 +381,16 @@ require("lazy").setup({
         end,
     },
 
+    { -- A Neovim lua plugin to help easily manage multiple terminal windows
+      -- Vimscript alternative: voldikss/vim-floaterm
+        "akinsho/toggleterm.nvim",
+        version = "*",
+        keys = { "<m-cr>" },
+        config = function()
+            require(conf .. "toggleterm")
+        end,
+    },
+
     -- [[ FILETYPE PLUGINS ]]
     { -- ledger
         "ledger/vim-ledger",
@@ -420,14 +430,23 @@ require("lazy").setup({
         config = function()
             require(conf .. "neorg")
         end,
+        enabled = false,
     },
-    { -- A Neovim lua plugin to help easily manage multiple terminal windows
-      -- Vimscript alternative: voldikss/vim-floaterm
-        "akinsho/toggleterm.nvim",
-        version = "*",
-        keys = { "<m-cr>" },
-        config = function()
-            require(conf .. "toggleterm")
-        end,
-    },
+
+    -- [[ MISC ]]
+    -- {
+    --     "jghauser/papis.nvim",
+    --     dependencies = {
+    --         "kkharji/sqlite.lua",
+    --          "MunifTanjim/nui.nvim",
+    --          "pysan3/pathlib.nvim",
+    --          "nvim-neotest/nvim-nio",
+    --         -- if not already installed, you may also want:
+    --         "nvim-telescope/telescope.nvim",
+    --         "hrsh7th/nvim-cmp",
+    --     },
+    --     config = function()
+    --         require("papis").setup()
+    --     end,
+    -- },
 })

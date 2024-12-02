@@ -23,7 +23,10 @@
         "${pkgs.poweralertd}/bin/poweralertd &"
 
         # notify me of any upcoming tasks
-        "taskdue"
+        # "taskdue"
+
+        # notify me of any events today
+        "${pkgs.remind}/bin/remind ${config.xdg.userDirs.documents}/remind.rem"
       ];
     };
   };

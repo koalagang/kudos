@@ -1,7 +1,12 @@
 {
   programs.eza = {
     enable = true;
-    icons = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+    enableIonIntegration = true;
+    enableNushellIntegration = true;
+    enableZshIntegration = true;
+    icons = "auto";
   };
 
   home.shellAliases = {

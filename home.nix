@@ -45,6 +45,7 @@
     ungoogled-chromium
     obsidian
     imv
+    ferdium
 
     # Powerful CLI tools
     imagemagick
@@ -89,6 +90,7 @@
         ".config/keepassxc"
 
         # misc
+        ".config/syncthing" # needed to persist device identification
         ".local/share/Trash" # xdg trash directory
         ".local/share/direnv" # remember which directories to allow direnv
         ".local/share/zsh" # zsh history
@@ -116,7 +118,8 @@
         ".mozilla"
         ".cache/ripgrep-all"
         ".local/share/sioyek"
-        ".config/syncthing"
+        ".local/share/syncthing/databases"
+        ".config/Ferdium"
 
         # misc
         ".config/libreoffice" # in addition to its config, libreoffice stores the most recently opened files here

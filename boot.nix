@@ -132,6 +132,7 @@
         "/etc/secureboot" # ALSO VERY IMPORTANT TO PERSIST IF YOU USE LANZABOOTE
         "/var/lib/iwd" # remember wifi networks
         "/var/lib/power-profiles-daemon" # remember power profile (set using powerprofilesctl set <profile>)
+        "/etc/mullvad-vpn" # persist Mullvad VPN login and settings
       ];
     };
     # use the nocow directory for virtual machines and other stuff that is written to very often

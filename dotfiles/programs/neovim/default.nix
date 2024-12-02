@@ -48,9 +48,6 @@
       # jvgrootveld/telescope-zoxide
       zoxide
 
-      # nvim-tree/nvim-web-devicons and nvim-neorg/neorg
-      (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
-
       # LSP
       # I'll probably move these to per-project flakes
       texlab
@@ -62,7 +59,7 @@
       # linters?
 
       # TODO: checkhealth on all plugins
-    ];
+   ];
 
     extraLuaPackages = luaPkgs: with luaPkgs; [
       # 3rd/image.nvim

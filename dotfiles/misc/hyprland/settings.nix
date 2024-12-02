@@ -73,7 +73,7 @@
 
       # Drop shadows are barely noticeable to me but they are taxing on the battery according to
       # https://wiki.hyprland.org/FAQ/#how-do-i-make-hyprland-draw-as-little-power-as-possible-on-my-laptop
-      drop_shadow = false;
+      shadow.enabled = false;
 
       # Blur is also apparently taxing on the battery but I enjoy it too much to disable
       blur = {
@@ -123,9 +123,6 @@
 
       # master should use 50% of the screen
       mfact = 0.5;
-
-      # don't enable smart gaps (I think this is off by default anyway)
-      no_gaps_when_only = 0;
 
       orientation = "left";
 

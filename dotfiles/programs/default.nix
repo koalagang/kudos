@@ -26,6 +26,7 @@
     ./eww
     ./ledger
     ./neovim
+    ./papis
     ./sioyek
     ./zk
   ];

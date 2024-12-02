@@ -235,7 +235,7 @@
         file = "nix-shell.plugin.zsh";
         src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
       }
-      {
+      { # NOTE: depends on fzf
         # replace zsh's default completion selection menu with fzf
         # NOTE: this plugin uses zsh's native completion
         # so you should still enable and configure it just as you would otherwise
@@ -245,7 +245,7 @@
         file = "fzf-tab.zsh";
         src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
       }
-      {
+      { # NOTE: depends on pipr
         name = "zsh-pipr";
         file = "pipr.plugin.zsh";
         src = pkgs.fetchFromGitHub {
@@ -255,6 +255,17 @@
           hash = "sha256-zxu/uk/iL5jPHilnvhB647+2f4kC8KpAKDbvJPimy/0=";
         };
       }
+      { # NOTE: (optionally) depends on fzf
+        name = "zsh-backflip";
+        file = "backflip.plugin.zsh";
+        src = pkgs.fetchFromGitHub {
+          owner = "koalagang";
+          repo = "zsh-backflip";
+          rev = "782ba9f48ff6489a8543a05568b4fd703d52798e";
+          hash = "sha256-H1vmtcAhHh79cOazi1Zx6A5JqhLvp7gt2WqLXY2KRkY=";
+        };
+      }
+
       # TODO: install https://github.com/momo-lab/zsh-abbrev-alias
     ];
   };

@@ -2,6 +2,8 @@
 
 {
   home.packages = with pkgs; [
+    libnotify # used by pomodoro scripts (which I will port to writeShellScriptBin soon)
+
     (writeShellScriptBin "eww-workspace" ''
       # pass input to hyprctl
       ${pkgs.hyprland}/bin/hyprctl dispatch "$@"
@@ -38,7 +40,11 @@
       ${pkgs.eww}/bin/eww update focused="$(${pkgs.coreutils}/bin/echo ''${widgets[@]} | ${pkgs.coreutils}/bin/tr -d '\n')"
     '')
 
+    # BUG: circle stays yellow even when charging.
+    # hovering over it will make it green but then after a minute it will go back to being yellow
     (writeShellScriptBin "eww-battery" ''
+        # NOTE: whether to use BAT1 or BAT0 may depend on the laptop
+        # perhaps I should modify the script so that it works regardless of the battery's name
         [ "$status" != 'charging' ] && \
           charge="$(${pkgs.upower}/bin/upower -i /org/freedesktop/UPower/devices/battery_BAT1 | ${pkgs.gawk}/bin/awk '/percentage/ {print $2}' | tr -d %)"
         if [ "$charge" -ge 20 ]; then
@@ -131,21 +137,23 @@
     '')
 
     (writeShellScriptBin "eww-brightness" ''
-      # NOTE: installing light with programs.light.enable option is necessary for this to work
+      # NOTE: installing light with the NixOS programs.light.enable option is necessary for this to work
       # because it applies udev rules granting access to members of the video group
+      # (make sure your user is in the video group)
 
       # if given a number
-      if [ -n "$1" ] && [ "$1" -eq "$1" ]; then
+      if [[ -n "$1" && "$1" -eq "$1" ]]; then
           ${pkgs.light}/bin/light -S "$1"
           brightness="$1"
-          # brightness="''${brightness%%.*}"
       elif [[ "$1" == 'plus' ]]; then
+          # increase the brightness
           ${pkgs.light}/bin/light -A 10
       elif [[ "$1" == 'minus' ]]; then
+          # decrease the brightness
           ${pkgs.light}/bin/light -U 10
       fi
 
-      brightness="$(light -G)" &&
+      brightness="$(${pkgs.light}/bin/light -G)" &&
         brightness="''${brightness%%.*}" &&
         ${pkgs.eww}/bin/eww update brightness_value_slider="$brightness"
 
@@ -158,6 +166,9 @@
       elif [ "$brightness" -lt 33 ]; then
           ${pkgs.eww}/bin/eww update brightness_icon='󰃞'
       fi
+
+      # save the current brightness
+      ${pkgs.light}/bin/light -O
     '')
 
     (writeShellScriptBin "eww-service" ''

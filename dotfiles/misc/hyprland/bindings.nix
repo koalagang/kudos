@@ -32,6 +32,7 @@
         "$appLaunchMod, p, exec, ${pkgs.libnotify}/bin/notify-send 'Launching Signal' ; ${pkgs.signal-desktop}/bin/signal-desktop &"
         "$appLaunchMod, b, exec, ${pkgs.libnotify}/bin/notify-send \"Launching ${config.home.sessionVariables.BROWSER}\" ; ${config.home.sessionVariables.BROWSER} &"
         "$appLaunchMod, o, exec, ${pkgs.libnotify}/bin/notify-send 'Launching Obsidian' ; ${pkgs.obsidian}/bin/obsidian &"
+        "$appLaunchMod, f, exec, ${pkgs.libnotify}/bin/notify-send 'Launching Ferdium' ; ${pkgs.ferdium}/bin/ferdium &"
         # I want to use hdrop with signal-desktop and keepassxc as well but I can't get them to play nice
         "$mainMod, t, exec, ${pkgs.hdrop}/bin/hdrop -f -g 58 --width 98 --height 91 foot -a foot_scratchpad"
         # temporary:

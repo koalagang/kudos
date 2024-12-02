@@ -150,12 +150,15 @@ tooltip {
 // so we add some padding to centre it
 .workspace_inactive_star {
   padding-right: 4px;
-  color: $base02;
+  color: $base03;
 }
-// TODO
 .workspace_focused_star {
   padding: 6px;
-  color: $selected;
+  color: $base0B;
+}
+.workspace_active_star {
+  padding: 6px;
+  color: $base0F;
 }
 
 .workspace_active {
