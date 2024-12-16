@@ -133,10 +133,12 @@
   };
 
   # Disable sudo, as run0 (systemd's privilige escalation tool) is more secure.
-  # If, for whatever reason, run0 does not work,
-  # resort to entering root via `su` as your backup plan.
   security = {
-    sudo.enable = false;
+    # NOTE: run0 is currently broken on NixOS. Might need to wait for the next systemd version?
+    # See https://github.com/systemd/systemd/issues/34682 and https://github.com/systemd/systemd/pull/34880
+    # The latest systemd version on NixOS unstable as of writing is 256.8
+    # ...In the meantime, I'll have sudo enabled
+    sudo.enable = true;
     polkit.enable = true; # polkit is required for run0 to work
   };
   # run0 does not have access to all environmental variables by default
