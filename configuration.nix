@@ -146,6 +146,7 @@
   # Simply use this `run` alias for rebuilds, e.g. `run nixos-rebuild switch`.
   environment.shellAliases."run" = "run0 --setenv=PATH --setenv=LOCALE_ARCHIVE";
 
+  # set delay between suspension and hibernation when using suspend-then-hibernate to 1 minute
   systemd.sleep.extraConfig = "HibernateDelaySec=1m";
 
   # don't allow unfree software...
@@ -171,18 +172,17 @@
   };
 
   nix = {
-    # Install and...
     package = pkgs.nixVersions.latest;
     settings = {
       # enable flakes
       experimental-features = "nix-command flakes";
 
-      # Respect the XDG base directory spec
+      # respect the XDG base directory spec
       use-xdg-base-directories = true;
     };
 
     # Automatically optimise the store monthly to avoid wasting storage
-    #optimise.automatic = true;
+    optimise.automatic = true;
   };
 
   # will enable once the next version of nh is released (so I can use run0)
@@ -215,10 +215,10 @@
     packages = with pkgs; [
       victor-mono # very nice for programming
       liberation_ttf # provides free versions of proprietary fonts, like Times New Roman and Arial
-      source-han-sans source-han-serif # Adobe's simplified and traditional Chinese, Japanese and Korean (CJK) fonts
+      source-han-sans source-han-serif # Adobe's Chinese, Japanese and Korean (CJK) fonts
       freefont_ttf # GNU's font which covers tons of writing systems not covered by most other fonts
       noto-fonts-emoji # Google's emoji font
-      nerd-fonts.fira-code # for icons (TODO: change to victor-mono?)
+      nerd-fonts.fira-code # icons font (TODO: change to victor-mono?)
     ];
     fontconfig = {
       enable = true;
@@ -231,15 +231,6 @@
     };
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
   services = {
     # audio server
     pipewire = {
@@ -252,19 +243,22 @@
         wireplumber.enable = true;
     };
 
+    # for upgrading BIOS firmware on framework laptops
     fwupd.enable = true;
 
+    # blocks USB port access unless explicit permission is given
     usbguard.enable = true;
 
     # optimise SSD health and performance
     fstrim.enable = true;
 
+    # provides battery information used by poweralertd, as well as my eww battery widget
     upower = {
       enable = true;
       percentageLow = 19;
       percentageCritical = 9;
       percentageAction = 9;
-      criticalPowerAction = "Hibernate";
+      criticalPowerAction = "Hibernate"; # also hibernates the system when on 9%
     };
 
     # there is a home-manager module for syncthing but it has very few options
@@ -363,15 +357,6 @@
   # This disables that.
   programs.ssh.enableAskPassword = false;
   # See https://github.com/NixOS/nixpkgs/issues/24311 for more
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
