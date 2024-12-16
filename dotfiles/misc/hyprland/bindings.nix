@@ -40,8 +40,8 @@
         "$appLaunchMod, u, exec, ${pkgs.libnotify}/bin/notify-send 'Launching Chromium' ; chromium &"
 
         # Power state
-        "$powerMod, p, exec, shutdown now"
-        "$powerMod, r, exec, reboot"
+        "$powerMod, p, exec, systemctl poweroff"
+        "$powerMod, r, exec, systemctl reboot"
         "$powerMod, s, exec, systemctl suspend"
         "$powerMod, h, exec, systemctl hibernate"
         "$powerMod, l, exec, hyprlock"
