@@ -1,5 +1,3 @@
-# can't get it to work atm
-# wondering if this is related https://github.com/nix-community/home-manager/issues/1865
 {
   services.wlsunset = {
     enable = true;

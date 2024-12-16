@@ -3,7 +3,7 @@
     disk = {
       main = {
         type = "disk";
-	      # the device can be /dev/nvme0n1 (if it's an nvme SSD), /dev/vda (if it's in a VM) or /dev/sda (all other devices)
+        # the device can be /dev/nvme0n1 (if it's an nvme SSD), /dev/vda (if it's in a VM) or /dev/sda (all other devices)
         device = "/dev/nvme0n1";
         content = {
           type = "gpt";
@@ -17,9 +17,9 @@
                 mountpoint = "/boot";
                 mountOptions = [
                   "defaults"
-		              # very important for security
-		              # (without it, random-seed file is world-readable)
-		              "umask=0077"
+                  # very important for security
+                  # (without it, random-seed file is world-readable)
+                  "umask=0077"
                 ];
               };
             };

@@ -16,7 +16,7 @@
       name = "rose-pine";
       package = pkgs.rose-pine-icon-theme;
     };
-    # the catppuccin cursors look ugly. the rose pine cursors looks nice.
+    # the catppuccin cursors look ugly but the rose pine cursors looks nice.
     cursorTheme = {
       name = "BreezeX-RosePine-Linux";
       package = pkgs.rose-pine-cursor;

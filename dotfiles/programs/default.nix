@@ -4,7 +4,6 @@
     ./btop
     ./direnv
     ./eza
-    ./firefox
     ./foot
     ./fzf
     ./git
@@ -24,6 +23,7 @@
 
     # WIP
     ./eww
+    ./firefox
     ./ledger
     ./neovim
     ./papis
