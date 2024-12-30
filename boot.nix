@@ -62,8 +62,8 @@
       # system packages are not accessible to the initrd so we need to make the necessary ones available
       packages = with pkgs; [
       	util-linux  # mount and umount
-	coreutils   # mkdir and mv
-	btrfs-progs # btrfs
+	      coreutils   # mkdir and mv
+	      btrfs-progs # btrfs
       ];
       services.cleanup = {
         description = "Perform cleanup of impermanent files";
@@ -80,27 +80,27 @@
 
           # make sure that the directory got mounted correctly
           if [ -e /btrfs_tmp/root ]; then
-          	# create a directory for the old roots if it does not already exist...
-          	mkdir -p /btrfs_tmp/old_roots
-          	# ...and move the current root into this directory with the timezone and timestamp as the name
-          	# e.g. BST-2024-08-25T15-24-21 (24 minutes and 21 seconds past 3pm on the 25th August 2024 British Summer Time)
-          	# this allows us to backup our old roots in case anything goes wrong (such as a system crash)
-          	mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Z-%Y-%m-%-dT%H-%M-%S")"
+              # create a directory for the old roots if it does not already exist...
+          	  mkdir -p /btrfs_tmp/old_roots
+          	  # ...and move the current root into this directory with the timezone and timestamp as the name
+          	  # e.g. BST-2024-08-25T15-24-21 (24 minutes and 21 seconds past 3pm on the 25th August 2024 British Summer Time)
+          	  # this allows us to backup our old roots in case anything goes wrong (such as a system crash)
+          	  mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Z-%Y-%m-%-dT%H-%M-%S")"
           fi
 
           # recursively delete subvolumes older than 30 days
           # NOTE: do not add quotation marks around the command substitutions used here
-	  # -- this will break the script because the for loops need to see the results as multiple elements
-	  # but wrapping the command substitutions in quotes will make them single elements
+	        # -- this will break the script because the for loops need to see the results as multiple elements
+	        # but wrapping the command substitutions in quotes will make them single elements
           delete_subvolume_recursively() {
-          	IFS=$'\n'
-          	for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d' '); do
-          	    delete_subvolume_recursively "/btrfs_tmp/$i"
-          	done
-          	btrfs subvolume delete "$1"
+              IFS=$'\n'
+              for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d' '); do
+                  delete_subvolume_recursively "/btrfs_tmp/$i"
+              done
+              btrfs subvolume delete "$1"
           }
           for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
-          	delete_subvolume_recursively "$i"
+          	  delete_subvolume_recursively "$i"
           done
 
           # create a new root subvolume to replace the one we just moved
@@ -122,8 +122,8 @@
       # hide the bind mounts from showing up as mounted drives in file managers
       hideMounts = true;
 
-      # a neat way to find what to persist is to issue the following rsync command:
-      # doas rsync -amvxx --dry-run --no-links --exclude '/tmp/*' --exclude '/root/*' / /persist/ | rg -v '^skipping|/$'
+      # a neat way to find what to persist is to issue the following rsync command (with root privileges):
+      # rsync -amvxx --dry-run --no-links --exclude '/tmp/*' --exclude '/root/*' / /persist/ | rg -v '^skipping|/$'
       # credit: https://willbush.dev/blog/impermanent-nixos/
       directories = [
         # VERY IMPORTANT TO PERSIST

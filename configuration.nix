@@ -132,7 +132,7 @@
     command-not-found.enable = false;
   };
 
-  # Disable sudo, as run0 (systemd's privilige escalation tool) is more secure.
+  # Disable sudo, as run0 (systemd's privilege escalation tool) is more secure.
   security = {
     # NOTE: run0 is currently broken on NixOS. Might need to wait for the next systemd version?
     # See https://github.com/systemd/systemd/issues/34682 and https://github.com/systemd/systemd/pull/34880
@@ -151,7 +151,7 @@
 
   # don't allow unfree software...
   nixpkgs.config.allowUnfree = false;
-  # ... with the exception of Obsidian
+  # ...with the exception of Obsidian
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "obsidian" ];
 
   # I don't use nano, perl, rsync or strace (the defaults).
@@ -185,8 +185,6 @@
     optimise.automatic = true;
   };
 
-  # will enable once the next version of nh is released (so I can use run0)
-  # see https://github.com/viperML/nh/pull/92#issuecomment-2330891767
   #programs.nh = {
   #  enable = true;
   #  flake = "/home/dante/Desktop/git/kudos";
