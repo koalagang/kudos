@@ -263,7 +263,7 @@
     # so it is unsatisfactory, which is why I'm using the NixOS module instead
     # TODO: fix issue where syncthing creates a new config on every boot
     syncthing = {
-      enable = true;
+      enable = false; # DISABLED UNTIL I GET AROUND TO FIXING THE ISSUE
       configDir = "/home/dante/.config/syncthing";
       dataDir = "/home/dante/.local/share/syncthing";
       databaseDir = "/home/dante/.local/share/syncthing/databases";
@@ -347,7 +347,7 @@
     };
   };
   # don't create default ~/Sync folder
-  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
+  #systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 
   # WORKAROUND:
   # For some reason, git opens an annoying graphical askpass window
