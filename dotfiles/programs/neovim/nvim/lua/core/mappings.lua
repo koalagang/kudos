@@ -24,7 +24,7 @@ vim.g.localleader = '\\' -- Double-backslash used to escape it
 -- [[ Basics ]]
 -- Basic bindings
 nmap("<c-s>", "<cmd>w<cr>")
-nmap(",", "<cmd>noh<cr>")
+nmap("<escape>", "<cmd>noh<cr>")
 nmap("cc", "<cmd>set cursorcolumn!<cr>")
 vmap("<", "<gv")
 vmap(">", ">gv")
