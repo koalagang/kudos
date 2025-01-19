@@ -48,7 +48,7 @@
 
   outputs = inputs@{ self, nixos-hardware, nixpkgs, home-manager, ... }: {
     # install script
-    # this enables us to deploy the configuration onto a new system using
+    # this enables us to deploy the configuration onto a new system using a single-command install:
     # nix run github:koalagang/kudos --no-write-lock-file
     packages.x86_64-linux.install = with nixpkgs.legacyPackages.x86_64-linux; stdenv.mkDerivation {
       pname = "install";
