@@ -1,6 +1,7 @@
 {
   imports = [
     ./bat
+    ./bemenu
     ./btop
     ./direnv
     ./eza

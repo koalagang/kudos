@@ -5,7 +5,7 @@
     # this can be dmenu itself or anything that is dmenu compatible
     # e.g. rofi -dmenu, fuzzel --dmenu, bemenu, etc.
     # but don't add, -l -i or -p because those are hardcoded into the scripts
-    DMENU_CMD = "${pkgs.bemenu}/bin/bemenu --fb '#${config.colorScheme.palette.base00}' --ff '#${config.colorScheme.palette.base05}' --nb '#${config.colorScheme.palette.base00}' --nf '#${config.colorScheme.palette.base05}' --tb '#${config.colorScheme.palette.base00}' --hb '#${config.colorScheme.palette.base00}' --tf '#${config.colorScheme.palette.base0E}' --hf '#${config.colorScheme.palette.base0B}' --af '#${config.colorScheme.palette.base05}' --ab '#${config.colorScheme.palette.base00}' --bdr '#${config.colorScheme.palette.base0E}' --fn 12 -H 40 -B 2 -R 10 -f";
+    DMENU_CMD = "${pkgs.bemenu}/bin/bemenu ${config.home.sessionVariables.BEMENU_OPTS}";
     # extra flags that you may want to use in some scripts but not others (e.g. centring the menu)
     # leave as an empty string if you don't intend to use this
     DMENU_EXTRA_FLAGS = "-c -W 0.33";
