@@ -69,5 +69,9 @@
         esac
       done
     '')
+
+    (pkgs.writeShellScriptBin "qr" ''
+      ${pkgs.coreutils}/bin/printf $@ | ${pkgs.curl}/bin/curl -F-=\<- qrenco.de
+    '')
   ];
 }

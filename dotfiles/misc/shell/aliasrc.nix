@@ -37,5 +37,6 @@
     nx = "${pkgs.nh}/bin/nh"; # I find 'nh' a bit awkward to type because of the placement of the keys
     iwc = "iwctl station wlan0";
     imp = "${pkgs.impala}/bin/impala";
+    wttr = "${pkgs.curl}/bin/curl wttr.in";
   };
 }
