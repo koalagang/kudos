@@ -185,14 +185,17 @@
     optimise.automatic = true;
   };
 
-  #programs.nh = {
-  #  enable = true;
-  #  flake = "/home/dante/Desktop/git/kudos";
-  #  #clean = {
-  #  #  enable = true;
-  #  #  extraArgs = "";
-  #  #}
-  #};
+  # there is a home-manager module for nh but it only does cleans at the user level,
+  # so I use the nixos module instead
+  programs.nh = {
+    enable = true;
+    flake = "/home/dante/Desktop/git/kudos";
+    # clean = {
+    #  enable = true;
+    #  dates = "weekly";
+    #  extraArgs = "--keep 15 --keep-since 14d";
+    # };
+  };
 
   # other stuff in the hyprland ecosystem are declared in their respective home-manager modules
   # these two lines are the only ones that must be included in configuration.nix
