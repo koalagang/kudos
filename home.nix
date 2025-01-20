@@ -72,7 +72,9 @@
 
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-mocha;
 
-  # TODO: move options to related config files
+  # TODO: consider removing nocow and moving everything in /persist/nocow to /persist???
+  # I'm not sure there is significant enough overhead from the databases to warrant using nodatacow
+  # + having a separate directory makes managing impermenance really annoying
   home.persistence = {
     "/persist/home/dante" = {
       directories = [
