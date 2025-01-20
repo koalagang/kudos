@@ -9,6 +9,7 @@
     guiAddress = "127.0.0.1:8384";
     settings = {
       gui = {
+        theme = "dark";
         user = "dante";
         # unfortunately, there is no hashed password file option
         # so making the hash public will have to suffice for now
