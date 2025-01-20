@@ -28,7 +28,6 @@
     ./ledger
     ./neovim
     ./papis
-    ./sioyek
     ./zk
   ];
 }

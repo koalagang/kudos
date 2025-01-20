@@ -9,5 +9,6 @@
     file."${config.xdg.configHome}/timewarrior/timewarrior.cfg".text = ''
       import ${pkgs.timewarrior}/share/doc/timew/doc/themes dark.theme
     '';
+    persistence."/persist/nocow/home/dante".directories = [ ".local/share/timewarrior" ];
   };
 }

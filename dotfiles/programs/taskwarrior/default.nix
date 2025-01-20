@@ -76,5 +76,6 @@
       PATH_EXT=${pkgs.taskopen}/share/taskopen/scripts
     '';
     sessionVariables.TASKOPENRC = "${config.xdg.configHome}/task/taskopenrc";
+    persistence."/persist/nocow/home/dante".directories = [ ".local/share/taskwarrior" ];
   };
 }

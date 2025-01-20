@@ -13,9 +13,12 @@
   };
 
   # ripgrep utilities
-  home.packages = with pkgs; [
-    ripgrep-all
-    repgrep
-    vgrep
-  ];
+  home = {
+    packages = with pkgs; [
+      ripgrep-all
+      repgrep
+      vgrep
+    ];
+    persistence."/persist/nocow/home/dante".directories = [ ".cache/ripgrep-all" ];
+  };
 }

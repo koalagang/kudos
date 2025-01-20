@@ -75,15 +75,28 @@
   };
 
   # Source lua config
-  home.file."${config.xdg.configHome}/nvim" = {
-    /* Link the file outside of the nix store.
-    This allows me to edit my lua config without rebuilding nix
-    (unless I need to add another package as seen above).
-    Specifying absolute path is necessary because flakes live in the nix store
-    but using an absolute path will allow us to create a symlink outside of the store.
-    I will probably change this once my neovim config has fewer moving parts.
-    See https://github.com/nix-community/home-manager/issues/257 for more. */
-    source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/programs/neovim/nvim";
-    recursive = true;
+  home = {
+    file."${config.xdg.configHome}/nvim" = {
+      /* Link the file outside of the nix store.
+      This allows me to edit my lua config without rebuilding nix
+      (unless I need to add another package as seen above).
+      Specifying absolute path is necessary because flakes live in the nix store
+      but using an absolute path will allow us to create a symlink outside of the store.
+      I will probably change this once my neovim config has fewer moving parts.
+      See https://github.com/nix-community/home-manager/issues/257 for more. */
+      source = config.lib.file.mkOutOfStoreSymlink "/home/dante/Desktop/git/kudos/dotfiles/programs/neovim/nvim";
+      recursive = true;
+    };
+    persistence = {
+      "/persist/home/dante".directories = [ ".local/state/nvim/backup" ];
+      "/persist/nocow/home/dante".directories = [
+        ".local/state/nvim/undo"
+        ".local/state/nvim/swap"
+        # neovim plugins are installed to here (won't be necessary once I switch to managing neovim plugins with nix)
+        ".local/share/nvim/lazy"
+        ".local/state/nvim/shada"
+        ".cache/nvim" # some neovim plugins use caching to improve performance
+      ];
+    };
   };
 }

@@ -18,4 +18,7 @@
     enable = true;
     pinentryPackage = pkgs.pinentry-tty;
   };
+
+  # gpg keys are stored here
+  home.persistence."/persist/home/dante".directories = [ ".config/gnupg" ];
 }

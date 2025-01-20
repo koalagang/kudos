@@ -11,5 +11,6 @@
       ANKI_WAYLAND = 1;       # force Anki to use wayland (rather than running through xwayland)
       DISABLE_QT5_COMPAT = 1; # disable qt5 shim and just use qt6
     };
+    persistence."/persist/nocow/home/dante".directories = [ ".local/share/Anki2" ];
   };
 }

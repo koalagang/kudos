@@ -79,8 +79,8 @@
     };
   };
 
-  # don't create default ~/Sync folder
-  home.sessionVariables.STNODEFAULTFOLDER = "true";
-
-  home.persistence."/persist/nocow/home/dante".directories = [ ".local/state/syncthing" ];
+  home = {
+    sessionVariables.STNODEFAULTFOLDER = "true"; # don't create default ~/Sync folder
+    persistence."/persist/nocow/home/dante".directories = [ ".local/state/syncthing" ]; # persist data
+  };
 }

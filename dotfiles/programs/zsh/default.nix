@@ -269,6 +269,10 @@
       # TODO: install https://github.com/momo-lab/zsh-abbrev-alias
     ];
   };
-  # plugin dependencies
-  home.packages = with pkgs; [ fzf pipr ];
+  home = {
+    packages = with pkgs; [ fzf pipr ]; # plugin dependencies
+    persistence."/persist/home/dante".directories = [  ".local/share/zsh" ]; # zsh history
+    # zcompdump (completion cache) files get placed in here
+    persistence."/persist/nocow/home/dante".directories = [ ".config/zsh" ];
+  };
 }

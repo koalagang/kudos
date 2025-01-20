@@ -11,7 +11,10 @@
     enableFishIntegration    = pkgs.mkDefault true;
   };
 
-  # Ironically (in more ways than one),
-  # I need to add an environmental variable to my shell to unclutter the screen from log output
-  home.sessionVariables.DIRENV_LOG_FORMAT="";
+  home = {
+    # Ironically (in more ways than one),
+    # I need to add an environmental variable to my shell to unclutter the screen from log output
+    sessionVariables.DIRENV_LOG_FORMAT="";
+    persistence."/persist/home/dante".directories = [ ".local/share/direnv" ];
+  };
 }

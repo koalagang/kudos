@@ -1,7 +1,6 @@
 { config, pkgs, inputs, ... }:
 
 {
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -56,14 +55,12 @@
     so
     ytfzf
     vimv-rs
-    skate
 
     # Misc
     testdisk
     nix-tree
     remind
     wyrd
-    khal # -- to use for ical calendar; I will consider trying out ical2rem later
   ];
 
   imports = [
@@ -88,13 +85,6 @@
 
         # imperative configs
         ".config/keepassxc"
-
-        # misc
-        ".local/share/Trash" # xdg trash directory
-        ".local/share/direnv" # remember which directories to allow direnv
-        ".local/share/zsh" # zsh history
-        ".local/state/nvim/backup" # neovim file backups
-        ".config/gnupg" # gpg keys are stored here
       ];
       # allow other users to access these files (needed for root operations)
       allowOther = true;
@@ -105,33 +95,16 @@
     "/persist/nocow/home/dante" = {
       directories = [
         # databases
-        ".local/share/mcfly"
-        ".local/share/taskwarrior"
-        ".local/share/timewarrior"
-        ".local/share/zoxide"
-        ".local/share/Anki2"
         ".config/Signal"
         ".config/chromium"
         ".config/obsidian"
         ".mullvad"
         ".mozilla"
-        ".cache/ripgrep-all"
-        ".local/share/sioyek"
         ".config/Ferdium"
 
         # misc
         ".config/libreoffice" # in addition to its config, libreoffice stores the most recently opened files here
-        ".local/state/nvim/undo"
-        ".local/state/nvim/swap"
-        ".local/state/nvim/shada"
-        # neovim plugins are installed to here (won't be necessary once I switch to managing neovim plugins with nix)
-        ".local/share/nvim/lazy"
         ".cache/keepassxc" # cache to remember last opened keepass database
-        ".cache/nvim" # some neovim plugins use caching to improve performance
-        ".config/zsh" # zcompdump (completion cache) files get placed in here
-        # charmbraclet (https://github.com/charmbracelet) apps store data here, incl. skate's databases
-        ".local/share/charm"
-        ".local/share/khal" # calendar database
       ];
       allowOther = true;
     };
