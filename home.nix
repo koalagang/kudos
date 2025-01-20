@@ -90,7 +90,6 @@
         ".config/keepassxc"
 
         # misc
-        ".config/syncthing" # needed to persist device identification
         ".local/share/Trash" # xdg trash directory
         ".local/share/direnv" # remember which directories to allow direnv
         ".local/share/zsh" # zsh history
@@ -118,7 +117,6 @@
         ".mozilla"
         ".cache/ripgrep-all"
         ".local/share/sioyek"
-        ".local/share/syncthing/databases"
         ".config/Ferdium"
 
         # misc
