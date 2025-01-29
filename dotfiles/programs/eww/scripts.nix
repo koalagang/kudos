@@ -142,7 +142,7 @@
       # (make sure your user is in the video group)
 
       # if given a number
-      if [[ -n "$1" && "$1" -eq "$1" ]]; then
+      if [[ "$1" =~ '^[0-9]+$' ]]; then
           ${pkgs.light}/bin/light -S "$1"
           brightness="$1"
       elif [[ "$1" == 'plus' ]]; then
