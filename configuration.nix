@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ./boot.nix
     ./btrfs.nix
+    ./virtualisation.nix
   ];
 
   networking = {

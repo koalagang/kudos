@@ -143,7 +143,6 @@
       hideMounts = true;
       directories = [
         "/var/log" # keep system logs
-        "/var/lib/libvirt" # store virtual machines (VERY IMPORTANT TO STORE IN nocow)
       ];
     };
   };
