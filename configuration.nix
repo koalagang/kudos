@@ -132,19 +132,33 @@
     command-not-found.enable = false;
   };
 
-  # Disable sudo, as run0 (systemd's privilege escalation tool) is more secure.
+  # NOTE: run0 is currently broken on NixOS
+  # see https://github.com/NixOS/nixpkgs/issues/331484
+  #
+  # # Disable sudo, as run0 (systemd's privilege escalation tool) is more secure.
+  # security = {
+  #   sudo.enable = false;
+  #   polkit.enable = true; # polkit is required for run0 to work
+  # };
+  # # run0 does not have access to all environmental variables by default
+  # # but PATH and LOCALE_ARCHIVE are needed for nixos-rebuild so we pass those into the command.
+  # # Simply use this `run` alias for rebuilds, e.g. `run nixos-rebuild switch`.
+  # environment.shellAliases."run" = "run0 --setenv=PATH --setenv=LOCALE_ARCHIVE";
+  #
+  # Swap out sudo for doas
   security = {
-    # NOTE: run0 is currently broken on NixOS. Might need to wait for the next systemd version?
-    # See https://github.com/systemd/systemd/issues/34682 and https://github.com/systemd/systemd/pull/34880
-    # The latest systemd version on NixOS unstable as of writing is 256.8
-    # ...In the meantime, I'll have sudo enabled
-    sudo.enable = true;
-    polkit.enable = true; # polkit is required for run0 to work
+    sudo.enable = false;
+    doas = {
+      enable = true;
+      extraRules = [{
+        groups = [ "wheel" ];
+        persist = true;
+        # this option is crucial
+        # `doas nixos-rebuild` will not work without it
+        keepEnv = true;
+      }];
+    };
   };
-  # run0 does not have access to all environmental variables by default
-  # but PATH and LOCALE_ARCHIVE are needed for nixos-rebuild so we pass those into the command.
-  # Simply use this `run` alias for rebuilds, e.g. `run nixos-rebuild switch`.
-  environment.shellAliases."run" = "run0 --setenv=PATH --setenv=LOCALE_ARCHIVE";
 
   # set delay between suspension and hibernation when using suspend-then-hibernate to 1 minute
   systemd.sleep.extraConfig = "HibernateDelaySec=1m";
